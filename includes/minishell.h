@@ -6,7 +6,7 @@
 /*   By: aleriaza <aleriaza@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 15:43:33 by ariazano          #+#    #+#             */
-/*   Updated: 2025/12/25 17:35:57 by aleriaza         ###   ########.fr       */
+/*   Updated: 2025/12/30 13:52:50 by aleriaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,11 +58,28 @@ typedef enum e_token_type
 //	T_IN_OUT,
 }			t_token_type;
 
+
+/* Shell context structure */
 typedef struct	s_shell
 {
 	char			**env;
 	int				exit_status;
 }				t_shell;
+
+/* Command structure */
+typedef struct s_cmd
+{
+	char	**args;
+}	t_cmd;
+
+/* Pipeline structure */
+typedef struct s_pipeline
+{
+	t_cmd	**cmds;
+	int		cmd_count;
+}	t_pipeline;
+
+
 
 /*
 typedef struct	s_data
