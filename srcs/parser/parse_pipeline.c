@@ -6,7 +6,7 @@
 /*   By: aleriaza <aleriaza@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/29 15:23:06 by aleriaza          #+#    #+#             */
-/*   Updated: 2025/12/29 15:35:03 by aleriaza         ###   ########.fr       */
+/*   Updated: 2025/12/30 13:56:17 by aleriaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	free_cmd(t_cmd *cmd)
 
 t_cmd	*parse_one_segment(char *segment)
 {
-	char	**args;
+	char	**tokens;
 	t_cmd	*cmd;
 
 	if (is_empty_segment(segment))
@@ -60,13 +60,7 @@ t_cmd	*parse_one_segment(char *segment)
 	tokens = tokenize_input(segment);
 	if (!tokens)
 		return (NULL);
-	args = create_args_array(tokens);
-	if (!args)
-		return (NULL);
-	cmd = create_cmd(args);
-	if (!cmd)
-		return (NULL);
-	free_tokens(tokens);
+	cmd = create_cmd(tokens);
 	return (cmd);
 }
 
