@@ -6,7 +6,7 @@
 /*   By: aleriaza <aleriaza@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/29 15:23:06 by aleriaza          #+#    #+#             */
-/*   Updated: 2025/12/30 13:56:17 by aleriaza         ###   ########.fr       */
+/*   Updated: 2026/01/12 16:32:58 by aleriaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,52 @@ void	free_cmd(t_cmd *cmd)
 	if (cmd->args)
 		free_array(cmd->args);
 	free(cmd);
+}
+
+/* Create pipeline from segments */
+t_pipeline	*create_pipeline(char **segments)
+{
+	t_pipeline	*pipeline;
+	int			i;
+
+	pipeline = malloc(sizeof(t_pipeline));
+	if (!pipeline)
+		return (NULL);
+	pipeline->cmd_count = array_len(segments);
+	pipeline->cmds = malloc(sizeof(t_cmd *) * (pipeline->cmd_count + 1));
+	if (!pipeline->cmds)
+	{
+		free(pipeline);
+		return (NULL);
+	}
+	i = 0;
+	while (segments[i])
+	{
+		pipeline->cmds[i] = create_cmd(tokenize_input(segments[i]));
+		i++;
+	}
+	pipeline->cmds[i] = NULL;
+	return (pipeline);
+}
+
+/* Free entire pipeline */
+void	free_pipeline(t_pipeline *pipeline)
+{
+	int	i;
+
+	if (!pipeline)
+		return ;
+	if (pipeline->cmds)
+	{
+		i = 0;
+		while (i < pipeline->cmd_count)
+		{
+			free_cmd(pipeline->cmds[i]);
+			i++;
+		}
+		free(pipeline->cmds);
+	}
+	free(pipeline);
 }
 
 t_cmd	*parse_one_segment(char *segment)

@@ -6,7 +6,7 @@
 /*   By: aleriaza <aleriaza@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/29 15:09:35 by aleriaza          #+#    #+#             */
-/*   Updated: 2025/12/29 15:34:02 by aleriaza         ###   ########.fr       */
+/*   Updated: 2026/01/12 16:34:47 by aleriaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ char	*extract_segment(char *input, int start, int end)
 	return (segment);
 }
 
+/*
 char	*get_next_segment(char *input, int *pos)
 {
 	int		start;
@@ -78,4 +79,33 @@ char	*get_next_segment(char *input, int *pos)
 	segment = extract_segment(input, start, end);
 	*pos = end + 1;
 	return (segment);
+}
+*/
+
+/* Split input string by pipe character */
+char	**split_by_pipes(char *input)
+{
+	char	**segments;
+	int		pipe_count;
+	int		i;
+	int		j;
+	int		start;
+	int		end;
+
+	pipe_count = count_pipes(input);
+	segments = malloc(sizeof(char *) * (pipe_count + 2));
+	if (!segments)
+		return (NULL);
+	i = 0;
+	j = 0;
+	start = 0;
+	while (i <= pipe_count)
+	{
+		end = find_pipe_pos(input, start);
+		segments[j++] = extract_segment(input, start, end);
+		start = end + 1;
+		i++;
+	}
+	segments[j] = NULL;
+	return (segments);
 }

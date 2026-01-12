@@ -6,18 +6,23 @@
 /*   By: aleriaza <aleriaza@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/25 16:06:23 by aleriaza          #+#    #+#             */
-/*   Updated: 2025/12/25 17:37:12 by aleriaza         ###   ########.fr       */
+/*   Updated: 2026/01/02 20:25:17 by aleriaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
+int	g_signal_received = 0;
+
+/* Free shell and exit */
 static void	cleanup_shell(t_shell *shell)
 {
-	if (!shell)
-		return ;
-	free_env(shell->env);
-	free(shell);
+	if (shell)
+	{
+		if (shell->env)
+			free_env(shell->env);
+		free(shell);
+	}
 }
 
 static t_shell	*init_shell(char **envp)
@@ -39,18 +44,21 @@ static t_shell	*init_shell(char **envp)
 
 static void	process_line(char *line, t_shell *shell)
 {
-	char **tokens;
-	
+	char		**segments;
+	t_pipeline	*pipeline;
+
 	if (!line || line[0] == '\0')
 		return ;
 	add_history(line);
-	tokens = tokenize_input(line);
-	if (!tokens)
+	segments = split_by_pipes(line);
+	if (!segments)
 		return ;
-	execute_command(tokens, shell);
-	free_array(tokens);
-	printf("You typed: %s\n", line);
-	(void)shell;
+	pipeline = create_pipeline(segments);
+	free_array(segments);
+	if (!pipeline)
+		return ;
+	run_pipeline(pipeline, shell);
+	free_pipeline(pipeline);
 }
 
 static void	shell_loop(t_shell *shell)

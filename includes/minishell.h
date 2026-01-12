@@ -6,7 +6,7 @@
 /*   By: aleriaza <aleriaza@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 15:43:33 by ariazano          #+#    #+#             */
-/*   Updated: 2025/12/30 13:52:50 by aleriaza         ###   ########.fr       */
+/*   Updated: 2026/01/02 20:44:42 by aleriaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ extern int	g_signal_received;
 # define YELLOW	"\033[0;33m"
 # define BLUE	"\033[1;34m"
 # define RESET	"\033[0m"
-
+/*
 // types of token |  &  ;  <  >  (  )  $  `  \  "  '  <space>  <tab>  <newline>
 typedef enum e_token_type
 {
@@ -57,7 +57,7 @@ typedef enum e_token_type
 //	T_THREE_OUT,
 //	T_IN_OUT,
 }			t_token_type;
-
+*/
 
 /* Shell context structure */
 typedef struct	s_shell
