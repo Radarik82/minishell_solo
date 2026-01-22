@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   env_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aleriaza <aleriaza@student.42wolfsburg.    +#+  +:+       +#+        */
+/*   By: dprudnik <dprudnik@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/25 16:30:39 by aleriaza          #+#    #+#             */
-/*   Updated: 2025/12/25 16:56:22 by aleriaza         ###   ########.fr       */
+/*   Updated: 2026/01/22 15:27:58 by dprudnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "minishell.h"
 
 /* Count environment variables */
 int	env_size(char **env)

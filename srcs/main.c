@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dprudnik <dprudnik@student.42wolfsburg.    +#+  +:+       +#+        */
+/*   By: dprudnik <dprudnik@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/25 16:06:23 by aleriaza          #+#    #+#             */
-/*   Updated: 2026/01/22 13:00:17 by dprudnik         ###   ########.fr       */
+/*   Updated: 2026/01/22 16:00:00 by dprudnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ int	main(int argc, char **argv, char **envp)
 	(void)argc;
 	(void)argv;
 	shell = init_shell(envp);
-	setup_signals();
+	// setup_signals();
 	shell_loop(shell);
 	cleanup_shell(shell);
 	return (0);

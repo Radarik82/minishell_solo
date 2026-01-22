@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aleriaza <aleriaza@student.42wolfsburg.    +#+  +:+       +#+        */
+/*   By: dprudnik <dprudnik@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/25 16:14:39 by aleriaza          #+#    #+#             */
-/*   Updated: 2025/12/25 16:56:14 by aleriaza         ###   ########.fr       */
+/*   Updated: 2026/01/22 15:55:49 by dprudnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#define _XOPEN_SOURCE 500
+#include "minishell.h"
 
 /* Global variable for signal handling */
 int	g_signal_received = 0;
