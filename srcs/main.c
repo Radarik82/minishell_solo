@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aleriaza <aleriaza@student.42wolfsburg.    +#+  +:+       +#+        */
+/*   By: dprudnik <dprudnik@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/25 16:06:23 by aleriaza          #+#    #+#             */
-/*   Updated: 2026/01/02 20:25:17 by aleriaza         ###   ########.fr       */
+/*   Updated: 2026/01/22 13:00:17 by dprudnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "minishell.h"
 
 int	g_signal_received = 0;
 
@@ -76,6 +76,7 @@ static void	shell_loop(t_shell *shell)
 		process_line(line, shell);
 		free(line);
 	}
+	rl_clear_history();//Added by denis (clears line history)
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -90,3 +91,4 @@ int	main(int argc, char **argv, char **envp)
 	cleanup_shell(shell);
 	return (0);
 }
+

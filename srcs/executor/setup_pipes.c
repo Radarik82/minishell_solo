@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   setup_pipes.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aleriaza <aleriaza@student.42wolfsburg.    +#+  +:+       +#+        */
+/*   By: dprudnik <dprudnik@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/12 16:36:06 by aleriaza          #+#    #+#             */
-/*   Updated: 2026/01/12 16:43:14 by aleriaza         ###   ########.fr       */
+/*   Updated: 2026/01/21 20:11:34 by dprudnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../../includes/minishell.h"
+# include "minishell.h"
 
 int create_pipe_fds(int *fd)
 {
