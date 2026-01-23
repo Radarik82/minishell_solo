@@ -6,7 +6,7 @@
 /*   By: dprudnik <dprudnik@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 15:43:33 by ariazano          #+#    #+#             */
-/*   Updated: 2026/01/20 17:42:28 by dprudnik         ###   ########.fr       */
+/*   Updated: 2026/01/23 15:07:02 by dprudnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,6 +130,29 @@ int		is_relative_path(char *str);
 void	free_array(char **arr);
 int		array_len(char **arr);
 char	*ft_strjoin_free(char *s1, char *s2);
+
+/* parse_pipeline.c*/
+int			is_empty_segment(char *segment);
+t_cmd		*create_cmd(char **args);
+void		free_cmd(t_cmd *cmd);
+t_pipeline	*create_pipeline(char **segments);
+void		free_pipeline(t_pipeline *pipeline);
+t_cmd		*parse_one_segment(char *segment);
+t_pipeline	*alloc_pipeline(int count);
+
+
+/* pipeline_utils.c*/
+
+
+/* split_pipes_utils.c*/
+char	**split_by_pipes(char *input);
+
+/* split_pipes.c */
+int		is_pipe(char c);
+int		count_pipes(char *str);
+int		find_pipe_pos(char *input, int start);
+char	*extract_segment(char *input, int start, int end);
+char	**split_by_pipes(char *input);
 
 /* tokenize.c */
 char	**tokenize_input(char *input);

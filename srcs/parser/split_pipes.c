@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   split_pipes.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aleriaza <aleriaza@student.42wolfsburg.    +#+  +:+       +#+        */
+/*   By: dprudnik <dprudnik@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/29 15:09:35 by aleriaza          #+#    #+#             */
-/*   Updated: 2026/01/12 16:34:47 by aleriaza         ###   ########.fr       */
+/*   Updated: 2026/01/23 15:02:31 by dprudnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "minishell.h"
 
 int	is_pipe(char c)
 {
