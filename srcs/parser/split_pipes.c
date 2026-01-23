@@ -6,7 +6,7 @@
 /*   By: dprudnik <dprudnik@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/29 15:09:35 by aleriaza          #+#    #+#             */
-/*   Updated: 2026/01/23 15:02:31 by dprudnik         ###   ########.fr       */
+/*   Updated: 2026/01/23 17:58:49 by dprudnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,6 @@ char	*extract_segment(char *input, int start, int end)
 	return (segment);
 }
 
-/*
 char	*get_next_segment(char *input, int *pos)
 {
 	int		start;
@@ -80,7 +79,6 @@ char	*get_next_segment(char *input, int *pos)
 	*pos = end + 1;
 	return (segment);
 }
-*/
 
 /* Split input string by pipe character */
 char	**split_by_pipes(char *input)

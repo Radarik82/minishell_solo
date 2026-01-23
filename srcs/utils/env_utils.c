@@ -6,11 +6,10 @@
 /*   By: dprudnik <dprudnik@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/25 16:30:39 by aleriaza          #+#    #+#             */
-/*   Updated: 2026/01/23 15:48:29 by dprudnik         ###   ########.fr       */
+/*   Updated: 2026/01/23 15:50:53 by dprudnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
 #include "minishell.h"
 
 /* Count environment variables */

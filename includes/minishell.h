@@ -6,7 +6,7 @@
 /*   By: dprudnik <dprudnik@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 15:43:33 by ariazano          #+#    #+#             */
-/*   Updated: 2026/01/23 15:07:02 by dprudnik         ###   ########.fr       */
+/*   Updated: 2026/01/23 18:27:01 by dprudnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,6 +119,9 @@ char	**split_path(char *path_env);
 int		is_executable(char *path);
 char	*join_path_cmd(char *dir, char *cmd);
 
+/* execute_pipes.c*/
+void	run_pipeline(t_pipeline *pipeline, t_shell *shell);
+
 /* execute.c */
 int		execute_command(char **args, t_shell *shell);
 int		fork_and_exec(char **args, t_shell *shell);
@@ -145,13 +148,14 @@ t_pipeline	*alloc_pipeline(int count);
 
 
 /* split_pipes_utils.c*/
-char	**split_by_pipes(char *input);
+// char	**split_by_pipes(char *input);
 
 /* split_pipes.c */
 int		is_pipe(char c);
 int		count_pipes(char *str);
 int		find_pipe_pos(char *input, int start);
 char	*extract_segment(char *input, int start, int end);
+char	*get_next_segment(char *input, int *pos);
 char	**split_by_pipes(char *input);
 
 /* tokenize.c */

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dprudnik <dprudnik@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dprudnik <dprudnik@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/25 16:14:39 by aleriaza          #+#    #+#             */
-/*   Updated: 2026/01/22 15:55:49 by dprudnik         ###   ########.fr       */
+/*   Updated: 2026/01/23 18:35:27 by dprudnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "minishell.h"
 
 /* Global variable for signal handling */
-int	g_signal_received = 0;
+// int	g_signal_received = 0;
 
 /* Handle SIGINT (Ctrl-C) in interactive mode */
 void	handle_sigint(int sig)
