@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dprudnik <dprudnik@student.42wolfsburg.    +#+  +:+       +#+        */
+/*   By: dprudnik <dprudnik@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 15:43:33 by ariazano          #+#    #+#             */
-/*   Updated: 2026/01/23 18:27:01 by dprudnik         ###   ########.fr       */
+/*   Updated: 2026/02/03 12:53:47 by dprudnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ extern int	g_signal_received;
 # define YELLOW	"\033[0;33m"
 # define BLUE	"\033[1;34m"
 # define RESET	"\033[0m"
-/*
+
 // types of token |  &  ;  <  >  (  )  $  `  \  "  '  <space>  <tab>  <newline>
 typedef enum e_token_type
 {
@@ -57,7 +57,6 @@ typedef enum e_token_type
 //	T_THREE_OUT,
 //	T_IN_OUT,
 }			t_token_type;
-*/
 
 /* Shell context structure */
 typedef struct	s_shell
@@ -97,6 +96,9 @@ typedef struct	s_token
 	struct s_token	*prev;
 }				t_token;
 */
+
+/* built_in_cmds.c*/
+void	check_builtin(char *arg);
 
 /* signals.c */
 void	setup_signals(void);
@@ -164,17 +166,6 @@ int		count_words(char *str);
 char	*extract_word(char *str, int start, int len);
 int		get_word_len(char *str, int start);
 int		is_space(char c);
-
-
-
-
-
-
-
-
-
-
-
 
 
 
