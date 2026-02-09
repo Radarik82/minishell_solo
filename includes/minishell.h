@@ -6,7 +6,7 @@
 /*   By: aleriaza <aleriaza@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 15:43:33 by ariazano          #+#    #+#             */
-/*   Updated: 2026/01/02 20:44:42 by aleriaza         ###   ########.fr       */
+/*   Updated: 2026/02/09 19:24:55 by aleriaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,14 +136,38 @@ char	**tokenize_input(char *input);
 int		count_words(char *str);
 char	*extract_word(char *str, int start, int len);
 int		get_word_len(char *str, int start);
+
+
+/* tokenize_utils.c */
+int	process_tokens(char *input, char **tokens);
 int		is_space(char c);
 
+/* split_pipes.c */
+int			is_pipe(char c);
+int			count_pipes(char *str);
+int			find_pipe_pos(char *input, int start);
+char		*extract_segment(char *input, int start, int end);
+char		**split_by_pipes(char *input);
+
+/* split_pipes_utils.c */
+int			process_segments(char *input, char **segments, int pipe_count);
+char		**split_by_pipes(char *input);
+t_pipeline	*create_pipeline(char **segments);
+
+/* parse_pipeline.c */
+void		free_cmd(t_cmd *cmd);
+t_pipeline	*create_pipeline(char **segments);
+void		free_pipeline(t_pipeline *pipeline);
+t_cmd		*parse_one_segment(char *segment);
+t_pipeline	*alloc_pipeline(int count);
+
+/* pipeline_utils.c */
+int			is_empty_segment(char *segment);
+t_cmd		*create_cmd(char **args);
 
 
-
-
-
-
+// int			run_pipeline(t_pipeline *pipeline, t_shell *shell);
+char		**tokenize_input(char *input);
 
 
 

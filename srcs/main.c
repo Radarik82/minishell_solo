@@ -6,7 +6,7 @@
 /*   By: aleriaza <aleriaza@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/25 16:06:23 by aleriaza          #+#    #+#             */
-/*   Updated: 2026/01/02 20:25:17 by aleriaza         ###   ########.fr       */
+/*   Updated: 2026/02/09 19:25:16 by aleriaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ static void	process_line(char *line, t_shell *shell)
 	free_array(segments);
 	if (!pipeline)
 		return ;
-	run_pipeline(pipeline, shell);
+	//run_pipeline(pipeline, shell);
 	free_pipeline(pipeline);
 }
 

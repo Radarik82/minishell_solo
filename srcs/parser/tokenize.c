@@ -6,16 +6,11 @@
 /*   By: aleriaza <aleriaza@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/25 17:20:08 by aleriaza          #+#    #+#             */
-/*   Updated: 2025/12/29 15:32:12 by aleriaza         ###   ########.fr       */
+/*   Updated: 2026/02/09 19:37:32 by aleriaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-int	is_space(char c)
-{
-	return (c == ' ' || c == '\t');
-}
 
 int	get_word_len(char *str, int start)
 {
@@ -72,26 +67,17 @@ char	**tokenize_input(char *input)
 {
 	char	**tokens;
 	int		word_count;
-	int		i;
-	int		j;
-	int		word_len;
 
+	if (!input)
+		return (NULL);
 	word_count = count_words(input);
 	tokens = malloc(sizeof(char *) * (word_count + 1));
 	if (!tokens)
 		return (NULL);
-	i = 0;
-	j = 0;
-	while (input[i])
+	if (process_tokens(input, tokens) == -1)
 	{
-		while (input[i] && is_space(input[i]))
-			i++;
-		if (!input[i])
-			break ;
-		word_len = get_word_len(input, i);
-		tokens[j++] = extract_word(input, i, word_len);
-		i += word_len;
+		free_array(tokens);
+		return (NULL);
 	}
-	tokens[j] = NULL;
 	return (tokens);
 }

@@ -1,42 +1,43 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipeline_utils.c                                   :+:      :+:    :+:   */
+/*   tokenize_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aleriaza <aleriaza@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/30 13:56:58 by aleriaza          #+#    #+#             */
-/*   Updated: 2026/02/09 19:39:18 by aleriaza         ###   ########.fr       */
+/*   Created: 2026/02/09 18:55:47 by aleriaza          #+#    #+#             */
+/*   Updated: 2026/02/09 19:37:31 by aleriaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	is_empty_segment(char *segment)
+int	is_space(char c)
 {
-	int	i;
-
-	if (!segment)
-		return (1);
-	i = 0;
-	while (segment[i])
-	{
-		if (!is_space(segment[i]))
-			return (0);
-		i++;
-	}
-	return (1);
+	return (c == ' ' || c == '\t');
 }
 
-t_cmd	*create_cmd(char **args)
+int	process_tokens(char *input, char **tokens)
 {
-	t_cmd	*cmd;
+	int	i;
+	int	j;
+	int	word_len;
 
-	if (!args)
-		return (NULL);
-	cmd = malloc(sizeof(t_cmd));
-	if (!cmd)
-		return (NULL);
-	cmd->args = args;
-	return (cmd);
+	i = 0;
+	j = 0;
+	while (input[i])
+	{
+		while (input[i] && is_space(input[i]))
+			i++;
+		if (!input[i])
+			break ;
+		word_len = get_word_len(input, i);
+		tokens[j] = extract_word(input, i, word_len);
+		if (!tokens[j])
+			return (-1);
+		j++;
+		i += word_len;
+	}
+	tokens[j] = NULL;
+	return (0);
 }
