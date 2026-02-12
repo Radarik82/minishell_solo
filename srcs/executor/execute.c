@@ -6,9 +6,11 @@
 /*   By: dprudnik <dprudnik@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/25 17:23:08 by aleriaza          #+#    #+#             */
-/*   Updated: 2026/01/20 14:37:24 by dprudnik         ###   ########.fr       */
+/*   Updated: 2026/02/05 16:30:32 by dprudnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+//ONLY WORKS WITHOUT PIPES FOR SINGLE EXECUTION!!!!!
 
 #include "minishell.h"
 

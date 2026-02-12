@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dprudnik <dprudnik@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dprudnik <dprudnik@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 15:43:33 by ariazano          #+#    #+#             */
-/*   Updated: 2026/02/03 12:53:47 by dprudnik         ###   ########.fr       */
+/*   Updated: 2026/02/12 16:43:02 by dprudnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,25 +58,34 @@ typedef enum e_token_type
 //	T_IN_OUT,
 }			t_token_type;
 
+typedef struct	s_fds
+{
+	int			*input_fd;
+	int			*output_fd;
+}				t_fds;
+
 /* Shell context structure */
 typedef struct	s_shell
 {
-	char			**env;
-	int				exit_status;
+	char		**env;
+	int			exit_status;
 }				t_shell;
 
 /* Command structure */
-typedef struct s_cmd
+typedef struct	s_cmd
 {
-	char	**args;
-}	t_cmd;
+	char		**args;
+	char		*infile;// NULL if nofile else name of file
+	char		*outfile;//NULL if nofile else name of file
+	int			append;//
+}				t_cmd;
 
 /* Pipeline structure */
-typedef struct s_pipeline
+typedef struct	s_pipeline
 {
-	t_cmd	**cmds;
-	int		cmd_count;
-}	t_pipeline;
+	t_cmd		**cmds;
+	int			cmd_count;
+}				t_pipeline;
 
 
 
@@ -98,7 +107,7 @@ typedef struct	s_token
 */
 
 /* built_in_cmds.c*/
-void	check_builtin(char *arg);
+void	is_builtin(char *arg);
 
 /* signals.c */
 void	setup_signals(void);
@@ -111,6 +120,7 @@ void	free_env(char **env);
 char	*get_env_var(char *name, char **env);
 
 /* errors.c */
+void	free_and_error(t_pipeline *pipeline, char *msg, int code);
 void	print_error(char *msg);
 void 	exit_error(char *msg, int code);
 
@@ -123,6 +133,7 @@ char	*join_path_cmd(char *dir, char *cmd);
 
 /* execute_pipes.c*/
 void	run_pipeline(t_pipeline *pipeline, t_shell *shell);
+void	run_pipeline_recursive(t_pipeline *pipeline, t_shell *shell, int current_index, int *input_fd);
 
 /* execute.c */
 int		execute_command(char **args, t_shell *shell);
@@ -145,7 +156,6 @@ void		free_pipeline(t_pipeline *pipeline);
 t_cmd		*parse_one_segment(char *segment);
 t_pipeline	*alloc_pipeline(int count);
 
-
 /* pipeline_utils.c*/
 
 
@@ -166,7 +176,5 @@ int		count_words(char *str);
 char	*extract_word(char *str, int start, int len);
 int		get_word_len(char *str, int start);
 int		is_space(char c);
-
-
 
 #endif

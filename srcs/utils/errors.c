@@ -6,11 +6,17 @@
 /*   By: dprudnik <dprudnik@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/25 16:33:54 by aleriaza          #+#    #+#             */
-/*   Updated: 2026/01/23 15:14:52 by dprudnik         ###   ########.fr       */
+/*   Updated: 2026/02/12 15:19:45 by dprudnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	free_and_error(t_pipeline *pipeline, char *msg, int code)
+{
+	free_pipeline(pipeline);
+	exit_error(msg, code);
+}
 
 void	print_error(char *msg)
 {
