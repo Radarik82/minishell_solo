@@ -6,7 +6,7 @@
 /*   By: dprudnik <dprudnik@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/03 12:10:44 by dprudnik          #+#    #+#             */
-/*   Updated: 2026/02/11 22:28:31 by dprudnik         ###   ########.fr       */
+/*   Updated: 2026/02/14 11:06:59 by dprudnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,3 +50,30 @@ void	exit_cmd(t_pipeline *pipeline)
 	free_pipeline(pipeline);
 	exit(0) ;
 }
+
+int	execute_builtin(t_pipeline *pipeline, t_shell *shell)
+{
+	if (pipeline->cmds[0]->infile)
+
+
+}
+int	execute_builtin_with_redirection(t_cmd *cmd)
+{
+	int	saved_stdin;
+	int	saved_stdout;
+
+	if (save_std_fds(&saved_stdin, &saved_stdout) == -1)
+		return (1);
+
+	if (apply_redirections(cmd) == -1)
+	{
+		restore_std_fds(saved_stdin, saved_stdout);
+		return (1);
+	}
+
+	exec_builtin(cmd);
+
+	restore_std_fds(saved_stdin, saved_stdout);
+	return (0);
+}
+

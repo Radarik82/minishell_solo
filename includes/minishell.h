@@ -6,7 +6,7 @@
 /*   By: dprudnik <dprudnik@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 15:43:33 by ariazano          #+#    #+#             */
-/*   Updated: 2026/02/12 16:43:02 by dprudnik         ###   ########.fr       */
+/*   Updated: 2026/02/14 11:05:40 by dprudnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ typedef struct	s_cmd
 	char		**args;
 	char		*infile;// NULL if nofile else name of file
 	char		*outfile;//NULL if nofile else name of file
-	int			append;//
+	int			append;// if 1 append to last arg
 }				t_cmd;
 
 /* Pipeline structure */
@@ -107,11 +107,17 @@ typedef struct	s_token
 */
 
 /* built_in_cmds.c*/
-void	is_builtin(char *arg);
+int		is_builtin(char *arg);
 
 /* signals.c */
 void	setup_signals(void);
 void	handle_sigint(int sig);
+
+/* env_mod_utils.c*/
+char	*create_env_var(char *key, char *value);
+int		find_env_index(char **env, char *key);
+int		add_env_var(char ***env, char *new_var);
+int		update_env(char ***env, char *key, char *value);
 
 /* env_utils.c */
 int		env_size(char **env);
@@ -120,9 +126,9 @@ void	free_env(char **env);
 char	*get_env_var(char *name, char **env);
 
 /* errors.c */
-void	free_and_error(t_pipeline *pipeline, char *msg, int code);
+void	free_and_error(t_pipeline *pipeline, t_shell *shell, char *msg, int code);
 void	print_error(char *msg);
-void 	exit_error(char *msg, int code);
+void	exit_error(char *msg, int code);
 
 /* find_path.c */
 char	*find_command(char *cmd, char **env);
@@ -130,6 +136,12 @@ char	*get_path_env(char **env);
 char	**split_path(char *path_env);
 int		is_executable(char *path);
 char	*join_path_cmd(char *dir, char *cmd);
+
+/* redirections.c*/
+int		handle_input_redirection(char *infile);
+int		handle_output_redirection(const char *outfile, int append);
+int		save_std_fds(int *saved_stdin, int *saved_stdout);
+void	restore_std_fds(int saved_stdin, int saved_stdout);
 
 /* execute_pipes.c*/
 void	run_pipeline(t_pipeline *pipeline, t_shell *shell);

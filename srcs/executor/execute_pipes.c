@@ -6,7 +6,7 @@
 /*   By: dprudnik <dprudnik@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/12 16:43:43 by aleriaza          #+#    #+#             */
-/*   Updated: 2026/02/12 16:38:37 by dprudnik         ###   ########.fr       */
+/*   Updated: 2026/02/14 12:10:03 by dprudnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,75 +39,49 @@ void	command_readout(t_pipeline *pipeline, t_shell *shell)//DEBUG ONLY!!!
 	printf("\n");
 }
 
+int	setup_pipes(int ***fds, t_pipeline *pipeline)
+{
+
+	*fds = malloc(sizeof(*fds) * pipeline->cmd_count - 1);
+	if (!*fds)
+		return (-1);
+}
+
 void	run_pipeline(t_pipeline *pipeline, t_shell *shell)
 {
-	// command_readout(pipeline, shell);
-	run_pipeline_recursive(pipeline, shell, 0, NULL);
+	int	**fds;
+
+	if (pipeline->cmd_count == 1 && is_builtin(pipeline->cmds[0]->args[0]))
+	{
+		execute_builtin(pipeline, shell);
+		return ;
+	}
+
+	if (setup_pipes(&fds, pipeline) == -1)
+		free_and_error(pipeline, shell, "Pipes error", 1);
+	command_readout(pipeline, shell);
 }
+//run_pipeline_recursive(pipeline, shell, 0, NULL);
 
-int	handle_input_redirection(char *infile)
-{
-	int	infile_fd;
 
-	infile_fd = open(infile, O_RDONLY);
-	if (infile_fd == -1)
-	{
-		perror("open infile");
-		return -1;
-	}
-	if (dup2(infile_fd, STDIN_FILENO) == -1)
-	{
-		perror("dup2 input");
-		close(infile_fd);
-		return -1;
-	}
-	close(infile_fd);
-	return 0;
-}
-
-int handle_output_redirection(const char *outfile, int append)
-{
-	int	flags;
-	int	outfile_fd;
-
-	flags = O_WRONLY | O_CREAT;
-	if (append)
-		flags |= O_APPEND;
-	else
-		flags |= O_TRUNC;
-	outfile_fd = open(outfile, flags, 0644);
-	if (outfile_fd == -1)
-	{
-		perror("open outfile");
-		return -1;
-	}
-	if (dup2(outfile_fd, STDOUT_FILENO) == -1)
-	{
-		perror("dup2 output");
-		close(outfile_fd);
-		return -1;
-	}
-	close(outfile_fd);
-	return 0;
-}
 
 void exec_cmd(t_pipeline *pipeline, t_cmd *cmd, t_fds *fds, t_shell *shell)
 {
 	pid_t pid = fork();
 
 	if (pid == -1)
-		free_and_error(pipeline, "Fork Error", 1);
+		free_and_error(pipeline, shell, "Fork Error", 1);
 	if (pid == 0) // Child process
 	{
 		if (cmd->infile)
 		{
 			if (handle_input_redirection(cmd->infile) == -1)
-				free_and_error(pipeline, "Redir Error", 2);
+				free_and_error(pipeline, shell, "Redir Error", 2);
 		}
 		if (cmd->outfile)
 		{
 			if (handle_output_redirection(cmd->outfile, cmd->append) == -1)
-				free_and_error(pipeline, "Redir Error", 3);
+				free_and_error(pipeline, shell, "Redir Error", 3);
 		}
 		if (fds->input_fd)
 		{
@@ -121,7 +95,7 @@ void exec_cmd(t_pipeline *pipeline, t_cmd *cmd, t_fds *fds, t_shell *shell)
 		}
 		char *cmd_path = cmd->args[0]; // Use the command name (e.g., "cat", "grep", etc.)
 		if (execve(cmd_path, cmd->args, shell->env) == -1)
-			free_and_error(pipeline, "Execve Error", 4);
+			free_and_error(pipeline, shell, "Execve Error", 4);
 	}
 }
 

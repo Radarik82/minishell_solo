@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dprudnik <dprudnik@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dprudnik <dprudnik@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/25 16:06:23 by aleriaza          #+#    #+#             */
-/*   Updated: 2026/01/22 16:00:00 by dprudnik         ###   ########.fr       */
+/*   Updated: 2026/02/13 19:58:48 by dprudnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ static void	process_line(char *line, t_shell *shell)
 	free_array(segments);
 	if (!pipeline)
 		return ;
-	run_pipeline(pipeline, shell);
+	run_pipeline(pipeline, shell);// Execution point.
 	free_pipeline(pipeline);
 }
 
@@ -76,7 +76,6 @@ static void	shell_loop(t_shell *shell)
 		process_line(line, shell);
 		free(line);
 	}
-	rl_clear_history();//Added by denis (clears line history)
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -91,4 +90,3 @@ int	main(int argc, char **argv, char **envp)
 	cleanup_shell(shell);
 	return (0);
 }
-
