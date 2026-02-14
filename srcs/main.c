@@ -6,7 +6,7 @@
 /*   By: dprudnik <dprudnik@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/25 16:06:23 by aleriaza          #+#    #+#             */
-/*   Updated: 2026/02/13 19:58:48 by dprudnik         ###   ########.fr       */
+/*   Updated: 2026/02/14 16:20:59 by dprudnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ static void	shell_loop(t_shell *shell)
 
 	while (1)
 	{
+		setup_signals();
 		line = readline("minishell> ");
 		if (!line)
 		{

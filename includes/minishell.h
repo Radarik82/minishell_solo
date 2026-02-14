@@ -6,7 +6,7 @@
 /*   By: dprudnik <dprudnik@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 15:43:33 by ariazano          #+#    #+#             */
-/*   Updated: 2026/02/14 11:05:40 by dprudnik         ###   ########.fr       */
+/*   Updated: 2026/02/14 17:29:05 by dprudnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,9 +75,11 @@ typedef struct	s_shell
 typedef struct	s_cmd
 {
 	char		**args;
-	char		*infile;// NULL if nofile else name of file
-	char		*outfile;//NULL if nofile else name of file
-	int			append;// if 1 append to last arg
+	int			input_count;
+	char		**input_files;   // Array of input files
+	int			output_count;
+	char		**output_files;  // Array of output files
+	int			*append_flags;   // Array of append flags for each output
 }				t_cmd;
 
 /* Pipeline structure */
@@ -106,12 +108,20 @@ typedef struct	s_token
 }				t_token;
 */
 
-/* built_in_cmds.c*/
+/* builtin_cmds.c*/
+int		exec_cd(char *path);
+void	exec_exit(t_pipeline *pipeline, t_shell *shell);
+
+/* builtin_utils.c*/
 int		is_builtin(char *arg);
+int		execute_builtin(t_pipeline *pipeline, t_shell *shell);
+// int		execute_builtin_with_redirection(t_cmd *cmd);
+
 
 /* signals.c */
 void	setup_signals(void);
 void	handle_sigint(int sig);
+void	setup_tmp_signals(void);
 
 /* env_mod_utils.c*/
 char	*create_env_var(char *key, char *value);
@@ -145,7 +155,7 @@ void	restore_std_fds(int saved_stdin, int saved_stdout);
 
 /* execute_pipes.c*/
 void	run_pipeline(t_pipeline *pipeline, t_shell *shell);
-void	run_pipeline_recursive(t_pipeline *pipeline, t_shell *shell, int current_index, int *input_fd);
+// void		run_pipeline_recursive(t_pipeline *pipeline, t_shell *shell, int current_index, int *input_fd);
 
 /* execute.c */
 int		execute_command(char **args, t_shell *shell);

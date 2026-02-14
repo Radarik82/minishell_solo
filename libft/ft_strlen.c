@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ariazano <ariazano@student.42wolfsburg.    +#+  +:+       +#+        */
+/*   By: dprudnik <dprudnik@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 11:05:50 by ariazano          #+#    #+#             */
-/*   Updated: 2023/11/21 00:20:55 by ariazano         ###   ########.fr       */
+/*   Updated: 2026/02/14 14:02:13 by dprudnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

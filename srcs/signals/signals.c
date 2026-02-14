@@ -6,7 +6,7 @@
 /*   By: dprudnik <dprudnik@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/25 16:14:39 by aleriaza          #+#    #+#             */
-/*   Updated: 2026/01/23 18:35:27 by dprudnik         ###   ########.fr       */
+/*   Updated: 2026/02/14 17:28:48 by dprudnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,4 +43,15 @@ void	setup_signals(void)
 	sa_quit.sa_handler = SIG_IGN;
 	sa_quit.sa_flags = 0;
 	sigaction(SIGQUIT, &sa_quit, NULL);
+}
+
+void	setup_tmp_signals(void)
+{
+	struct sigaction	sa_ignore;
+	struct sigaction	sa_old;
+
+	sa_ignore.sa_handler = SIG_IGN;
+	sigemptyset(&sa_ignore.sa_mask);
+	sa_ignore.sa_flags = 0;
+	sigaction(SIGINT, &sa_ignore, &sa_old);
 }
