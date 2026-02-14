@@ -6,7 +6,7 @@
 /*   By: dprudnik <dprudnik@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 15:43:33 by ariazano          #+#    #+#             */
-/*   Updated: 2026/02/14 17:29:05 by dprudnik         ###   ########.fr       */
+/*   Updated: 2026/02/14 22:35:26 by dprudnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,12 +109,18 @@ typedef struct	s_token
 */
 
 /* builtin_cmds.c*/
+int		exec_echo(char **args);
+int		is_valid_n_flag(char *arg);
 int		exec_cd(char *path);
-void	exec_exit(t_pipeline *pipeline, t_shell *shell);
+int		exec_exit(t_pipeline *p, t_cmd *cmd, t_shell *shell);
+int		exec_env(t_shell *shell);
+
+/* builtin_cmds_2.c*/
+
 
 /* builtin_utils.c*/
 int		is_builtin(char *arg);
-int		execute_builtin(t_pipeline *pipeline, t_shell *shell);
+int		execute_builtin(t_pipeline *p, t_cmd *cmd, t_shell *shell);
 // int		execute_builtin_with_redirection(t_cmd *cmd);
 
 

@@ -6,7 +6,7 @@
 /*   By: dprudnik <dprudnik@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/12 16:43:43 by aleriaza          #+#    #+#             */
-/*   Updated: 2026/02/14 14:06:53 by dprudnik         ###   ########.fr       */
+/*   Updated: 2026/02/14 22:32:46 by dprudnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	run_pipeline(t_pipeline *pipeline, t_shell *shell)
 
 	if (pipeline->cmd_count == 1 && is_builtin(pipeline->cmds[0]->args[0]))
 	{
-		execute_builtin(pipeline, shell);
+		execute_builtin(pipeline, pipeline->cmds[0], shell);
 		return ;
 	}
 	if (pipeline->cmd_count == 1)// Temporary Only for single extern arg with no redirections
@@ -100,15 +100,10 @@ void	run_pipeline(t_pipeline *pipeline, t_shell *shell)
 // 	wait(NULL);
 // }
 
-void	command_readout(t_pipeline *pipeline, t_shell *shell)//DEBUG ONLY!!!
+void	command_readout(t_pipeline *pipeline)//DEBUG ONLY!!!
 {
-	int	i = 0;
+	int	i;
 
-	while (shell->env[i])
-	{
-		printf("%s\n", shell->env[i]);
-		i++;
-	}
 	i = 0;
 	while (pipeline->cmds[i])
 	{

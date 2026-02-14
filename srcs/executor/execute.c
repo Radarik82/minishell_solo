@@ -6,7 +6,7 @@
 /*   By: dprudnik <dprudnik@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/25 17:23:08 by aleriaza          #+#    #+#             */
-/*   Updated: 2026/02/14 17:29:39 by dprudnik         ###   ########.fr       */
+/*   Updated: 2026/02/14 21:21:27 by dprudnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,8 @@ void	execute_child(char **args, char **env)
 
 int	fork_and_exec(char **args, t_shell *shell)
 {
-	pid_t				pid;
-	int					status;
+	pid_t	pid;
+	int		status;
 
 	setup_tmp_signals();
 	pid = fork();
