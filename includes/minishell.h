@@ -6,7 +6,7 @@
 /*   By: dprudnik <dprudnik@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 15:43:33 by ariazano          #+#    #+#             */
-/*   Updated: 2026/02/14 22:35:26 by dprudnik         ###   ########.fr       */
+/*   Updated: 2026/02/16 11:21:05 by dprudnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,8 @@ typedef enum e_token_type
 
 typedef struct	s_fds
 {
-	int			*input_fd;
-	int			*output_fd;
+	int		prev_fds[2];
+	int		curr_fds[2];
 }				t_fds;
 
 /* Shell context structure */
@@ -107,6 +107,18 @@ typedef struct	s_token
 	struct s_token	*prev;
 }				t_token;
 */
+
+/* pipe_setup.c*/
+int		setup_pipe(t_pipeline *p, t_fds *fds, int count);
+pid_t	fork_loop(t_pipeline *pipeline, int *count);
+int		check_and_exec(char **args, t_shell *shell);
+
+/* pipe_utils.c*/
+int		create_pipe_fds(int *fd);
+void	close_pipe_fds(int *fd);
+void	setup_input_pipe(int *fd);
+void	setup_output_pipe(int *fd);
+void	close_unused_pipes(int *prev_fd, int *curr_fd);
 
 /* builtin_cmds.c*/
 int		exec_echo(char **args);
@@ -161,6 +173,7 @@ void	restore_std_fds(int saved_stdin, int saved_stdout);
 
 /* execute_pipes.c*/
 void	run_pipeline(t_pipeline *pipeline, t_shell *shell);
+int		execute_multi_cmds(t_pipeline *p, t_shell *shell);
 // void		run_pipeline_recursive(t_pipeline *pipeline, t_shell *shell, int current_index, int *input_fd);
 
 /* execute.c */

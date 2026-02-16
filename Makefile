@@ -20,7 +20,8 @@ SRCS =	srcs/main.c \
 		srcs/executor/execute.c \
 		srcs/executor/find_path.c \
 		srcs/executor/redirections.c \
-		srcs/executor/setup_pipes.c \
+		srcs/executor/pipe_setup.c \
+		srcs/executor/pipe_utils.c \
 		srcs/parser/tokenize.c \
 		srcs/parser/split_pipes.c \
 		srcs/parser/split_pipes_utils.c \

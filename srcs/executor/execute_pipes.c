@@ -6,7 +6,7 @@
 /*   By: dprudnik <dprudnik@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/12 16:43:43 by aleriaza          #+#    #+#             */
-/*   Updated: 2026/02/14 22:32:46 by dprudnik         ###   ########.fr       */
+/*   Updated: 2026/02/16 11:56:25 by dprudnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,22 +14,73 @@
 
 void	run_pipeline(t_pipeline *pipeline, t_shell *shell)
 {
-	// int	**fds;
-
 	if (pipeline->cmd_count == 1 && is_builtin(pipeline->cmds[0]->args[0]))
-	{
 		execute_builtin(pipeline, pipeline->cmds[0], shell);
-		return ;
-	}
-	if (pipeline->cmd_count == 1)// Temporary Only for single extern arg with no redirections
-	{
+	else if (pipeline->cmd_count == 1)// Only for single extern arg to bypass pipecreation
 		execute_command(pipeline->cmds[0]->args, shell);
-		return ;
-	}
-	// if (setup_pipes(&fds, pipeline) == -1)
-	// 	free_and_error(pipeline, shell, "Pipes error", 1);
+	else
+		execute_multi_cmds(pipeline, shell);
+	return ;
 	// command_readout(pipeline, shell);//Debug Only
 }
+
+int	execute_multi_cmds(t_pipeline *p, t_shell *shell)
+{
+	pid_t	pid;
+	int		status;
+	int		count;
+
+	count = 0;
+	setup_tmp_signals();
+	pid = fork_loop(p, &count);
+	if (pid == -1)
+		exit_error("Fork error", 122);
+	if (pid == 0)
+		status = check_and_exec(p->cmds[count]->args, shell);
+	waitpid(pid, &status, 0);
+	if (WIFSIGNALED(status))
+	{
+		if (WTERMSIG(status) == SIGQUIT)
+			printf("Quit (core dumped)\n");
+		else if (WTERMSIG(status) == SIGINT)
+			printf("\n");
+	}
+	setup_signals();
+	if (WIFEXITED(status))
+		return (WEXITSTATUS(status));
+	return (1);
+}
+/* ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+might need to add middle function instead of running just
+execute_child to check validity of args like execute_command()
+also need handling of redirs
+*/
+
+void	command_readout(t_pipeline *pipeline)//DEBUG ONLY!!!
+{
+	int	i;
+
+	i = 0;
+	while (pipeline->cmds[i])
+	{
+		int	j = 0;
+		while (pipeline->cmds[i]->args[j])
+		{
+			printf("* ");
+			printf("%s ", pipeline->cmds[i]->args[j]);
+			printf("* ");
+			j++;
+		}
+		if (pipeline->cmds[i + 1])
+			printf(RED"| "RESET);
+		i++;
+	}
+	printf("\n");
+}
+
+
+
+
 
 // int	setup_pipes(int ***fds, t_pipeline *pipeline)
 // {
@@ -100,24 +151,3 @@ void	run_pipeline(t_pipeline *pipeline, t_shell *shell)
 // 	wait(NULL);
 // }
 
-void	command_readout(t_pipeline *pipeline)//DEBUG ONLY!!!
-{
-	int	i;
-
-	i = 0;
-	while (pipeline->cmds[i])
-	{
-		int	j = 0;
-		while (pipeline->cmds[i]->args[j])
-		{
-			printf("* ");
-			printf("%s ", pipeline->cmds[i]->args[j]);
-			printf("* ");
-			j++;
-		}
-		if (pipeline->cmds[i + 1])
-			printf(RED"| "RESET);
-		i++;
-	}
-	printf("\n");
-}
