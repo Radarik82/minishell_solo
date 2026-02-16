@@ -6,7 +6,7 @@
 /*   By: dprudnik <dprudnik@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 15:43:33 by ariazano          #+#    #+#             */
-/*   Updated: 2026/02/16 11:21:05 by dprudnik         ###   ########.fr       */
+/*   Updated: 2026/02/16 13:20:55 by dprudnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,15 @@ typedef struct	s_pipeline
 	t_cmd		**cmds;
 	int			cmd_count;
 }				t_pipeline;
+
+typedef struct	s_exec
+{
+	t_pipeline	*p;
+	t_shell		*shell;
+	int			i;
+	int			prev_fd;
+	int			pipefd[2];
+}				t_exec;
 
 
 

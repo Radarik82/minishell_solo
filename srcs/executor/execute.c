@@ -6,7 +6,7 @@
 /*   By: dprudnik <dprudnik@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/25 17:23:08 by aleriaza          #+#    #+#             */
-/*   Updated: 2026/02/16 11:42:51 by dprudnik         ###   ########.fr       */
+/*   Updated: 2026/02/16 13:29:37 by dprudnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	execute_child(char **args, char **env)
 		cmd_path = find_command(args[0], env);
 	if (!cmd_path)
 	{
-		print_error("aaaaah! command not found");
+		print_error("command not found");
 		exit(127);
 	}
 	signal(SIGINT, SIG_DFL);

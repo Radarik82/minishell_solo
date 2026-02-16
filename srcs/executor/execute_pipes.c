@@ -6,7 +6,7 @@
 /*   By: dprudnik <dprudnik@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/12 16:43:43 by aleriaza          #+#    #+#             */
-/*   Updated: 2026/02/16 11:56:25 by dprudnik         ###   ########.fr       */
+/*   Updated: 2026/02/16 13:29:10 by dprudnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,130 +24,64 @@ void	run_pipeline(t_pipeline *pipeline, t_shell *shell)
 	// command_readout(pipeline, shell);//Debug Only
 }
 
-int	execute_multi_cmds(t_pipeline *p, t_shell *shell)
+static int	handle_parent(t_exec *exec)
 {
-	pid_t	pid;
-	int		status;
-	int		count;
-
-	count = 0;
-	setup_tmp_signals();
-	pid = fork_loop(p, &count);
-	if (pid == -1)
-		exit_error("Fork error", 122);
-	if (pid == 0)
-		status = check_and_exec(p->cmds[count]->args, shell);
-	waitpid(pid, &status, 0);
-	if (WIFSIGNALED(status))
+	if (exec->prev_fd != -1)
+		close(exec->prev_fd);
+	if (exec->i < exec->p->cmd_count - 1)
 	{
-		if (WTERMSIG(status) == SIGQUIT)
-			printf("Quit (core dumped)\n");
-		else if (WTERMSIG(status) == SIGINT)
-			printf("\n");
+		close(exec->pipefd[1]);
+		return (exec->pipefd[0]);
 	}
-	setup_signals();
-	if (WIFEXITED(status))
-		return (WEXITSTATUS(status));
-	return (1);
+	return (-1);
 }
-/* ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-might need to add middle function instead of running just
-execute_child to check validity of args like execute_command()
-also need handling of redirs
-*/
 
-void	command_readout(t_pipeline *pipeline)//DEBUG ONLY!!!
+static void	exec_child(t_exec *exec)
+{
+	if (exec->prev_fd != -1)
+		dup2(exec->prev_fd, STDIN_FILENO);
+	if (exec->i < exec->p->cmd_count - 1)
+		dup2(exec->pipefd[1], STDOUT_FILENO);
+	if (exec->prev_fd != -1)
+		close(exec->prev_fd);
+	if (exec->i < exec->p->cmd_count - 1)
+	{
+		close(exec->pipefd[0]);
+		close(exec->pipefd[1]);
+	}
+	execute_child(exec->p->cmds[exec->i]->args,
+		exec->shell->env);
+}
+
+static void	wait_children(int cmd_count)
 {
 	int	i;
 
 	i = 0;
-	while (pipeline->cmds[i])
+	while (i < cmd_count)
 	{
-		int	j = 0;
-		while (pipeline->cmds[i]->args[j])
-		{
-			printf("* ");
-			printf("%s ", pipeline->cmds[i]->args[j]);
-			printf("* ");
-			j++;
-		}
-		if (pipeline->cmds[i + 1])
-			printf(RED"| "RESET);
+		wait(NULL);
 		i++;
 	}
-	printf("\n");
 }
 
+int	execute_multi_cmds(t_pipeline *p, t_shell *shell)
+{
+	t_exec	exec;
 
-
-
-
-// int	setup_pipes(int ***fds, t_pipeline *pipeline)
-// {
-
-// 	*fds = malloc(sizeof(*fds) * pipeline->cmd_count - 1);
-// 	if (!*fds)
-// 		return (-1);
-// }
-
-// void exec_cmd(t_pipeline *pipeline, t_cmd *cmd, t_fds *fds, t_shell *shell)
-// {
-// 	pid_t pid = fork();
-
-// 	if (pid == -1)
-// 		free_and_error(pipeline, shell, "Fork Error", 1);
-// 	if (pid == 0) // Child process
-// 	{
-// 		if (cmd->infile)
-// 		{
-// 			if (handle_input_redirection(cmd->infile) == -1)
-// 				free_and_error(pipeline, shell, "Redir Error", 2);
-// 		}
-// 		if (cmd->outfile)
-// 		{
-// 			if (handle_output_redirection(cmd->outfile, cmd->append) == -1)
-// 				free_and_error(pipeline, shell, "Redir Error", 3);
-// 		}
-// 		if (fds->input_fd)
-// 		{
-// 			dup2(fds->input_fd[0], STDIN_FILENO);  // Set stdin to the read end of the previous pipe
-// 			close(fds->input_fd[0]);
-// 		}
-// 		if (fds->output_fd)
-// 		{
-// 			dup2(fds->output_fd[1], STDOUT_FILENO);  // Set stdout to the write end of the current pipe
-// 			close(fds->output_fd[1]);
-// 		}
-// 		char *cmd_path = cmd->args[0]; // Use the command name (e.g., "cat", "grep", etc.)
-// 		if (execve(cmd_path, cmd->args, shell->env) == -1)
-// 			free_and_error(pipeline, shell, "Execve Error", 4);
-// 	}
-// }
-
-// void run_pipeline_recursive(t_pipeline *pipeline, t_shell *shell, int current_index, int *input_fd)
-// {
-// 	t_cmd	*cmd;
-// 	t_fds	fds;
-// 	int		pipe_fds[2];
-
-// 	if (current_index >= pipeline->cmd_count)
-// 		return;
-// 	fds.input_fd = input_fd;
-// 	cmd = pipeline->cmds[current_index];
-// 	if (current_index < pipeline->cmd_count - 1)
-// 	{
-// 		if (pipe(pipe_fds) == -1)
-// 			return;
-// 		fds.output_fd = pipe_fds;
-// 	}
-// 	exec_cmd(pipeline, cmd, &fds, shell);
-// 	if (fds.output_fd)
-// 	{
-// 		close(pipe_fds[1]);
-// 		run_pipeline_recursive(pipeline, shell, current_index + 1, pipe_fds);
-// 	}
-// 	else
-// 		run_pipeline_recursive(pipeline, shell, current_index + 1, NULL);
-// 	wait(NULL);
-// }
-
+	exec.p = p;
+	exec.shell = shell;
+	exec.i = 0;
+	exec.prev_fd = -1;
+	while (exec.i < p->cmd_count)
+	{
+		if (exec.i < p->cmd_count - 1)
+			pipe(exec.pipefd);
+		if (fork() == 0)
+			exec_child(&exec);
+		exec.prev_fd = handle_parent(&exec);
+		exec.i++;
+	}
+	wait_children(p->cmd_count);
+	return (0);
+}
