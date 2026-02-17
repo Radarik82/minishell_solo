@@ -6,7 +6,7 @@
 /*   By: dprudnik <dprudnik@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 10:53:24 by dprudnik          #+#    #+#             */
-/*   Updated: 2026/02/14 11:05:48 by dprudnik         ###   ########.fr       */
+/*   Updated: 2026/02/16 20:27:22 by dprudnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,4 +82,28 @@ void	restore_std_fds(int saved_stdin, int saved_stdout)
 		dup2(saved_stdout, STDOUT_FILENO);
 		close(saved_stdout);
 	}
+}
+
+
+
+
+/* TEMPORARY not for production!!*/
+int	execute_builtin_with_redirection(t_cmd *cmd)
+{
+	int	saved_stdin;
+	int	saved_stdout;
+
+	if (save_std_fds(&saved_stdin, &saved_stdout) == -1)
+		return (1);
+
+	if (apply_redirections(cmd) == -1)
+	{
+		restore_std_fds(saved_stdin, saved_stdout);
+		return (1);
+	}
+
+	exec_builtin(cmd);
+
+	restore_std_fds(saved_stdin, saved_stdout);
+	return (0);
 }

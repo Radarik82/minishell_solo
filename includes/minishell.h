@@ -6,7 +6,7 @@
 /*   By: dprudnik <dprudnik@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 15:43:33 by ariazano          #+#    #+#             */
-/*   Updated: 2026/02/16 13:20:55 by dprudnik         ###   ########.fr       */
+/*   Updated: 2026/02/16 21:50:01 by dprudnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,12 +57,6 @@ typedef enum e_token_type
 //	T_THREE_OUT,
 //	T_IN_OUT,
 }			t_token_type;
-
-typedef struct	s_fds
-{
-	int		prev_fds[2];
-	int		curr_fds[2];
-}				t_fds;
 
 /* Shell context structure */
 typedef struct	s_shell
@@ -118,9 +112,6 @@ typedef struct	s_token
 */
 
 /* pipe_setup.c*/
-int		setup_pipe(t_pipeline *p, t_fds *fds, int count);
-pid_t	fork_loop(t_pipeline *pipeline, int *count);
-int		check_and_exec(char **args, t_shell *shell);
 
 /* pipe_utils.c*/
 int		create_pipe_fds(int *fd);

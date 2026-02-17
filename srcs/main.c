@@ -6,7 +6,7 @@
 /*   By: dprudnik <dprudnik@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/25 16:06:23 by aleriaza          #+#    #+#             */
-/*   Updated: 2026/02/16 13:42:03 by dprudnik         ###   ########.fr       */
+/*   Updated: 2026/02/16 20:08:20 by dprudnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ static void	shell_loop(t_shell *shell)
 	while (1)
 	{
 		setup_signals();
-		line = readline(BLUE"minishell> "RESET);
+		line = readline(GREEN"minishell> "RESET);
 		if (!line)
 		{
 			printf("exit\n");

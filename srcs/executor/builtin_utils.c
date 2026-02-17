@@ -6,7 +6,7 @@
 /*   By: dprudnik <dprudnik@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 13:05:52 by dprudnik          #+#    #+#             */
-/*   Updated: 2026/02/14 22:35:40 by dprudnik         ###   ########.fr       */
+/*   Updated: 2026/02/16 20:26:38 by dprudnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,23 +52,4 @@ int	execute_builtin(t_pipeline *p, t_cmd *cmd, t_shell *shell)
 	return (1);
 }
 
-// int	execute_builtin_with_redirection(t_cmd *cmd)
-// {
-// 	int	saved_stdin;
-// 	int	saved_stdout;
-
-// 	if (save_std_fds(&saved_stdin, &saved_stdout) == -1)
-// 		return (1);
-
-// 	if (apply_redirections(cmd) == -1)
-// 	{
-// 		restore_std_fds(saved_stdin, saved_stdout);
-// 		return (1);
-// 	}
-
-// 	exec_builtin(cmd);
-
-// 	restore_std_fds(saved_stdin, saved_stdout);
-// 	return (0);
-// }
 
