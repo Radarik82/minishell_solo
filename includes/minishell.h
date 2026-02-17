@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dprudnik <dprudnik@student.42wolfsburg.    +#+  +:+       +#+        */
+/*   By: dprudnik <dprudnik@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 15:43:33 by ariazano          #+#    #+#             */
-/*   Updated: 2026/02/16 21:50:01 by dprudnik         ###   ########.fr       */
+/*   Updated: 2026/02/17 12:57:00 by dprudnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ typedef struct	s_cmd
 {
 	char		**args;
 	int			input_count;
+	
 	char		**input_files;   // Array of input files
 	int			output_count;
 	char		**output_files;  // Array of output files

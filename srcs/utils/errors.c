@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   errors.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dprudnik <dprudnik@student.42wolfsburg.    +#+  +:+       +#+        */
+/*   By: dprudnik <dprudnik@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/25 16:33:54 by aleriaza          #+#    #+#             */
-/*   Updated: 2026/02/13 19:37:29 by dprudnik         ###   ########.fr       */
+/*   Updated: 2026/02/17 18:01:39 by dprudnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ void	free_and_error(t_pipeline *pipeline, t_shell *shell, char *msg, int code)
 	{
 		if (shell->env)
 			free_env(shell->env);
-		free(shell);
 	}
 	exit_error(msg, code);
 }
