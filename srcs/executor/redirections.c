@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dprudnik <dprudnik@student.42wolfsburg.    +#+  +:+       +#+        */
+/*   By: dprudnik <dprudnik@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 10:53:24 by dprudnik          #+#    #+#             */
-/*   Updated: 2026/02/16 20:27:22 by dprudnik         ###   ########.fr       */
+/*   Updated: 2026/02/17 12:20:04 by dprudnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,22 +88,22 @@ void	restore_std_fds(int saved_stdin, int saved_stdout)
 
 
 /* TEMPORARY not for production!!*/
-int	execute_builtin_with_redirection(t_cmd *cmd)
-{
-	int	saved_stdin;
-	int	saved_stdout;
+// int	execute_builtin_with_redirection(t_cmd *cmd)
+// {
+// 	int	saved_stdin;
+// 	int	saved_stdout;
 
-	if (save_std_fds(&saved_stdin, &saved_stdout) == -1)
-		return (1);
+// 	if (save_std_fds(&saved_stdin, &saved_stdout) == -1)
+// 		return (1);
 
-	if (apply_redirections(cmd) == -1)
-	{
-		restore_std_fds(saved_stdin, saved_stdout);
-		return (1);
-	}
+// 	if (apply_redirections(cmd) == -1)
+// 	{
+// 		restore_std_fds(saved_stdin, saved_stdout);
+// 		return (1);
+// 	}
 
-	exec_builtin(cmd);
+// 	execute_builtin(cmd);
 
-	restore_std_fds(saved_stdin, saved_stdout);
-	return (0);
-}
+// 	restore_std_fds(saved_stdin, saved_stdout);
+// 	return (0);
+// }

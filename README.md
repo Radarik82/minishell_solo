@@ -41,6 +41,10 @@
 >
 > Ai:
 >
-> ### blah:
+> Other:
+> \- [https://www.gnu.org/software/bash/manual](https://www.gnu.org/software/bash/manual/html_node/)
+> \- [Youtube "Shell Program Explained"](https://www.youtube.com/watch?v=ubt-UjcQUYg)
+> \- [Youtube "The fork() function in C"](https://www.youtube.com/watch?v=cex9XrZCU14)
+>
 >
 > Additional sections may be required depending on the project (e.g., usage examples, feature list, technical choices, etc.).
