@@ -6,7 +6,7 @@
 /*   By: dprudnik <dprudnik@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 13:05:52 by dprudnik          #+#    #+#             */
-/*   Updated: 2026/02/19 16:11:55 by dprudnik         ###   ########.fr       */
+/*   Updated: 2026/02/19 16:27:37 by dprudnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,4 +52,7 @@ int	execute_builtin(t_pipeline *p, t_cmd *cmd, t_shell *shell)
 	return (1);
 }
 
-
+char	*get_exit_status(t_shell *shell)
+{
+	return ft_itoa(shell->exit_status);
+}

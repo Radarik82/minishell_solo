@@ -6,7 +6,7 @@
 /*   By: dprudnik <dprudnik@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 15:43:33 by ariazano          #+#    #+#             */
-/*   Updated: 2026/02/19 15:54:51 by dprudnik         ###   ########.fr       */
+/*   Updated: 2026/02/19 16:28:56 by dprudnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,12 +129,13 @@ int		exec_exit(t_pipeline *p, t_cmd *cmd, t_shell *shell);
 int		exec_env(t_shell *shell);
 
 /* builtin_cmds_2.c*/
-char	*get_exit_status(t_shell *shell);
 int		exec_pwd(t_cmd *cmd, t_shell *shell);
+int		exec_export(t_cmd *cmd, t_shell *shell);
 
 /* builtin_utils.c*/
 int		is_builtin(char *arg);
 int		execute_builtin(t_pipeline *p, t_cmd *cmd, t_shell *shell);
+char	*get_exit_status(t_shell *shell);
 // int		execute_builtin_with_redirection(t_cmd *cmd);
 
 

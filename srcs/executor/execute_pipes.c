@@ -6,7 +6,7 @@
 /*   By: dprudnik <dprudnik@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/12 16:43:43 by aleriaza          #+#    #+#             */
-/*   Updated: 2026/02/19 15:28:22 by dprudnik         ###   ########.fr       */
+/*   Updated: 2026/02/19 16:21:23 by dprudnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 void	run_pipeline(t_pipeline *pipeline, t_shell *shell)
 {
+	//need to handle expander "$" here. (I think).
 	if (pipeline->cmd_count == 1 && is_builtin(pipeline->cmds[0]->args[0]))
 		execute_builtin(pipeline, pipeline->cmds[0], shell);
 	else if (pipeline->cmd_count == 1)// Only for single extern arg to bypass pipecreation
@@ -73,18 +74,6 @@ static void wait_children(int cmd_count, pid_t last_pid, t_shell *shell)
 		i++;
 	}
 }
-
-// static void	wait_children(int cmd_count) //OLD VERSION
-// {
-// 	int	i;
-
-// 	i = 0;
-// 	while (i < cmd_count)
-// 	{
-// 		wait(NULL);
-// 		i++;
-// 	}
-// }
 
 int	execute_multi_cmds(t_pipeline *p, t_shell *shell)
 {
