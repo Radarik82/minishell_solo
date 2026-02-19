@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_pipes.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dprudnik <dprudnik@student.42wolfsburg.    +#+  +:+       +#+        */
+/*   By: dprudnik <dprudnik@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/12 16:43:43 by aleriaza          #+#    #+#             */
-/*   Updated: 2026/02/16 13:29:10 by dprudnik         ###   ########.fr       */
+/*   Updated: 2026/02/19 15:28:22 by dprudnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,21 +53,44 @@ static void	exec_child(t_exec *exec)
 		exec->shell->env);
 }
 
-static void	wait_children(int cmd_count)
+static void wait_children(int cmd_count, pid_t last_pid, t_shell *shell)
 {
-	int	i;
+	int		i;
+	int		status;
+	pid_t	pid;
 
 	i = 0;
 	while (i < cmd_count)
 	{
-		wait(NULL);
+		pid = waitpid(-1, &status, 0);
+		if (pid == last_pid)
+		{
+			if (WIFEXITED(status))
+				shell->exit_status = WEXITSTATUS(status);
+			else if (WIFSIGNALED(status))
+				shell->exit_status = 128 + WTERMSIG(status);
+		}
 		i++;
 	}
 }
 
+// static void	wait_children(int cmd_count) //OLD VERSION
+// {
+// 	int	i;
+
+// 	i = 0;
+// 	while (i < cmd_count)
+// 	{
+// 		wait(NULL);
+// 		i++;
+// 	}
+// }
+
 int	execute_multi_cmds(t_pipeline *p, t_shell *shell)
 {
 	t_exec	exec;
+	pid_t	pid;
+	pid_t	last_pid;
 
 	exec.p = p;
 	exec.shell = shell;
@@ -77,11 +100,14 @@ int	execute_multi_cmds(t_pipeline *p, t_shell *shell)
 	{
 		if (exec.i < p->cmd_count - 1)
 			pipe(exec.pipefd);
-		if (fork() == 0)
+		pid = fork();
+		if (pid == 0)
 			exec_child(&exec);
+		if (exec.i == p->cmd_count - 1)
+			last_pid = pid;
 		exec.prev_fd = handle_parent(&exec);
 		exec.i++;
 	}
-	wait_children(p->cmd_count);
+	wait_children(p->cmd_count, last_pid, shell);
 	return (0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_cmds.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dprudnik <dprudnik@student.42wolfsburg.    +#+  +:+       +#+        */
+/*   By: dprudnik <dprudnik@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/03 12:10:44 by dprudnik          #+#    #+#             */
-/*   Updated: 2026/02/16 13:41:34 by dprudnik         ###   ########.fr       */
+/*   Updated: 2026/02/19 16:11:43 by dprudnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,23 +56,23 @@ int is_valid_n_flag(char *arg)
 }
 
 
-int	exec_cd(char *path)//TODO: illigal to use setenv!!
-{
-	char	cwd[1024];
+// int	exec_cd(t_cmd *cmd, t_shell *shell)//TODO: illigal to use setenv!!
+// {
+// 	char	*path;
 
-	if (path == NULL || ft_strncmp(path, "~", ft_strlen(path)) == 0)
-		path = getenv("HOME");
+// 	if (path == NULL || ft_strncmp(path, "~", ft_strlen(path)) == 0)
+// 		path = getenv("HOME");
 
-	if (chdir(path) == -1)
-	{
-		perror("cd");
-	} else
-	{
-		if (getcwd(cwd, sizeof(cwd)) != NULL)
-			setenv("PWD", cwd, 1);
-	}
-	return (0);
-}
+// 	if (chdir(path) == -1)
+// 	{
+// 		perror("cd");
+// 	} else
+// 	{
+// 		if (getcwd(cwd, sizeof(cwd)) != NULL)
+// 			setenv("PWD", cwd, 1);
+// 	}
+// 	return (0);
+// }
 
 int	exec_exit(t_pipeline *p, t_cmd *cmd, t_shell *shell)
 {
@@ -85,12 +85,8 @@ int	exec_exit(t_pipeline *p, t_cmd *cmd, t_shell *shell)
 	else
 	{
 		free_pipeline(p);
-		if (shell)
-		{
-			if (shell->env)
-				free_env(shell->env);
-			free(shell);
-		}
+		if (shell->env)
+			free_env(shell->env);
 	}
 	exit(0) ;
 }

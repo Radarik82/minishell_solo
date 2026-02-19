@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dprudnik <dprudnik@student.42wolfsburg.    +#+  +:+       +#+        */
+/*   By: dprudnik <dprudnik@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 13:05:52 by dprudnik          #+#    #+#             */
-/*   Updated: 2026/02/16 20:26:38 by dprudnik         ###   ########.fr       */
+/*   Updated: 2026/02/19 16:11:55 by dprudnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,9 @@ int	execute_builtin(t_pipeline *p, t_cmd *cmd, t_shell *shell)
 	if (ft_strncmp(arg, "echo", len) == 0)
 		return (exec_echo(cmd->args));
 	// else if (ft_strncmp(arg, "cd", len) == 0)
-	// 	return (exec_cd(pipeline->cmds[0], shell));
-	// else if (ft_strncmp(arg, "pwd", len) == 0)
-	// 	return (exec_pwd(pipeline->cmds[0], shell));
+	// 	return (exec_cd(cmd, shell));
+	else if (ft_strncmp(arg, "pwd", len) == 0)
+		return (exec_pwd(cmd, shell));
 	// else if (ft_strncmp(arg, "export", len) == 0)
 	// 	return (exec_export(pipeline->cmds[0], shell));
 	// else if (ft_strncmp(arg, "unset", len) == 0)

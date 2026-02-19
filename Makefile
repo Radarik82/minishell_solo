@@ -15,6 +15,7 @@ SRCS =	srcs/main.c \
 		srcs/utils/errors.c \
 		srcs/utils/string_utils.c \
 		srcs/executor/builtin_cmds.c \
+		srcs/executor/builtin_cmds_2.c \
 		srcs/executor/builtin_utils.c \
 		srcs/executor/execute_pipes.c \
 		srcs/executor/execute.c \

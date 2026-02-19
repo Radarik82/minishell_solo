@@ -6,7 +6,7 @@
 /*   By: dprudnik <dprudnik@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 15:43:33 by ariazano          #+#    #+#             */
-/*   Updated: 2026/02/17 12:57:00 by dprudnik         ###   ########.fr       */
+/*   Updated: 2026/02/19 15:54:51 by dprudnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ typedef struct	s_cmd
 {
 	char		**args;
 	int			input_count;
-	
+
 	char		**input_files;   // Array of input files
 	int			output_count;
 	char		**output_files;  // Array of output files
@@ -124,12 +124,13 @@ void	close_unused_pipes(int *prev_fd, int *curr_fd);
 /* builtin_cmds.c*/
 int		exec_echo(char **args);
 int		is_valid_n_flag(char *arg);
-int		exec_cd(char *path);
+int		exec_cd(t_cmd *cmd, t_shell *shell);
 int		exec_exit(t_pipeline *p, t_cmd *cmd, t_shell *shell);
 int		exec_env(t_shell *shell);
 
 /* builtin_cmds_2.c*/
-
+char	*get_exit_status(t_shell *shell);
+int		exec_pwd(t_cmd *cmd, t_shell *shell);
 
 /* builtin_utils.c*/
 int		is_builtin(char *arg);
