@@ -28,37 +28,38 @@ int	exec_pwd(t_cmd *cmd, t_shell *shell)
 	return (0);
 }
 
-int	sort_and_printout(t_shell *shell)
-{
-	char	*value;
-	char	*key;
-	size_t	vars;
-	size_t	i;
-
-	i = 0;
-	vars = env_size(shell->env);
-	while (i < vars)
-	{
-		
-	}
-	if (value)
-		ft_printf("declare -x %s=\"%s\"\n", key, value);
-	ft_printf("declare -x %s\n", key);
-
-	return (0);
-}
-
-
-int		exec_export(t_cmd *cmd, t_shell *shell)
-{
-	int	status;
-
-	status = add_env_var(shell->env, cmd->args[1]);//temp!
-
-	if (!cmd->args[1])
-		sort_and_printout(shell);
-
-
-
-	return (status);
-}
+// TODO: export printout and handling.
+// int	sort_and_printout(t_shell *shell)
+// {
+// 	char	*value;
+// 	char	*key;
+// 	size_t	vars;
+// 	size_t	i;
+//
+// 	i = 0;
+// 	vars = env_size(shell->env);
+// 	while (i < vars)
+// 	{
+//
+// 	}
+// 	if (value)
+// 		ft_printf("declare -x %s=\"%s\"\n", key, value);
+// 	ft_printf("declare -x %s\n", key);
+//
+// 	return (0);
+// }
+//
+//
+// int		exec_export(t_cmd *cmd, t_shell *shell)
+// {
+// 	int	status;
+//
+// 	status = add_env_var(shell->env, cmd->args[1]);//temp!
+//
+// 	if (!cmd->args[1])
+// 		sort_and_printout(shell);
+//
+//
+//
+// 	return (status);
+// }

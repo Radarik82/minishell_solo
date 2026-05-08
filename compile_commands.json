@@ -1,0 +1,62 @@
+[
+    {
+        "command": "cc -c -Wall -Wextra -Werror -g -Iincludes/ -Ilibft/ -o obj/executor/builtin_cmds_2.o srcs/executor/builtin_cmds_2.c",
+        "directory": "/home/dprudnik/Github/Minishell",
+        "file": "/home/dprudnik/Github/Minishell/srcs/executor/builtin_cmds_2.c"
+    },
+    {
+        "command": "cc -c -Wall -Wextra -Werror -g -Iincludes/ -Ilibft/ -o obj/executor/builtin_utils.o srcs/executor/builtin_utils.c",
+        "directory": "/home/dprudnik/Github/Minishell",
+        "file": "/home/dprudnik/Github/Minishell/srcs/executor/builtin_utils.c"
+    },
+    {
+        "command": "cc -c -Wall -Wextra -Werror -g -Iincludes/ -Ilibft/ -o obj/executor/execute_pipes.o srcs/executor/execute_pipes.c",
+        "directory": "/home/dprudnik/Github/Minishell",
+        "file": "/home/dprudnik/Github/Minishell/srcs/executor/execute_pipes.c"
+    },
+    {
+        "command": "cc -c -Wall -Wextra -Werror -g -Iincludes/ -Ilibft/ -o obj/executor/execute.o srcs/executor/execute.c",
+        "directory": "/home/dprudnik/Github/Minishell",
+        "file": "/home/dprudnik/Github/Minishell/srcs/executor/execute.c"
+    },
+    {
+        "command": "cc -c -Wall -Wextra -Werror -g -Iincludes/ -Ilibft/ -o obj/executor/find_path.o srcs/executor/find_path.c",
+        "directory": "/home/dprudnik/Github/Minishell",
+        "file": "/home/dprudnik/Github/Minishell/srcs/executor/find_path.c"
+    },
+    {
+        "command": "cc -c -Wall -Wextra -Werror -g -Iincludes/ -Ilibft/ -o obj/executor/redirections.o srcs/executor/redirections.c",
+        "directory": "/home/dprudnik/Github/Minishell",
+        "file": "/home/dprudnik/Github/Minishell/srcs/executor/redirections.c"
+    },
+    {
+        "command": "cc -c -Wall -Wextra -Werror -g -Iincludes/ -Ilibft/ -o obj/executor/pipe_setup.o srcs/executor/pipe_setup.c",
+        "directory": "/home/dprudnik/Github/Minishell",
+        "file": "/home/dprudnik/Github/Minishell/srcs/executor/pipe_setup.c"
+    },
+    {
+        "command": "cc -c -Wall -Wextra -Werror -g -Iincludes/ -Ilibft/ -o obj/executor/pipe_utils.o srcs/executor/pipe_utils.c",
+        "directory": "/home/dprudnik/Github/Minishell",
+        "file": "/home/dprudnik/Github/Minishell/srcs/executor/pipe_utils.c"
+    },
+    {
+        "command": "cc -c -Wall -Wextra -Werror -g -Iincludes/ -Ilibft/ -o obj/parser/tokenize.o srcs/parser/tokenize.c",
+        "directory": "/home/dprudnik/Github/Minishell",
+        "file": "/home/dprudnik/Github/Minishell/srcs/parser/tokenize.c"
+    },
+    {
+        "command": "cc -c -Wall -Wextra -Werror -g -Iincludes/ -Ilibft/ -o obj/parser/split_pipes.o srcs/parser/split_pipes.c",
+        "directory": "/home/dprudnik/Github/Minishell",
+        "file": "/home/dprudnik/Github/Minishell/srcs/parser/split_pipes.c"
+    },
+    {
+        "command": "cc -c -Wall -Wextra -Werror -g -Iincludes/ -Ilibft/ -o obj/parser/split_pipes_utils.o srcs/parser/split_pipes_utils.c",
+        "directory": "/home/dprudnik/Github/Minishell",
+        "file": "/home/dprudnik/Github/Minishell/srcs/parser/split_pipes_utils.c"
+    },
+    {
+        "command": "cc -c -Wall -Wextra -Werror -g -Iincludes/ -Ilibft/ -o obj/parser/parse_pipeline.o srcs/parser/parse_pipeline.c",
+        "directory": "/home/dprudnik/Github/Minishell",
+        "file": "/home/dprudnik/Github/Minishell/srcs/parser/parse_pipeline.c"
+    }
+]
