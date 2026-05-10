@@ -1,55 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tokenize_utils.c                                   :+:      :+:    :+:   */
+/*   cmd_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aleriaza <aleriaza@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/02/09 18:55:47 by aleriaza          #+#    #+#             */
+/*   Created: 2026/05/09 12:00:00 by aleriaza          #+#    #+#             */
 /*   Updated: 2026/05/09 12:00:00 by aleriaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	is_space(char c)
+t_cmd	*create_cmd(char **args)
 {
-	return (c == ' ' || c == '\t');
-}
+	t_cmd	*cmd;
 
-int	is_quote(char c)
-{
-	return (c == '\'' || c == '"');
-}
-
-int	jump_past_quote(char *str, int i)
-{
-	char	qchar;
-
-	qchar = str[i];
-	i++;
-	while (str[i] && str[i] != qchar)
-		i++;
-	if (!str[i])
-		return (-1);
-	return (i + 1);
-}
-
-t_token	*new_token(char *val)
-{
-	t_token	*node;
-
-	node = malloc(sizeof(t_token));
-	if (!node)
+	if (!args)
 		return (NULL);
-	node->val = val;
-	node->next = NULL;
-	return (node);
+	cmd = malloc(sizeof(t_cmd));
+	if (!cmd)
+		return (NULL);
+	cmd->args = args;
+	cmd->redirs = NULL;
+	cmd->next = NULL;
+	return (cmd);
 }
 
-void	token_add_back(t_token **head, t_token *node)
+void	cmd_add_back(t_cmd **head, t_cmd *node)
 {
-	t_token	*cur;
+	t_cmd	*cur;
 
 	if (!head || !node)
 		return ;
@@ -62,4 +42,40 @@ void	token_add_back(t_token **head, t_token *node)
 	while (cur->next)
 		cur = cur->next;
 	cur->next = node;
+}
+
+int	cmd_count(t_cmd *head)
+{
+	int	n;
+
+	n = 0;
+	while (head)
+	{
+		n++;
+		head = head->next;
+	}
+	return (n);
+}
+
+void	free_cmd(t_cmd *cmd)
+{
+	if (!cmd)
+		return ;
+	if (cmd->args)
+		free_array(cmd->args);
+	if (cmd->redirs)
+		free_redirs(cmd->redirs);
+	free(cmd);
+}
+
+void	free_cmd_list(t_cmd *head)
+{
+	t_cmd	*tmp;
+
+	while (head)
+	{
+		tmp = head->next;
+		free_cmd(head);
+		head = tmp;
+	}
 }

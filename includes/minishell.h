@@ -34,69 +34,42 @@ extern int	g_signal_received;
 # define YELLOW	"\033[0;33m"
 # define BLUE	"\033[1;34m"
 # define RESET	"\033[0m"
-/*
-// types of token |  &  ;  <  >  (  )  $  `  \  "  '  <space>  <tab>  <newline>
-typedef enum e_token_type
-{
-	T_NEWLINE,
-	T_SPACE,
-	T_DOLLAR,
-	T_AMPER,
-	T_TAB,
-	T_APPEND,
-	T_PIPE,
-	T_OR,
-	T_AND,
-	T_DELIM,
-	T_LPAR,
-	T_RPAR,
-//	T_WORD = 1,
-//	T_RED_INP,
-//	T_RED_OUT,
-//	T_THREE_IN,
-//	T_THREE_OUT,
-//	T_IN_OUT,
-}			t_token_type;
-*/
 
-/* Shell context structure */
-typedef struct	s_shell
+/* Token node — internal, used only during parsing */
+typedef struct s_token
 {
-	char			**env;
-	int				exit_status;
-}				t_shell;
+	char			*val;
+	struct s_token	*next;
+}	t_token;
 
-/* Command structure */
+/* Shell context — env copy + last return code */
+typedef struct s_shell
+{
+	char	**env;
+	int		exit_status;
+}	t_shell;
+
+/* Redirection type constants */
+# define REDIR_IN		0
+# define REDIR_OUT		1
+# define REDIR_APPEND	2
+# define REDIR_HEREDOC	3
+
+/* Redirection node */
+typedef struct s_redir
+{
+	int				type;
+	char			*file;
+	struct s_redir	*next;
+}	t_redir;
+
+/* Command node — parser output, one node per pipe segment */
 typedef struct s_cmd
 {
-	char	**args;
+	char			**args;
+	t_redir			*redirs;
+	struct s_cmd	*next;
 }	t_cmd;
-
-/* Pipeline structure */
-typedef struct s_pipeline
-{
-	t_cmd	**cmds;
-	int		cmd_count;
-}	t_pipeline;
-
-
-
-/*
-typedef struct	s_data
-{
-	int		argc;
-	char	**argv;
-	char	*env;
-}				t_data;
-
-typedef struct	s_token
-{
-	t_token_type	type;
-	char			*word;
-	struct s_token	*next;
-	struct s_token	*prev;
-}				t_token;
-*/
 
 /* signals.c */
 void	setup_signals(void);
@@ -110,7 +83,7 @@ char	*get_env_var(char *name, char **env);
 
 /* errors.c */
 void	print_error(char *msg);
-void 	exit_error(char *msg, int code);
+void	exit_error(char *msg, int code);
 
 /* find_path.c */
 char	*find_command(char *cmd, char **env);
@@ -132,47 +105,50 @@ int		array_len(char **arr);
 char	*ft_strjoin_free(char *s1, char *s2);
 
 /* tokenize.c */
-char	**tokenize_input(char *input);
-int		count_words(char *str);
-char	*extract_word(char *str, int start, int len);
-int		get_word_len(char *str, int start);
-
+t_token	*tokenize_input(char *input);
 
 /* tokenize_utils.c */
-int	process_tokens(char *input, char **tokens);
 int		is_space(char c);
+int		is_quote(char c);
+int		jump_past_quote(char *str, int i);
+t_token	*new_token(char *val);
+void	token_add_back(t_token **head, t_token *node);
+
+/* token_free.c */
+void	free_tokens(t_token *head);
+char	**tokens_to_argv(t_token *head);
+int		token_count(t_token *head);
 
 /* split_pipes.c */
-int			is_pipe(char c);
-int			count_pipes(char *str);
-int			find_pipe_pos(char *input, int start);
-char		*extract_segment(char *input, int start, int end);
-char		**split_by_pipes(char *input);
+t_cmd	*split_and_parse(char *input, t_shell *shell);
+int		find_pipe_pos(char *input, int start);
+char	*extract_segment(char *input, int start, int end);
 
-/* split_pipes_utils.c */
-int			process_segments(char *input, char **segments, int pipe_count);
-char		**split_by_pipes(char *input);
-t_pipeline	*create_pipeline(char **segments);
+/* expand.c */
+char	*expand_token(char *val, t_shell *shell);
+int		expand_token_list(t_token *head, t_shell *shell);
 
-/* parse_pipeline.c */
-void		free_cmd(t_cmd *cmd);
-t_pipeline	*create_pipeline(char **segments);
-void		free_pipeline(t_pipeline *pipeline);
-t_cmd		*parse_one_segment(char *segment);
-t_pipeline	*alloc_pipeline(int count);
+/* cmd_utils.c */
+t_cmd	*create_cmd(char **args);
+void	free_cmd(t_cmd *cmd);
+void	free_cmd_list(t_cmd *head);
+int		cmd_count(t_cmd *head);
+void	cmd_add_back(t_cmd **head, t_cmd *node);
 
-/* pipeline_utils.c */
-int			is_empty_segment(char *segment);
-t_cmd		*create_cmd(char **args);
+/* redir_utils.c */
+t_redir	*new_redir(int type, char *file);
+void	redir_add_back(t_redir **head, t_redir *node);
+void	free_redirs(t_redir *head);
+int		is_redir_op(char *val);
+int		get_redir_type(char *val);
 
+/* redir_parse.c */
+int		parse_redirs(t_token **head, t_redir **redirs);
 
-// int			run_pipeline(t_pipeline *pipeline, t_shell *shell);
-char		**tokenize_input(char *input);
-
-
-
-
-
+/* syntax.c */
+int		validate_input(char *input);
+int		syntax_error(char *msg);
+int		check_unclosed_quotes(char *input);
 
 
 #endif

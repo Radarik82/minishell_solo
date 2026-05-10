@@ -1,65 +1,66 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tokenize_utils.c                                   :+:      :+:    :+:   */
+/*   token_free.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aleriaza <aleriaza@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/02/09 18:55:47 by aleriaza          #+#    #+#             */
+/*   Created: 2026/05/09 12:00:00 by aleriaza          #+#    #+#             */
 /*   Updated: 2026/05/09 12:00:00 by aleriaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	is_space(char c)
+int	token_count(t_token *head)
 {
-	return (c == ' ' || c == '\t');
-}
+	int	n;
 
-int	is_quote(char c)
-{
-	return (c == '\'' || c == '"');
-}
-
-int	jump_past_quote(char *str, int i)
-{
-	char	qchar;
-
-	qchar = str[i];
-	i++;
-	while (str[i] && str[i] != qchar)
-		i++;
-	if (!str[i])
-		return (-1);
-	return (i + 1);
-}
-
-t_token	*new_token(char *val)
-{
-	t_token	*node;
-
-	node = malloc(sizeof(t_token));
-	if (!node)
-		return (NULL);
-	node->val = val;
-	node->next = NULL;
-	return (node);
-}
-
-void	token_add_back(t_token **head, t_token *node)
-{
-	t_token	*cur;
-
-	if (!head || !node)
-		return ;
-	if (!*head)
+	n = 0;
+	while (head)
 	{
-		*head = node;
-		return ;
+		n++;
+		head = head->next;
 	}
-	cur = *head;
-	while (cur->next)
-		cur = cur->next;
-	cur->next = node;
+	return (n);
+}
+
+char	**tokens_to_argv(t_token *head)
+{
+	char	**argv;
+	int		size;
+	int		i;
+
+	size = token_count(head);
+	argv = malloc(sizeof(char *) * (size + 1));
+	if (!argv)
+		return (NULL);
+	i = 0;
+	while (head)
+	{
+		argv[i] = ft_strdup(head->val);
+		if (!argv[i])
+		{
+			free_array(argv);
+			return (NULL);
+		}
+		i++;
+		head = head->next;
+	}
+	argv[i] = NULL;
+	return (argv);
+}
+
+void	free_tokens(t_token *head)
+{
+	t_token	*tmp;
+
+	while (head)
+	{
+		tmp = head->next;
+		if (head->val)
+			free(head->val);
+		free(head);
+		head = tmp;
+	}
 }

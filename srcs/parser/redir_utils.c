@@ -1,55 +1,51 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tokenize_utils.c                                   :+:      :+:    :+:   */
+/*   redir_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aleriaza <aleriaza@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/02/09 18:55:47 by aleriaza          #+#    #+#             */
+/*   Created: 2026/05/09 12:00:00 by aleriaza          #+#    #+#             */
 /*   Updated: 2026/05/09 12:00:00 by aleriaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	is_space(char c)
+int	get_redir_type(char *val)
 {
-	return (c == ' ' || c == '\t');
+	if (val[0] == '<' && val[1] == '<')
+		return (REDIR_HEREDOC);
+	if (val[0] == '<')
+		return (REDIR_IN);
+	if (val[0] == '>' && val[1] == '>')
+		return (REDIR_APPEND);
+	return (REDIR_OUT);
 }
 
-int	is_quote(char c)
+int	is_redir_op(char *val)
 {
-	return (c == '\'' || c == '"');
+	if (!val || (val[0] != '<' && val[0] != '>'))
+		return (0);
+	return (val[1] == '\0' || (val[1] == val[0] && val[2] == '\0'));
 }
 
-int	jump_past_quote(char *str, int i)
+t_redir	*new_redir(int type, char *file)
 {
-	char	qchar;
+	t_redir	*node;
 
-	qchar = str[i];
-	i++;
-	while (str[i] && str[i] != qchar)
-		i++;
-	if (!str[i])
-		return (-1);
-	return (i + 1);
-}
-
-t_token	*new_token(char *val)
-{
-	t_token	*node;
-
-	node = malloc(sizeof(t_token));
+	node = malloc(sizeof(t_redir));
 	if (!node)
 		return (NULL);
-	node->val = val;
+	node->type = type;
+	node->file = file;
 	node->next = NULL;
 	return (node);
 }
 
-void	token_add_back(t_token **head, t_token *node)
+void	redir_add_back(t_redir **head, t_redir *node)
 {
-	t_token	*cur;
+	t_redir	*cur;
 
 	if (!head || !node)
 		return ;
@@ -62,4 +58,18 @@ void	token_add_back(t_token **head, t_token *node)
 	while (cur->next)
 		cur = cur->next;
 	cur->next = node;
+}
+
+void	free_redirs(t_redir *head)
+{
+	t_redir	*tmp;
+
+	while (head)
+	{
+		tmp = head->next;
+		if (head->file)
+			free(head->file);
+		free(head);
+		head = tmp;
+	}
 }

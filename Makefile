@@ -14,12 +14,15 @@ SRCS =	srcs/main.c \
 		srcs/utils/string_utils.c \
 		srcs/parser/tokenize.c \
 		srcs/parser/tokenize_utils.c \
-		srcs/executor/find_path.c \
-		srcs/executor/execute.c \
+		srcs/parser/token_free.c \
 		srcs/parser/split_pipes.c \
-		srcs/parser/split_pipes_utils.c \
-		srcs/parser/pipeline_utils.c \
-		srcs/parser/parse_pipeline.c 
+		srcs/parser/cmd_utils.c \
+		srcs/parser/expand.c \
+		srcs/parser/redir_utils.c \
+		srcs/parser/redir_parse.c \
+		srcs/parser/syntax.c \
+		srcs/executor/find_path.c \
+		srcs/executor/execute.c
 
 OBJS = $(SRCS:.c=.o)
 
