@@ -21,6 +21,28 @@ int	exec_pwd(t_cmd *cmd, t_shell *shell)
 		print_error("pwd: too many arguments");
 		return (2);
 	}
+	path = malloc(PATH_MAX);
+	if (!path)
+		return (2);
+	if (getcwd(path, PATH_MAX) == NULL)
+		return (2);
+
+	path = get_env_var("PWD", shell->env);
+	if (!path)
+		print_error("pwd: get_env_var failed!");
+	ft_printf("%s\n", path);
+	return (0);
+}
+
+int	exec_pwd_old(t_cmd *cmd, t_shell *shell)
+{
+	char	*path;
+
+	if (cmd->args[1])
+	{
+		print_error("pwd: too many arguments");
+		return (2);
+	}
 	path = get_env_var("PWD", shell->env);
 	if (!path)
 		print_error("pwd: get_env_var failed!");

@@ -21,8 +21,8 @@ Minishell is a small shell similar to Bash. It can execute single commands and a
 
 	Run `./minishell ` in the CLI to start/execute Minishell.
 
-	> [!NOTE]
-	> If **Not** Compiled see above instructions to compile first.
+> [!NOTE]
+> If **Not** Compiled see above instructions to compile first.
 
 - Minishell Use Instructions
 
@@ -47,3 +47,4 @@ Minishell is a small shell similar to Bash. It can execute single commands and a
 
 
  Additional (e.g., usage examples, feature list, technical choices, etc.).
+

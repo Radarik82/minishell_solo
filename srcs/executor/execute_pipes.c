@@ -12,9 +12,9 @@
 
 # include "minishell.h"
 
+// TODO: need to handle expander "$" here. (I think).
 void	run_pipeline(t_pipeline *pipeline, t_shell *shell)
 {
-	//need to handle expander "$" here. (I think).
 	if (pipeline->cmd_count == 1 && is_builtin(pipeline->cmds[0]->args[0]))
 		execute_builtin(pipeline, pipeline->cmds[0], shell);
 	else if (pipeline->cmd_count == 1)// Only for single extern arg to bypass pipecreation

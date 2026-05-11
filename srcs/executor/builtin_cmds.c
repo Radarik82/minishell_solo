@@ -12,6 +12,7 @@
 
 #include "minishell.h"
 
+// TODO: stripping of "" done during parsing?
 int	exec_echo(char **args)
 {
 	int	i;
@@ -56,17 +57,19 @@ int is_valid_n_flag(char *arg)
 }
 
 
-// int	exec_cd(t_cmd *cmd, t_shell *shell)//TODO: illigal to use setenv!!
+// int	exec_cd(t_cmd *cmd, t_shell *shell)// TODO: illigal to use setenv!!
 // {
 // 	char	*path;
-
+//
 // 	if (path == NULL || ft_strncmp(path, "~", ft_strlen(path)) == 0)
 // 		path = getenv("HOME");
-
+//
 // 	if (chdir(path) == -1)
 // 	{
 // 		perror("cd");
-// 	} else
+// 		return ();
+// 	}
+// 	else
 // 	{
 // 		if (getcwd(cwd, sizeof(cwd)) != NULL)
 // 			setenv("PWD", cwd, 1);
