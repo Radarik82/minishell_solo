@@ -6,7 +6,7 @@
 /*   By: aleriaza <aleriaza@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 15:43:33 by ariazano          #+#    #+#             */
-/*   Updated: 2026/02/09 19:24:55 by aleriaza         ###   ########.fr       */
+/*   Updated: 2026/05/13 22:32:55 by denis            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,9 +93,10 @@ char	**split_path(char *path_env);
 int		is_executable(char *path);
 char	*join_path_cmd(char *dir, char *cmd);
 
-/* builtin_cmds.c */// TODO : will seperate later!
-int		exec_echo(char **args);
+/* builtin_commands */
 int		exec_cd(t_cmd *cmd, t_shell *shell);
+int		exec_echo(char **args);
+
 int		exec_pwd(t_cmd *cmd, t_shell *shell);
 int		exec_export(t_cmd *cmd, t_shell *shell);
 int		exec_unset(t_cmd *cmd, t_shell *shell);
