@@ -104,6 +104,9 @@ void	free_array(char **arr);
 int		array_len(char **arr);
 char	*ft_strjoin_free(char *s1, char *s2);
 
+/* readline_utils.c */
+char	*read_full_line(void);
+
 /* tokenize.c */
 t_token	*tokenize_input(char *input);
 

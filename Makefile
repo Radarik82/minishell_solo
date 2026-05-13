@@ -14,6 +14,7 @@ SRCS =	srcs/main.c \
 		srcs/utils/env_utils.c \
 		srcs/utils/errors.c \
 		srcs/utils/string_utils.c \
+		srcs/utils/readline_utils.c \
 		srcs/parser/tokenize.c \
 		srcs/parser/tokenize_utils.c \
 		srcs/parser/token_free.c \

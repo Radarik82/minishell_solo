@@ -64,7 +64,7 @@ static void	shell_loop(t_shell *shell)
 
 	while (1)
 	{
-		line = readline("minishell> ");
+		line = read_full_line();
 		if (!line)
 		{
 			printf("exit\n");
