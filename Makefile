@@ -4,6 +4,8 @@ CC = cc
 CFLAGS = -Wall -Wextra -Werror -g
 LDFLAGS = -lreadline
 
+INCLUDES = -Iincludes/ -Ilibft/
+
 LIBFT_DIR = libft
 LIBFT = $(LIBFT_DIR)/libft.a
 
@@ -24,22 +26,26 @@ SRCS =	srcs/main.c \
 		srcs/parser/redir_utils.c \
 		srcs/parser/redir_parse.c \
 		srcs/parser/syntax.c \
+		srcs/executor/builtin_cmds.c \
+		srcs/executor/builtin_entry.c \
+		srcs/executor/execute.c \
+		srcs/executor/run_commands.c \
 		srcs/executor/find_path.c \
-		srcs/executor/execute.c
+		srcs/executor/setup_pipes.c
 
 OBJS = $(patsubst %.c, $(OBJ_DIR)/%.o, $(SRCS))
 
 all: $(NAME)
 
 $(NAME): $(LIBFT) $(OBJS)
-	$(CC) $(CFLAGS) $(OBJS) $(LIBFT) $(LDFLAGS) -o $(NAME)
+	$(CC) $(CFLAGS) $(INCLUDES) $(OBJS) $(LIBFT) $(LDFLAGS) -o $(NAME)
 
 $(LIBFT):
 	make -C $(LIBFT_DIR)
 
 $(OBJ_DIR)/%.o: %.c
 	@mkdir -p $(dir $@)
-	$(CC) $(CFLAGS) -c $< -o $@
+	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
 clean:
 	rm -rf $(OBJ_DIR)

@@ -34,7 +34,7 @@ char	*read_full_line(void)
 	char	*line;
 	char	*next;
 
-	line = readline("minishell> ");
+	line = readline(GREEN"minishell> "RESET);
 	if (!line)
 		return (NULL);
 	while (check_unclosed_quotes(line) == -1)

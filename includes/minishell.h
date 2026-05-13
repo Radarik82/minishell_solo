@@ -14,6 +14,7 @@
 # define MINISHELL_H
 
 # include <unistd.h>
+# include <limits.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <fcntl.h>
@@ -92,12 +93,29 @@ char	**split_path(char *path_env);
 int		is_executable(char *path);
 char	*join_path_cmd(char *dir, char *cmd);
 
+/* builtin_cmds.c */// TODO : will seperate later!
+int		exec_echo(char **args);
+int		exec_cd(t_cmd *cmd, t_shell *shell);
+int		exec_pwd(t_cmd *cmd, t_shell *shell);
+int		exec_export(t_cmd *cmd, t_shell *shell);
+int		exec_unset(t_cmd *cmd, t_shell *shell);
+int		exec_env(t_shell *shell);
+int		exec_exit(t_cmd *cmd, t_shell *shell);
+
+/* builtin_entry.c */
+int		is_builtin(char *arg);
+
 /* execute.c */
 int		execute_command(char **args, t_shell *shell);
 int		fork_and_exec(char **args, t_shell *shell);
 void	execute_child(char **args, char **env);
 int		is_absolute_path(char *str);
 int		is_relative_path(char *str);
+
+/* run_commands.c */
+void	run_commands(t_cmd *cmds, t_shell *shell);
+int		execute_builtin(t_cmd *cmd, t_shell *shell);
+int		execute_multi_cmds(t_cmd *cmds, t_shell *shell);
 
 /* string_utils.c */
 void	free_array(char **arr);
