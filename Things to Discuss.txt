@@ -1,0 +1,21 @@
+A file to keep track of TODOs.
+----------------------------------------------------
+
+Things to discuss:
+[ ] does loop in main.c reset shell->exit_status ?
+[ ] does shell pass/return exit_status to parent shell (ex. when command "exit i j sakdjf" is called)? I manually coded the exit code if exit cmd is miss-used.
+
+
+
+
+
+
+Things to change:
+
+
+
+
+
+
+Things to add:
+[ ] Need to deal with command miss-use for builtin_cmds.

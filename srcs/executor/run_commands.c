@@ -14,7 +14,6 @@
 
 void	run_commands(t_cmd *cmds, t_shell *shell)
 {
-	//need to handle expander "$" here. (I think).
 	if (cmds->next == NULL && is_builtin(cmds->args[0]))
 		execute_builtin(cmds, shell);
 	else //if (cmds->next == NULL)// Only for single extern arg to bypass pipecreation
@@ -25,9 +24,8 @@ void	run_commands(t_cmd *cmds, t_shell *shell)
 	// command_readout(pipeline, shell);//Debug Only
 }
 
-// // TODO : make fit new data structure.
-// // TODO : need to handle return exit codes and functions need
-// // to be changed to return proper exit codes.
+// TODO : all builtin cmds need to update shell exit code
+// for exit code expander.
 int	execute_builtin(t_cmd *cmd, t_shell *shell)
 {
 	int	len;
@@ -50,11 +48,6 @@ int	execute_builtin(t_cmd *cmd, t_shell *shell)
 	else if (ft_strncmp(arg, "exit", len) == 0)
 		return (exec_exit(cmd, shell));
 	return (1);
-}
-
-char	*get_exit_status(t_shell *shell)
-{
-	return ft_itoa(shell->exit_status);
 }
 //
 // // FIX : copied from old V1.0!!!

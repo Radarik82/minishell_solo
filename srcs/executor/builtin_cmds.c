@@ -56,11 +56,25 @@ int	exec_echo(char **args)
 }
 
 // TODO : need function for cd.
+// TODO : Do I need to handle all chdir() errors???
+// FIX : need to change.
 int	exec_cd(t_cmd *cmd, t_shell *shell)
 {
 	(void)cmd;//tmp
 	(void)shell;//tmp
-	// use chdir();
+	int	ret;
+
+	if (cmd->args[2])
+	{
+		print_error("cd: too many arguments");
+		shell->exit_status = 1;
+	}
+	ret = chdir(cmd->args[1]);
+	if (ret == -1)
+	{
+		print_error("cd: No such file or directory");
+		return (1);
+	}
 	return (0);
 }
 
@@ -72,6 +86,7 @@ int	exec_pwd(t_cmd *cmd, t_shell *shell)
 	if (cmd->args[1])
 	{
 		print_error("pwd: too many arguments");
+		shell->exit_status = 2;
 		return (2);
 	}
 	path = get_env_var("PWD", shell->env);
@@ -111,17 +126,17 @@ int	exec_env(t_shell *shell)
 
 int	exec_exit(t_cmd *cmd, t_shell *shell)
 {
+	int	exit_code;
+
+	exit_code = 0;
 	if (cmd->args[1])
 	{
 		print_error("exit: too many arguments");
-		return (1);
+		exit_code = 2;
 	}
-	else
-	{
-		write(1, "exit\n", 5);
-		free_cmd_list(cmd);
-		if (shell->env)
-			free_env(shell->env);
-	}
-	exit(0);
+	write(1, "exit\n", 5);
+	free_cmd_list(cmd);
+	if (shell->env)
+		free_env(shell->env);
+	exit(exit_code);
 }
