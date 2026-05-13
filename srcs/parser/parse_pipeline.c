@@ -3,43 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parse_pipeline.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dprudnik <dprudnik@student.42wolfsburg.    +#+  +:+       +#+        */
+/*   By: aleriaza <aleriaza@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/29 15:23:06 by aleriaza          #+#    #+#             */
-/*   Updated: 2026/02/14 14:25:00 by dprudnik         ###   ########.fr       */
+/*   Updated: 2026/02/09 19:37:28 by aleriaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
-
-int	is_empty_segment(char *segment)
-{
-	int	i;
-
-	if (!segment)
-		return (1);
-	i = 0;
-	while (segment[i])
-	{
-		if (!is_space(segment[i]))
-			return (0);
-		i++;
-	}
-	return (1);
-}
-
-t_cmd	*create_cmd(char **args)
-{
-	t_cmd	*cmd;
-
-	if (!args)
-		return (NULL);
-	cmd = malloc(sizeof(t_cmd));
-	if (!cmd)
-		return (NULL);
-	cmd->args = args;
-	return (cmd);
-}
+#include "../../includes/minishell.h"
 
 void	free_cmd(t_cmd *cmd)
 {

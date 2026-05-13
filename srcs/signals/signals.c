@@ -3,18 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dprudnik <dprudnik@student.42wolfsburg.    +#+  +:+       +#+        */
+/*   By: aleriaza <aleriaza@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/25 16:14:39 by aleriaza          #+#    #+#             */
-/*   Updated: 2026/02/14 17:28:48 by dprudnik         ###   ########.fr       */
+/*   Updated: 2025/12/25 16:56:14 by aleriaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#define _XOPEN_SOURCE 500
-#include "minishell.h"
+#include "../../includes/minishell.h"
 
 /* Global variable for signal handling */
-// int	g_signal_received = 0;
+int	g_signal_received = 0;
 
 /* Handle SIGINT (Ctrl-C) in interactive mode */
 void	handle_sigint(int sig)
@@ -43,15 +42,4 @@ void	setup_signals(void)
 	sa_quit.sa_handler = SIG_IGN;
 	sa_quit.sa_flags = 0;
 	sigaction(SIGQUIT, &sa_quit, NULL);
-}
-
-void	setup_tmp_signals(void)
-{
-	struct sigaction	sa_ignore;
-	struct sigaction	sa_old;
-
-	sa_ignore.sa_handler = SIG_IGN;
-	sigemptyset(&sa_ignore.sa_mask);
-	sa_ignore.sa_flags = 0;
-	sigaction(SIGINT, &sa_ignore, &sa_old);
 }

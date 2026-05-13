@@ -3,31 +3,37 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dprudnik <dprudnik@student.42wolfsburg.    +#+  +:+       +#+        */
+/*   By: aleriaza <aleriaza@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/25 17:20:08 by aleriaza          #+#    #+#             */
-/*   Updated: 2026/01/23 15:00:34 by dprudnik         ###   ########.fr       */
+/*   Updated: 2026/05/09 12:00:00 by aleriaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../includes/minishell.h"
 
-int	is_space(char c)
+static int	get_word_len(char *str, int i)
 {
-	return (c == ' ' || c == '\t');
+	int	start;
+	int	ret;
+
+	start = i;
+	while (str[i] && !is_space(str[i]) && str[i] != '<' && str[i] != '>')
+	{
+		if (is_quote(str[i]))
+		{
+			ret = jump_past_quote(str, i);
+			if (ret == -1)
+				return (-1);
+			i = ret;
+		}
+		else
+			i++;
+	}
+	return (i - start);
 }
 
-int	get_word_len(char *str, int start)
-{
-	int	len;
-
-	len = 0;
-	while (str[start + len] && !is_space(str[start + len]))
-		len++;
-	return (len);
-}
-
-char	*extract_word(char *str, int start, int len)
+static char	*extract_word(char *str, int start, int len)
 {
 	char	*word;
 	int		i;
@@ -45,53 +51,69 @@ char	*extract_word(char *str, int start, int len)
 	return (word);
 }
 
-int	count_words(char *str)
+static char	*get_redir_op(char *str, int *i)
 {
-	int	count;
-	int	i;
-	int	in_word;
+	char	*op;
 
-	count = 0;
-	i = 0;
-	in_word = 0;
-	while (str[i])
+	if ((str[*i] == '<' && str[*i + 1] == '<')
+		|| (str[*i] == '>' && str[*i + 1] == '>'))
 	{
-		if (!is_space(str[i]) && !in_word)
-		{
-			in_word = 1;
-			count++;
-		}
-		else if (is_space(str[i]))
-			in_word = 0;
-		i++;
+		op = ft_substr(str, *i, 2);
+		*i += 2;
 	}
-	return (count);
+	else
+	{
+		op = ft_substr(str, *i, 1);
+		*i += 1;
+	}
+	return (op);
 }
 
-char	**tokenize_input(char *input)
+static int	add_next_token(char *input, int *i, t_token **head)
 {
-	char	**tokens;
-	int		word_count;
-	int		i;
-	int		j;
-	int		word_len;
+	char	*word;
+	t_token	*node;
+	int		wlen;
 
-	word_count = count_words(input);
-	tokens = malloc(sizeof(char *) * (word_count + 1));
-	if (!tokens)
+	if (input[*i] == '<' || input[*i] == '>')
+		word = get_redir_op(input, i);
+	else
+	{
+		wlen = get_word_len(input, *i);
+		if (wlen == -1)
+			return (-1);
+		word = extract_word(input, *i, wlen);
+		*i += wlen;
+	}
+	if (!word)
+		return (-1);
+	node = new_token(word);
+	if (!node)
+		return (free(word), -1);
+	token_add_back(head, node);
+	return (0);
+}
+
+t_token	*tokenize_input(char *input)
+{
+	t_token	*head;
+	int		i;
+
+	if (!input)
 		return (NULL);
+	head = NULL;
 	i = 0;
-	j = 0;
 	while (input[i])
 	{
 		while (input[i] && is_space(input[i]))
 			i++;
 		if (!input[i])
 			break ;
-		word_len = get_word_len(input, i);
-		tokens[j++] = extract_word(input, i, word_len);
-		i += word_len;
+		if (add_next_token(input, &i, &head) == -1)
+		{
+			free_tokens(head);
+			return (NULL);
+		}
 	}
-	tokens[j] = NULL;
-	return (tokens);
+	return (head);
 }

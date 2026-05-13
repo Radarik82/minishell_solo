@@ -3,16 +3,34 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_cmds.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dprudnik <dprudnik@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dprudnik <dprudnik@student.42wolfsburg.de  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/02/03 12:10:44 by dprudnik          #+#    #+#             */
-/*   Updated: 2026/02/19 16:11:43 by dprudnik         ###   ########.fr       */
+/*   Created: 2026/05/12 15:32:39 by dprudnik          #+#    #+#             */
+/*   Updated: 2026/05/12 17:06:00 by dprudnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// TODO: stripping of "" done during parsing?
+int is_valid_n_flag(char *arg)
+{
+	int	j;
+
+	j = 0;
+	if (arg[j] != '-')
+		return (0);
+	j++;
+	if (arg[j] == '\0')
+		return (0);
+	while (arg[j])
+	{
+		if (arg[j] != 'n')
+			return (0);
+		j++;
+	}
+	return (1);
+}
+
 int	exec_echo(char **args)
 {
 	int	i;
@@ -37,61 +55,46 @@ int	exec_echo(char **args)
 	return (0);
 }
 
-int is_valid_n_flag(char *arg)
+// TODO : need function for cd.
+int	exec_cd(t_cmd *cmd, t_shell *shell)
 {
-	int	j;
-
-	j = 0;
-	if (arg[j] != '-')
-		return (0);
-	j++;
-	if (arg[j] == '\0')
-		return (0);
-	while (arg[j])
-	{
-		if (arg[j] != 'n')
-			return (0);
-		j++;
-	}
-	return (1);
+	(void)cmd;//tmp
+	(void)shell;//tmp
+	// use chdir();
+	return (0);
 }
 
-
-// int	exec_cd(t_cmd *cmd, t_shell *shell)// TODO: illigal to use setenv!!
-// {
-// 	char	*path;
-//
-// 	if (path == NULL || ft_strncmp(path, "~", ft_strlen(path)) == 0)
-// 		path = getenv("HOME");
-//
-// 	if (chdir(path) == -1)
-// 	{
-// 		perror("cd");
-// 		return ();
-// 	}
-// 	else
-// 	{
-// 		if (getcwd(cwd, sizeof(cwd)) != NULL)
-// 			setenv("PWD", cwd, 1);
-// 	}
-// 	return (0);
-// }
-
-int	exec_exit(t_pipeline *p, t_cmd *cmd, t_shell *shell)
+// TODO : may need to change to use getcwd().
+int	exec_pwd(t_cmd *cmd, t_shell *shell)
 {
-	write(1, "exit\n", 5);
+	char	*path;
+
 	if (cmd->args[1])
 	{
-		print_error("exit: too many arguments");
-		return (1);
+		print_error("pwd: too many arguments");
+		return (2);
 	}
-	else
-	{
-		free_pipeline(p);
-		if (shell->env)
-			free_env(shell->env);
-	}
-	exit(0) ;
+	path = get_env_var("PWD", shell->env);
+	if (!path)
+		print_error("pwd: get_env_var failed!");
+	ft_printf("%s\n", path);
+	return (0);
+}
+
+int	exec_export(t_cmd *cmd, t_shell *shell)
+{
+	(void)cmd;//tmp
+	(void)shell;//tmp
+
+	return (0);
+}
+
+int	exec_unset(t_cmd *cmd, t_shell *shell)
+{
+	(void)cmd;//tmp
+	(void)shell;//tmp
+
+	return (0);
 }
 
 int	exec_env(t_shell *shell)
@@ -104,4 +107,21 @@ int	exec_env(t_shell *shell)
 		i++;
 	}
 	return (0);
+}
+
+int	exec_exit(t_cmd *cmd, t_shell *shell)
+{
+	if (cmd->args[1])
+	{
+		print_error("exit: too many arguments");
+		return (1);
+	}
+	else
+	{
+		write(1, "exit\n", 5);
+		free_cmd_list(cmd);
+		if (shell->env)
+			free_env(shell->env);
+	}
+	exit(0);
 }

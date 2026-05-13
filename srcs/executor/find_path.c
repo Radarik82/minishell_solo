@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   find_path.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dprudnik <dprudnik@student.42wolfsburg.    +#+  +:+       +#+        */
+/*   By: aleriaza <aleriaza@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/25 17:29:15 by aleriaza          #+#    #+#             */
-/*   Updated: 2026/01/21 20:11:41 by dprudnik         ###   ########.fr       */
+/*   Updated: 2025/12/25 17:33:03 by aleriaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

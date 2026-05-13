@@ -1,62 +1,322 @@
 [
     {
-        "command": "cc -c -Wall -Wextra -Werror -g -Iincludes/ -Ilibft/ -o obj/executor/builtin_cmds_2.o srcs/executor/builtin_cmds_2.c",
-        "directory": "/home/dprudnik/Github/Minishell",
-        "file": "/home/dprudnik/Github/Minishell/srcs/executor/builtin_cmds_2.c"
+        "command": "cc -c -Wall -Wextra -Werror -g -Iincludes/ -Ilibft/ -o obj/srcs/main.o srcs/main.c",
+        "directory": "/home/denis/Github/Minishell_V2.0",
+        "file": "/home/denis/Github/Minishell_V2.0/srcs/main.c"
     },
     {
-        "command": "cc -c -Wall -Wextra -Werror -g -Iincludes/ -Ilibft/ -o obj/executor/builtin_utils.o srcs/executor/builtin_utils.c",
-        "directory": "/home/dprudnik/Github/Minishell",
-        "file": "/home/dprudnik/Github/Minishell/srcs/executor/builtin_utils.c"
+        "command": "cc -c -Wall -Wextra -Werror -g -Iincludes/ -Ilibft/ -o obj/srcs/signals/signals.o srcs/signals/signals.c",
+        "directory": "/home/denis/Github/Minishell_V2.0",
+        "file": "/home/denis/Github/Minishell_V2.0/srcs/signals/signals.c"
     },
     {
-        "command": "cc -c -Wall -Wextra -Werror -g -Iincludes/ -Ilibft/ -o obj/executor/execute_pipes.o srcs/executor/execute_pipes.c",
-        "directory": "/home/dprudnik/Github/Minishell",
-        "file": "/home/dprudnik/Github/Minishell/srcs/executor/execute_pipes.c"
+        "command": "cc -c -Wall -Wextra -Werror -g -Iincludes/ -Ilibft/ -o obj/srcs/utils/env_utils.o srcs/utils/env_utils.c",
+        "directory": "/home/denis/Github/Minishell_V2.0",
+        "file": "/home/denis/Github/Minishell_V2.0/srcs/utils/env_utils.c"
     },
     {
-        "command": "cc -c -Wall -Wextra -Werror -g -Iincludes/ -Ilibft/ -o obj/executor/execute.o srcs/executor/execute.c",
-        "directory": "/home/dprudnik/Github/Minishell",
-        "file": "/home/dprudnik/Github/Minishell/srcs/executor/execute.c"
+        "command": "cc -c -Wall -Wextra -Werror -g -Iincludes/ -Ilibft/ -o obj/srcs/utils/errors.o srcs/utils/errors.c",
+        "directory": "/home/denis/Github/Minishell_V2.0",
+        "file": "/home/denis/Github/Minishell_V2.0/srcs/utils/errors.c"
     },
     {
-        "command": "cc -c -Wall -Wextra -Werror -g -Iincludes/ -Ilibft/ -o obj/executor/find_path.o srcs/executor/find_path.c",
-        "directory": "/home/dprudnik/Github/Minishell",
-        "file": "/home/dprudnik/Github/Minishell/srcs/executor/find_path.c"
+        "command": "cc -c -Wall -Wextra -Werror -g -Iincludes/ -Ilibft/ -o obj/srcs/utils/string_utils.o srcs/utils/string_utils.c",
+        "directory": "/home/denis/Github/Minishell_V2.0",
+        "file": "/home/denis/Github/Minishell_V2.0/srcs/utils/string_utils.c"
     },
     {
-        "command": "cc -c -Wall -Wextra -Werror -g -Iincludes/ -Ilibft/ -o obj/executor/redirections.o srcs/executor/redirections.c",
-        "directory": "/home/dprudnik/Github/Minishell",
-        "file": "/home/dprudnik/Github/Minishell/srcs/executor/redirections.c"
+        "command": "cc -c -Wall -Wextra -Werror -g -Iincludes/ -Ilibft/ -o obj/srcs/parser/tokenize.o srcs/parser/tokenize.c",
+        "directory": "/home/denis/Github/Minishell_V2.0",
+        "file": "/home/denis/Github/Minishell_V2.0/srcs/parser/tokenize.c"
     },
     {
-        "command": "cc -c -Wall -Wextra -Werror -g -Iincludes/ -Ilibft/ -o obj/executor/pipe_setup.o srcs/executor/pipe_setup.c",
-        "directory": "/home/dprudnik/Github/Minishell",
-        "file": "/home/dprudnik/Github/Minishell/srcs/executor/pipe_setup.c"
+        "command": "cc -c -Wall -Wextra -Werror -g -Iincludes/ -Ilibft/ -o obj/srcs/parser/tokenize_utils.o srcs/parser/tokenize_utils.c",
+        "directory": "/home/denis/Github/Minishell_V2.0",
+        "file": "/home/denis/Github/Minishell_V2.0/srcs/parser/tokenize_utils.c"
     },
     {
-        "command": "cc -c -Wall -Wextra -Werror -g -Iincludes/ -Ilibft/ -o obj/executor/pipe_utils.o srcs/executor/pipe_utils.c",
-        "directory": "/home/dprudnik/Github/Minishell",
-        "file": "/home/dprudnik/Github/Minishell/srcs/executor/pipe_utils.c"
+        "command": "cc -c -Wall -Wextra -Werror -g -Iincludes/ -Ilibft/ -o obj/srcs/parser/token_free.o srcs/parser/token_free.c",
+        "directory": "/home/denis/Github/Minishell_V2.0",
+        "file": "/home/denis/Github/Minishell_V2.0/srcs/parser/token_free.c"
     },
     {
-        "command": "cc -c -Wall -Wextra -Werror -g -Iincludes/ -Ilibft/ -o obj/parser/tokenize.o srcs/parser/tokenize.c",
-        "directory": "/home/dprudnik/Github/Minishell",
-        "file": "/home/dprudnik/Github/Minishell/srcs/parser/tokenize.c"
+        "command": "cc -c -Wall -Wextra -Werror -g -Iincludes/ -Ilibft/ -o obj/srcs/parser/split_pipes.o srcs/parser/split_pipes.c",
+        "directory": "/home/denis/Github/Minishell_V2.0",
+        "file": "/home/denis/Github/Minishell_V2.0/srcs/parser/split_pipes.c"
     },
     {
-        "command": "cc -c -Wall -Wextra -Werror -g -Iincludes/ -Ilibft/ -o obj/parser/split_pipes.o srcs/parser/split_pipes.c",
-        "directory": "/home/dprudnik/Github/Minishell",
-        "file": "/home/dprudnik/Github/Minishell/srcs/parser/split_pipes.c"
+        "command": "cc -c -Wall -Wextra -Werror -g -Iincludes/ -Ilibft/ -o obj/srcs/parser/cmd_utils.o srcs/parser/cmd_utils.c",
+        "directory": "/home/denis/Github/Minishell_V2.0",
+        "file": "/home/denis/Github/Minishell_V2.0/srcs/parser/cmd_utils.c"
     },
     {
-        "command": "cc -c -Wall -Wextra -Werror -g -Iincludes/ -Ilibft/ -o obj/parser/split_pipes_utils.o srcs/parser/split_pipes_utils.c",
-        "directory": "/home/dprudnik/Github/Minishell",
-        "file": "/home/dprudnik/Github/Minishell/srcs/parser/split_pipes_utils.c"
+        "command": "cc -c -Wall -Wextra -Werror -g -Iincludes/ -Ilibft/ -o obj/srcs/parser/expand.o srcs/parser/expand.c",
+        "directory": "/home/denis/Github/Minishell_V2.0",
+        "file": "/home/denis/Github/Minishell_V2.0/srcs/parser/expand.c"
     },
     {
-        "command": "cc -c -Wall -Wextra -Werror -g -Iincludes/ -Ilibft/ -o obj/parser/parse_pipeline.o srcs/parser/parse_pipeline.c",
-        "directory": "/home/dprudnik/Github/Minishell",
-        "file": "/home/dprudnik/Github/Minishell/srcs/parser/parse_pipeline.c"
+        "command": "cc -c -Wall -Wextra -Werror -g -Iincludes/ -Ilibft/ -o obj/srcs/parser/redir_utils.o srcs/parser/redir_utils.c",
+        "directory": "/home/denis/Github/Minishell_V2.0",
+        "file": "/home/denis/Github/Minishell_V2.0/srcs/parser/redir_utils.c"
+    },
+    {
+        "command": "cc -c -Wall -Wextra -Werror -g -Iincludes/ -Ilibft/ -o obj/srcs/parser/redir_parse.o srcs/parser/redir_parse.c",
+        "directory": "/home/denis/Github/Minishell_V2.0",
+        "file": "/home/denis/Github/Minishell_V2.0/srcs/parser/redir_parse.c"
+    },
+    {
+        "command": "cc -c -Wall -Wextra -Werror -g -Iincludes/ -Ilibft/ -o obj/srcs/parser/syntax.o srcs/parser/syntax.c",
+        "directory": "/home/denis/Github/Minishell_V2.0",
+        "file": "/home/denis/Github/Minishell_V2.0/srcs/parser/syntax.c"
+    },
+    {
+        "command": "cc -c -Wall -Wextra -Werror -g -Iincludes/ -Ilibft/ -o obj/srcs/executor/builtin_cmds.o srcs/executor/builtin_cmds.c",
+        "directory": "/home/denis/Github/Minishell_V2.0",
+        "file": "/home/denis/Github/Minishell_V2.0/srcs/executor/builtin_cmds.c"
+    },
+    {
+        "command": "cc -c -Wall -Wextra -Werror -g -Iincludes/ -Ilibft/ -o obj/srcs/executor/builtin_entry.o srcs/executor/builtin_entry.c",
+        "directory": "/home/denis/Github/Minishell_V2.0",
+        "file": "/home/denis/Github/Minishell_V2.0/srcs/executor/builtin_entry.c"
+    },
+    {
+        "command": "cc -c -Wall -Wextra -Werror -g -Iincludes/ -Ilibft/ -o obj/srcs/executor/execute.o srcs/executor/execute.c",
+        "directory": "/home/denis/Github/Minishell_V2.0",
+        "file": "/home/denis/Github/Minishell_V2.0/srcs/executor/execute.c"
+    },
+    {
+        "command": "cc -c -Wall -Wextra -Werror -g -Iincludes/ -Ilibft/ -o obj/srcs/executor/run_commands.o srcs/executor/run_commands.c",
+        "directory": "/home/denis/Github/Minishell_V2.0",
+        "file": "/home/denis/Github/Minishell_V2.0/srcs/executor/run_commands.c"
+    },
+    {
+        "command": "cc -c -Wall -Wextra -Werror -g -Iincludes/ -Ilibft/ -o obj/srcs/executor/find_path.o srcs/executor/find_path.c",
+        "directory": "/home/denis/Github/Minishell_V2.0",
+        "file": "/home/denis/Github/Minishell_V2.0/srcs/executor/find_path.c"
+    },
+    {
+        "command": "cc -c -Wall -Wextra -Werror -g -Iincludes/ -Ilibft/ -o obj/srcs/executor/setup_pipes.o srcs/executor/setup_pipes.c",
+        "directory": "/home/denis/Github/Minishell_V2.0",
+        "file": "/home/denis/Github/Minishell_V2.0/srcs/executor/setup_pipes.c"
+    },
+    {
+        "command": "cc -c -g ft_atoi.c",
+        "directory": "/home/denis/Github/Minishell_V2.0/libft",
+        "file": "/home/denis/Github/Minishell_V2.0/libft/ft_atoi.c"
+    },
+    {
+        "command": "cc -c -g ft_bzero.c",
+        "directory": "/home/denis/Github/Minishell_V2.0/libft",
+        "file": "/home/denis/Github/Minishell_V2.0/libft/ft_bzero.c"
+    },
+    {
+        "command": "cc -c -g ft_isalnum.c",
+        "directory": "/home/denis/Github/Minishell_V2.0/libft",
+        "file": "/home/denis/Github/Minishell_V2.0/libft/ft_isalnum.c"
+    },
+    {
+        "command": "cc -c -g ft_isalpha.c",
+        "directory": "/home/denis/Github/Minishell_V2.0/libft",
+        "file": "/home/denis/Github/Minishell_V2.0/libft/ft_isalpha.c"
+    },
+    {
+        "command": "cc -c -g ft_isascii.c",
+        "directory": "/home/denis/Github/Minishell_V2.0/libft",
+        "file": "/home/denis/Github/Minishell_V2.0/libft/ft_isascii.c"
+    },
+    {
+        "command": "cc -c -g ft_isdigit.c",
+        "directory": "/home/denis/Github/Minishell_V2.0/libft",
+        "file": "/home/denis/Github/Minishell_V2.0/libft/ft_isdigit.c"
+    },
+    {
+        "command": "cc -c -g ft_isprint.c",
+        "directory": "/home/denis/Github/Minishell_V2.0/libft",
+        "file": "/home/denis/Github/Minishell_V2.0/libft/ft_isprint.c"
+    },
+    {
+        "command": "cc -c -g ft_memchr.c",
+        "directory": "/home/denis/Github/Minishell_V2.0/libft",
+        "file": "/home/denis/Github/Minishell_V2.0/libft/ft_memchr.c"
+    },
+    {
+        "command": "cc -c -g ft_memcmp.c",
+        "directory": "/home/denis/Github/Minishell_V2.0/libft",
+        "file": "/home/denis/Github/Minishell_V2.0/libft/ft_memcmp.c"
+    },
+    {
+        "command": "cc -c -g ft_memcpy.c",
+        "directory": "/home/denis/Github/Minishell_V2.0/libft",
+        "file": "/home/denis/Github/Minishell_V2.0/libft/ft_memcpy.c"
+    },
+    {
+        "command": "cc -c -g ft_memmove.c",
+        "directory": "/home/denis/Github/Minishell_V2.0/libft",
+        "file": "/home/denis/Github/Minishell_V2.0/libft/ft_memmove.c"
+    },
+    {
+        "command": "cc -c -g ft_memset.c",
+        "directory": "/home/denis/Github/Minishell_V2.0/libft",
+        "file": "/home/denis/Github/Minishell_V2.0/libft/ft_memset.c"
+    },
+    {
+        "command": "cc -c -g ft_strchr.c",
+        "directory": "/home/denis/Github/Minishell_V2.0/libft",
+        "file": "/home/denis/Github/Minishell_V2.0/libft/ft_strchr.c"
+    },
+    {
+        "command": "cc -c -g ft_strlcat.c",
+        "directory": "/home/denis/Github/Minishell_V2.0/libft",
+        "file": "/home/denis/Github/Minishell_V2.0/libft/ft_strlcat.c"
+    },
+    {
+        "command": "cc -c -g ft_strlcpy.c",
+        "directory": "/home/denis/Github/Minishell_V2.0/libft",
+        "file": "/home/denis/Github/Minishell_V2.0/libft/ft_strlcpy.c"
+    },
+    {
+        "command": "cc -c -g ft_strlen.c",
+        "directory": "/home/denis/Github/Minishell_V2.0/libft",
+        "file": "/home/denis/Github/Minishell_V2.0/libft/ft_strlen.c"
+    },
+    {
+        "command": "cc -c -g ft_strncmp.c",
+        "directory": "/home/denis/Github/Minishell_V2.0/libft",
+        "file": "/home/denis/Github/Minishell_V2.0/libft/ft_strncmp.c"
+    },
+    {
+        "command": "cc -c -g ft_strnstr.c",
+        "directory": "/home/denis/Github/Minishell_V2.0/libft",
+        "file": "/home/denis/Github/Minishell_V2.0/libft/ft_strnstr.c"
+    },
+    {
+        "command": "cc -c -g ft_strrchr.c",
+        "directory": "/home/denis/Github/Minishell_V2.0/libft",
+        "file": "/home/denis/Github/Minishell_V2.0/libft/ft_strrchr.c"
+    },
+    {
+        "command": "cc -c -g ft_tolower.c",
+        "directory": "/home/denis/Github/Minishell_V2.0/libft",
+        "file": "/home/denis/Github/Minishell_V2.0/libft/ft_tolower.c"
+    },
+    {
+        "command": "cc -c -g ft_toupper.c",
+        "directory": "/home/denis/Github/Minishell_V2.0/libft",
+        "file": "/home/denis/Github/Minishell_V2.0/libft/ft_toupper.c"
+    },
+    {
+        "command": "cc -c -g ft_calloc.c",
+        "directory": "/home/denis/Github/Minishell_V2.0/libft",
+        "file": "/home/denis/Github/Minishell_V2.0/libft/ft_calloc.c"
+    },
+    {
+        "command": "cc -c -g ft_strdup.c",
+        "directory": "/home/denis/Github/Minishell_V2.0/libft",
+        "file": "/home/denis/Github/Minishell_V2.0/libft/ft_strdup.c"
+    },
+    {
+        "command": "cc -c -g ft_putstr_fd.c",
+        "directory": "/home/denis/Github/Minishell_V2.0/libft",
+        "file": "/home/denis/Github/Minishell_V2.0/libft/ft_putstr_fd.c"
+    },
+    {
+        "command": "cc -c -g ft_putendl_fd.c",
+        "directory": "/home/denis/Github/Minishell_V2.0/libft",
+        "file": "/home/denis/Github/Minishell_V2.0/libft/ft_putendl_fd.c"
+    },
+    {
+        "command": "cc -c -g ft_itoa.c",
+        "directory": "/home/denis/Github/Minishell_V2.0/libft",
+        "file": "/home/denis/Github/Minishell_V2.0/libft/ft_itoa.c"
+    },
+    {
+        "command": "cc -c -g ft_putnbr_fd.c",
+        "directory": "/home/denis/Github/Minishell_V2.0/libft",
+        "file": "/home/denis/Github/Minishell_V2.0/libft/ft_putnbr_fd.c"
+    },
+    {
+        "command": "cc -c -g ft_putchar_fd.c",
+        "directory": "/home/denis/Github/Minishell_V2.0/libft",
+        "file": "/home/denis/Github/Minishell_V2.0/libft/ft_putchar_fd.c"
+    },
+    {
+        "command": "cc -c -g ft_substr.c",
+        "directory": "/home/denis/Github/Minishell_V2.0/libft",
+        "file": "/home/denis/Github/Minishell_V2.0/libft/ft_substr.c"
+    },
+    {
+        "command": "cc -c -g ft_strjoin.c",
+        "directory": "/home/denis/Github/Minishell_V2.0/libft",
+        "file": "/home/denis/Github/Minishell_V2.0/libft/ft_strjoin.c"
+    },
+    {
+        "command": "cc -c -g ft_strtrim.c",
+        "directory": "/home/denis/Github/Minishell_V2.0/libft",
+        "file": "/home/denis/Github/Minishell_V2.0/libft/ft_strtrim.c"
+    },
+    {
+        "command": "cc -c -g ft_strmapi.c",
+        "directory": "/home/denis/Github/Minishell_V2.0/libft",
+        "file": "/home/denis/Github/Minishell_V2.0/libft/ft_strmapi.c"
+    },
+    {
+        "command": "cc -c -g ft_split.c",
+        "directory": "/home/denis/Github/Minishell_V2.0/libft",
+        "file": "/home/denis/Github/Minishell_V2.0/libft/ft_split.c"
+    },
+    {
+        "command": "cc -c -g ft_striteri.c",
+        "directory": "/home/denis/Github/Minishell_V2.0/libft",
+        "file": "/home/denis/Github/Minishell_V2.0/libft/ft_striteri.c"
+    },
+    {
+        "command": "cc -c -g get_next_line.c",
+        "directory": "/home/denis/Github/Minishell_V2.0/libft",
+        "file": "/home/denis/Github/Minishell_V2.0/libft/get_next_line.c"
+    },
+    {
+        "command": "cc -c -g get_next_line_utils.c",
+        "directory": "/home/denis/Github/Minishell_V2.0/libft",
+        "file": "/home/denis/Github/Minishell_V2.0/libft/get_next_line_utils.c"
+    },
+    {
+        "command": "cc -c -g ft_strcpy.c",
+        "directory": "/home/denis/Github/Minishell_V2.0/libft",
+        "file": "/home/denis/Github/Minishell_V2.0/libft/ft_strcpy.c"
+    },
+    {
+        "command": "cc -c -g ft_printf_c_s.c",
+        "directory": "/home/denis/Github/Minishell_V2.0/libft",
+        "file": "/home/denis/Github/Minishell_V2.0/libft/ft_printf_c_s.c"
+    },
+    {
+        "command": "cc -c -g ft_printf_d_i_u.c",
+        "directory": "/home/denis/Github/Minishell_V2.0/libft",
+        "file": "/home/denis/Github/Minishell_V2.0/libft/ft_printf_d_i_u.c"
+    },
+    {
+        "command": "cc -c -g ft_printf_p.c",
+        "directory": "/home/denis/Github/Minishell_V2.0/libft",
+        "file": "/home/denis/Github/Minishell_V2.0/libft/ft_printf_p.c"
+    },
+    {
+        "command": "cc -c -g ft_printf_x.c",
+        "directory": "/home/denis/Github/Minishell_V2.0/libft",
+        "file": "/home/denis/Github/Minishell_V2.0/libft/ft_printf_x.c"
+    },
+    {
+        "command": "cc -c -g ft_printf.c",
+        "directory": "/home/denis/Github/Minishell_V2.0/libft",
+        "file": "/home/denis/Github/Minishell_V2.0/libft/ft_printf.c"
+    },
+    {
+        "command": "cc -c -g ft_processor.c",
+        "directory": "/home/denis/Github/Minishell_V2.0/libft",
+        "file": "/home/denis/Github/Minishell_V2.0/libft/ft_processor.c"
+    },
+    {
+        "command": "cc -c -g libft_prn.c",
+        "directory": "/home/denis/Github/Minishell_V2.0/libft",
+        "file": "/home/denis/Github/Minishell_V2.0/libft/libft_prn.c"
     }
 ]

@@ -3,23 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   errors.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dprudnik <dprudnik@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aleriaza <aleriaza@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/25 16:33:54 by aleriaza          #+#    #+#             */
-/*   Updated: 2026/02/19 15:32:31 by dprudnik         ###   ########.fr       */
+/*   Updated: 2025/12/25 16:56:25 by aleriaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
-
-void	free_and_error(t_pipeline *pipeline, t_shell *shell, char *msg, int code)
-{
-	free_pipeline(pipeline);
-
-	if (shell->env)
-		free_env(shell->env);
-	exit_error(msg, code);
-}
+#include "../../includes/minishell.h"
 
 void	print_error(char *msg)
 {

@@ -3,16 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dprudnik <dprudnik@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aleriaza <aleriaza@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/25 16:06:23 by aleriaza          #+#    #+#             */
-/*   Updated: 2026/02/17 17:55:04 by dprudnik         ###   ########.fr       */
+/*   Updated: 2026/05/12 17:31:57 by dprudnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
-
-int	g_signal_received = 0;
+#include "../includes/minishell.h"
 
 /* Free shell and exit */
 static void	cleanup_shell(t_shell *shell)
@@ -21,34 +19,44 @@ static void	cleanup_shell(t_shell *shell)
 	{
 		if (shell->env)
 			free_env(shell->env);
+		free(shell);
 	}
 }
 
-static void	init_shell(t_shell *shell, char **envp)
+static t_shell	*init_shell(char **envp)
 {
+	t_shell	*shell;
+
+	shell = malloc(sizeof(t_shell));
+	if (!shell)
+		exit_error("malloc failed", 1);
 	shell->env = copy_env(envp);
 	if (!shell->env)
+	{
+		free(shell);
 		exit_error("env copy failed", 1);
+	}
 	shell->exit_status = 0;
+	return (shell);
 }
 
 static void	process_line(char *line, t_shell *shell)
 {
-	char		**segments;
-	t_pipeline	*pipeline;
+	t_cmd	*cmds;
 
 	if (!line || line[0] == '\0')
 		return ;
 	add_history(line);
-	segments = split_by_pipes(line);
-	if (!segments)
+	if (validate_input(line) == -1)
+	{
+		shell->exit_status = 2;
 		return ;
-	pipeline = create_pipeline(segments);
-	free_array(segments);
-	if (!pipeline)
+	}
+	cmds = split_and_parse(line, shell);
+	if (!cmds)
 		return ;
-	run_pipeline(pipeline, shell);// Execution point.
-	free_pipeline(pipeline);
+	run_commands(cmds, shell);// FIX :Added by Denis!!
+	free_cmd_list(cmds);
 }
 
 static void	shell_loop(t_shell *shell)
@@ -57,7 +65,6 @@ static void	shell_loop(t_shell *shell)
 
 	while (1)
 	{
-		setup_signals();
 		line = readline(GREEN"minishell> "RESET);
 		if (!line)
 		{
@@ -71,12 +78,13 @@ static void	shell_loop(t_shell *shell)
 
 int	main(int argc, char **argv, char **envp)
 {
-	t_shell	shell;
+	t_shell	*shell;
 
 	(void)argc;
 	(void)argv;
-	init_shell(&shell, envp);
-	shell_loop(&shell);
-	cleanup_shell(&shell);
-	return (shell.exit_status);
+	shell = init_shell(envp);
+	setup_signals();
+	shell_loop(shell);
+	cleanup_shell(shell);
+	return (0);
 }

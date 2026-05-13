@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipe_utils.c                                       :+:      :+:    :+:   */
+/*   setup_pipes.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dprudnik <dprudnik@student.42wolfsburg.    +#+  +:+       +#+        */
+/*   By: aleriaza <aleriaza@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/12 16:36:06 by aleriaza          #+#    #+#             */
-/*   Updated: 2026/02/16 09:30:40 by dprudnik         ###   ########.fr       */
+/*   Updated: 2026/02/09 19:21:12 by aleriaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "minishell.h"
+#include "minishell.h"
 
 int	create_pipe_fds(int *fd)
 {
@@ -38,7 +38,7 @@ void	setup_input_pipe(int *fd)
 void	setup_output_pipe(int *fd)
 {
 	dup2(fd[1], STDOUT_FILENO);
-	// close(fd[0]);// dont want to close read end just yet.
+	close(fd[0]);
 	close(fd[1]);
 }
 

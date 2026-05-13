@@ -3,14 +3,12 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dprudnik <dprudnik@student.42wolfsburg.    +#+  +:+       +#+        */
+/*   By: aleriaza <aleriaza@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/25 17:23:08 by aleriaza          #+#    #+#             */
-/*   Updated: 2026/02/16 13:29:37 by dprudnik         ###   ########.fr       */
+/*   Updated: 2025/12/25 17:28:10 by aleriaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-//ONLY WORKS WITHOUT PIPES FOR SINGLE EXECUTION!!!!!
 
 #include "minishell.h"
 
@@ -48,8 +46,6 @@ void	execute_child(char **args, char **env)
 		print_error("command not found");
 		exit(127);
 	}
-	signal(SIGINT, SIG_DFL);
-	signal(SIGQUIT, SIG_DFL);
 	execve(cmd_path, args, env);
 	perror("execve");
 	exit(126);
@@ -60,21 +56,12 @@ int	fork_and_exec(char **args, t_shell *shell)
 	pid_t	pid;
 	int		status;
 
-	setup_tmp_signals();
 	pid = fork();
 	if (pid == -1)
 		return (-1);
 	if (pid == 0)
 		execute_child(args, shell->env);
 	waitpid(pid, &status, 0);
-	if (WIFSIGNALED(status))
-	{
-		if (WTERMSIG(status) == SIGQUIT)
-			printf("Quit (core dumped)\n");
-		else if (WTERMSIG(status) == SIGINT)
-			printf("\n");
-	}
-	setup_signals();
 	if (WIFEXITED(status))
 		return (WEXITSTATUS(status));
 	return (1);
