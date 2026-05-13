@@ -7,21 +7,27 @@ LDFLAGS = -lreadline
 LIBFT_DIR = libft
 LIBFT = $(LIBFT_DIR)/libft.a
 
+OBJ_DIR = obj
+
 SRCS =	srcs/main.c \
 		srcs/signals/signals.c \
 		srcs/utils/env_utils.c \
 		srcs/utils/errors.c \
 		srcs/utils/string_utils.c \
+		srcs/utils/readline_utils.c \
 		srcs/parser/tokenize.c \
 		srcs/parser/tokenize_utils.c \
-		srcs/executor/find_path.c \
-		srcs/executor/execute.c \
+		srcs/parser/token_free.c \
 		srcs/parser/split_pipes.c \
-		srcs/parser/split_pipes_utils.c \
-		srcs/parser/pipeline_utils.c \
-		srcs/parser/parse_pipeline.c 
+		srcs/parser/cmd_utils.c \
+		srcs/parser/expand.c \
+		srcs/parser/redir_utils.c \
+		srcs/parser/redir_parse.c \
+		srcs/parser/syntax.c \
+		srcs/executor/find_path.c \
+		srcs/executor/execute.c
 
-OBJS = $(SRCS:.c=.o)
+OBJS = $(patsubst %.c, $(OBJ_DIR)/%.o, $(SRCS))
 
 all: $(NAME)
 
@@ -31,11 +37,12 @@ $(NAME): $(LIBFT) $(OBJS)
 $(LIBFT):
 	make -C $(LIBFT_DIR)
 
-%.o: %.c
+$(OBJ_DIR)/%.o: %.c
+	@mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
-	rm -f $(OBJS)
+	rm -rf $(OBJ_DIR)
 	make -C $(LIBFT_DIR) clean
 
 fclean: clean

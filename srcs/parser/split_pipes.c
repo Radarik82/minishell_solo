@@ -6,99 +6,114 @@
 /*   By: aleriaza <aleriaza@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/29 15:09:35 by aleriaza          #+#    #+#             */
-/*   Updated: 2026/02/09 19:37:31 by aleriaza         ###   ########.fr       */
+/*   Updated: 2026/05/09 12:00:00 by aleriaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	is_pipe(char c)
-{
-	return (c == '|');
-}
-
-int	count_pipes(char *str)
-{
-	int	count;
-	int	i;
-
-	count = 0;
-	i = 0;
-	while (str[i])
-	{
-		if (is_pipe(str[i]))
-			count++;
-		i++;
-	}
-	return (count);
-}
-
 int	find_pipe_pos(char *input, int start)
 {
 	int	i;
+	int	ret;
 
 	i = start;
 	while (input[i])
 	{
-		if (is_pipe(input[i]))
+		if (is_quote(input[i]))
+		{
+			ret = jump_past_quote(input, i);
+			if (ret == -1)
+				return (-1);
+			i = ret;
+		}
+		else if (input[i] == '|')
 			return (i);
-		i++;
+		else
+			i++;
 	}
 	return (i);
 }
 
 char	*extract_segment(char *input, int start, int end)
 {
-	char	*segment;
+	char	*seg;
 	int		len;
 	int		i;
 
 	len = end - start;
-	segment = malloc(sizeof(char) * (len + 1));
-	if (!segment)
+	seg = malloc(sizeof(char) * (len + 1));
+	if (!seg)
 		return (NULL);
 	i = 0;
 	while (i < len)
 	{
-		segment[i] = input[start + i];
+		seg[i] = input[start + i];
 		i++;
 	}
-	segment[i] = '\0';
-	return (segment);
+	seg[i] = '\0';
+	return (seg);
 }
 
-/*
-char	*get_next_segment(char *input, int *pos)
+static t_cmd	*segment_fail(t_token *tok, t_redir *red, char **args)
 {
+	free_tokens(tok);
+	free_redirs(red);
+	free_array(args);
+	return (NULL);
+}
+
+static t_cmd	*parse_segment(char *seg, t_shell *shell)
+{
+	t_token	*tokens;
+	t_redir	*redirs;
+	char	**args;
+	t_cmd	*cmd;
+
+	tokens = tokenize_input(seg);
+	if (!tokens)
+		return (NULL);
+	if (expand_token_list(tokens, shell) == -1)
+		return (segment_fail(tokens, NULL, NULL));
+	redirs = NULL;
+	if (parse_redirs(&tokens, &redirs) == -1)
+		return (segment_fail(tokens, redirs, NULL));
+	args = tokens_to_argv(tokens);
+	free_tokens(tokens);
+	if (!args)
+		return (segment_fail(NULL, redirs, NULL));
+	cmd = create_cmd(args);
+	if (!cmd)
+		return (segment_fail(NULL, redirs, args));
+	cmd->redirs = redirs;
+	return (cmd);
+}
+
+t_cmd	*split_and_parse(char *input, t_shell *shell)
+{
+	t_cmd	*head;
+	t_cmd	*node;
+	char	*seg;
 	int		start;
-	int		end;
-	char	*segment;
+	int		pipe;
 
-	start = *pos;
-	end = find_pipe_pos(input, start);
-	segment = extract_segment(input, start, end);
-	*pos = end + 1;
-	return (segment);
-}
-*/
-
-/* Split input string by pipe character */
-
-char	**split_by_pipes(char *input)
-{
-	char	**segments;
-	int		pipe_count;
-
-	if (!input)
-		return (NULL);
-	pipe_count = count_pipes(input);
-	segments = malloc(sizeof(char *) * (pipe_count + 2));
-	if (!segments)
-		return (NULL);
-	if (process_segments(input, segments, pipe_count) == -1)
+	head = NULL;
+	start = 0;
+	while (1)
 	{
-		free_array(segments);
-		return (NULL);
+		pipe = find_pipe_pos(input, start);
+		if (pipe == -1)
+			return (free_cmd_list(head), NULL);
+		seg = extract_segment(input, start, pipe);
+		if (!seg)
+			return (free_cmd_list(head), NULL);
+		node = parse_segment(seg, shell);
+		free(seg);
+		if (node)
+			cmd_add_back(&head, node);
+		if (!input[pipe])
+			break ;
+		start = pipe + 1;
 	}
-	return (segments);
+	return (head);
 }

@@ -12,8 +12,6 @@
 
 #include "../includes/minishell.h"
 
-int	g_signal_received = 0;
-
 /* Free shell and exit */
 static void	cleanup_shell(t_shell *shell)
 {
@@ -44,21 +42,20 @@ static t_shell	*init_shell(char **envp)
 
 static void	process_line(char *line, t_shell *shell)
 {
-	char		**segments;
-	t_pipeline	*pipeline;
+	t_cmd	*cmds;
 
 	if (!line || line[0] == '\0')
 		return ;
 	add_history(line);
-	segments = split_by_pipes(line);
-	if (!segments)
+	if (validate_input(line) == -1)
+	{
+		shell->exit_status = 2;
 		return ;
-	pipeline = create_pipeline(segments);
-	free_array(segments);
-	if (!pipeline)
+	}
+	cmds = split_and_parse(line, shell);
+	if (!cmds)
 		return ;
-	//run_pipeline(pipeline, shell);
-	free_pipeline(pipeline);
+	free_cmd_list(cmds);
 }
 
 static void	shell_loop(t_shell *shell)
@@ -67,7 +64,7 @@ static void	shell_loop(t_shell *shell)
 
 	while (1)
 	{
-		line = readline("minishell> ");
+		line = read_full_line();
 		if (!line)
 		{
 			printf("exit\n");
