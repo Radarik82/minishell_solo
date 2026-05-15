@@ -12,19 +12,6 @@
 
 #include "minishell.h"
 
-// TODO : according to sections 3.2 Documentation.
-// need to add redirection fucntionality to bultin && execute_command funtion.
-int	execute_builtin(t_cmd *cmd, t_shell *shell)
-{
-	//save_stdin/stdout.
-	apply_redirections(cmd->redirs);
-	select_builtin(cmd, shell);
-	//restore stdin/stdout.
-	//update exit status
-
-	return (0);
-}
-
 // TODO : need to change. Refer to Documentation.
 void	run_commands(t_cmd *cmds, t_shell *shell)
 {
@@ -32,15 +19,40 @@ void	run_commands(t_cmd *cmds, t_shell *shell)
 		if (is_builtin(cmds->args[0]))
 			execute_builtin(cmds, shell);
 		else
-			execute_command(cmds->args, shell);
+			execute_command(cmds, shell);
 	else if (cmds->next != NULL)
 		execute_pipeline(cmds, shell);
 	return ;
-	// command_readout(pipeline, shell);//Debug Only
 }
 
-// TODO : all builtin cmds need to update shell exit code
-// for exit code expander.
+// TODO : according to sections 3.2 Documentation.
+// need to add redirection fucntionality to execute_command funtion.
+int	execute_builtin(t_cmd *cmd, t_shell *shell)
+{
+	int	exit_code;
+	int saved_stdin;
+	int saved_stdout;
+
+	exit_code = 0;
+	if (cmd->redirs == NULL)
+		exit_code = select_builtin(cmd, shell);
+	else
+	{
+		if (save_std_fds(&saved_stdin, &saved_stdout) == -1)
+		{
+			shell->exit_status = 1;
+			return (-1);
+		} 
+		apply_redirections(cmd->redirs);
+		exit_code = select_builtin(cmd, shell);
+		restore_std_fds(saved_stdin, saved_stdout);
+	}
+	shell->exit_status = exit_code;
+	return (0);
+}
+
+// TODO : all builtin cmds need to return a code
+// for shell update exit code for exit code expander.
 int	select_builtin(t_cmd *cmd, t_shell *shell)
 {
 	int	len;
@@ -62,7 +74,7 @@ int	select_builtin(t_cmd *cmd, t_shell *shell)
 		return (exec_env(shell));
 	else if (ft_strncmp(arg, "exit", len) == 0)
 		return (exec_exit(cmd, shell));
-	return (1);
+	return (0);
 }
 
 int	open_pipe(t_exec *ex)
@@ -97,16 +109,21 @@ static void	wait_children(t_pipe *pipe, t_shell *shell)
 	}
 }
 
+// FIX : when bellow code is uncommented piping does not work.
 void	child_process(t_exec *ex)
 {
-	// setup_input.
 	if (ex->pipe.in != STDIN_FILENO)
 		setup_input_pipe(ex->pipe.in);
-	//setup_output if needed.
 	if (ex->cmd->next)
 		setup_output_pipe(ex->pipe.fd);
-	// apply_redirections(ex->cmd->redirs);// TODO : create redir funtion.
+	// if (is_builtin(ex->cmd->args[0]))
+	// 	execute_builtin(ex->cmd, ex->shell);
+	// else
+	// {
+		// if (ex->cmd->redirs != NULL)
+		// 	apply_redirections(ex->cmd->redirs);
 	execute_child(ex->cmd->args, ex->shell->env);
+	// }
 }
 
 void	parent_process(t_exec *ex)
@@ -127,7 +144,6 @@ int	execute_pipeline(t_cmd *cmds, t_shell *shell)
 	ex.cmd = cmds;
 	ex.pipe.in = STDIN_FILENO;
 	ex.pipe.cmd_count = cmd_count(cmds);
-
 	while (ex.cmd)
 	{
 		if (open_pipe(&ex))

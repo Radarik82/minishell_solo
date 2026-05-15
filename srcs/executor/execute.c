@@ -51,7 +51,7 @@ void	execute_child(char **args, char **env)
 	exit(126);
 }
 
-int	fork_and_exec(char **args, t_shell *shell)
+int	fork_and_exec(t_cmd *cmd, t_shell *shell)
 {
 	pid_t	pid;
 	int		status;
@@ -60,20 +60,24 @@ int	fork_and_exec(char **args, t_shell *shell)
 	if (pid == -1)
 		return (-1);
 	if (pid == 0)
-		execute_child(args, shell->env);
+	{
+		if (cmd->redirs != NULL)
+			apply_redirections(cmd->redirs);
+		execute_child(cmd->args, shell->env);
+	}
 	waitpid(pid, &status, 0);
 	if (WIFEXITED(status))
 		return (WEXITSTATUS(status));
 	return (1);
 }
 
-int	execute_command(char **args, t_shell *shell)
+int	execute_command(t_cmd *cmd, t_shell *shell)
 {
 	int	exit_code;
 
-	if (!args || !args[0])
+	if (!cmd->args || !cmd->args[0])
 		return (0);
-	exit_code = fork_and_exec(args, shell);
+	exit_code = fork_and_exec(cmd, shell);
 	shell->exit_status = exit_code;
 	return (exit_code);
 }

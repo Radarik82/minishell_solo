@@ -121,11 +121,13 @@ int		exec_env(t_shell *shell);
 int		exec_exit(t_cmd *cmd, t_shell *shell);
 
 /* builtin_entry.c */
+int     save_std_fds(int *saved_stdin, int *saved_stdout);
+void    restore_std_fds(int saved_stdin, int saved_stdout);
 int		is_builtin(char *arg);
 
 /* execute.c */
-int		execute_command(char **args, t_shell *shell);
-int		fork_and_exec(char **args, t_shell *shell);
+int		execute_command(t_cmd *cmd, t_shell *shell);
+int		fork_and_exec(t_cmd *cmd, t_shell *shell);
 void	execute_child(char **args, char **env);
 int		is_absolute_path(char *str);
 int		is_relative_path(char *str);

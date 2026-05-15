@@ -23,7 +23,6 @@ int	exec_cd(t_cmd *cmd, t_shell *shell)
 	if (cmd->args[2])
 	{
 		print_error("cd: too many arguments");
-		shell->exit_status = 1;
 		return (1);
 	}
 	else if (!cmd->args[1])
@@ -36,7 +35,7 @@ int	exec_cd(t_cmd *cmd, t_shell *shell)
 	if (ret == -1)
 	{
 		print_error("cd: No such file or directory");
-		shell->exit_status = 1;
+		return (1);
 	}
 	return (0);
 }

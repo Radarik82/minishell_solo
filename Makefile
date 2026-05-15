@@ -26,7 +26,7 @@ SRCS =	srcs/main.c \
 		srcs/parser/redir_utils.c \
 		srcs/parser/redir_parse.c \
 		srcs/parser/syntax.c \
-		srcs/executor/builtin_entry.c \
+		srcs/executor/builtin_utils.c \
 		srcs/executor/execute.c \
 		srcs/executor/run_commands.c \
 		srcs/executor/find_path.c \
