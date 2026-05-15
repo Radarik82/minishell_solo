@@ -12,14 +12,15 @@
 
 #include "minishell.h"
 
+// TODO : need to change. Refer to Documentation.
 void	run_commands(t_cmd *cmds, t_shell *shell)
 {
 	if (cmds->next == NULL && is_builtin(cmds->args[0]))
 		execute_builtin(cmds, shell);
-	else //if (cmds->next == NULL)// Only for single extern arg to bypass pipecreation
+	else if (cmds->next == NULL)// Only for single extern arg to bypass pipecreation
 		execute_command(cmds->args, shell);
-	// else
-	// 	execute_multi_cmds(cmds, shell);
+	else
+		execute_pipeline(cmds, shell);
 	return ;
 	// command_readout(pipeline, shell);//Debug Only
 }
@@ -49,21 +50,90 @@ int	execute_builtin(t_cmd *cmd, t_shell *shell)
 		return (exec_exit(cmd, shell));
 	return (1);
 }
-//
-// // FIX : copied from old V1.0!!!
-// static int	handle_parent(t_exec *exec)
-// {
-// 	if (exec->prev_fd != -1)
-// 		close(exec->prev_fd);
-// 	if (exec->i < exec->p->cmd_count - 1)
-// 	{
-// 		close(exec->pipefd[1]);
-// 		return (exec->pipefd[0]);
-// 	}
-// 	return (-1);
-// }
-//
-// // FIX : copied from old V1.0!!!
+
+int	open_pipe(t_exec *ex)
+{
+	if (!ex->cmd->next)
+		return (0);
+	if (pipe(ex->pipe.fd) == -1)
+	{
+		perror("pipe");
+		return (1);
+	}
+	return (0);
+}
+
+// TODO : dont know if allowed to use WEXITSTATUS();
+static void	wait_children(t_pipe *pipe, t_shell *shell)
+{
+	int		status;
+	pid_t	pid;
+
+	pid = waitpid(-1, &status, 0);
+	while (pid > 0)
+	{
+		if (pid == pipe->pid)
+		{
+			if (WIFEXITED(status))
+				shell->exit_status = WEXITSTATUS(status);
+			else if (WIFSIGNALED(status))
+				shell->exit_status = 128 + WTERMSIG(status);
+		}
+		pid = waitpid(-1, &status, 0);
+	}
+}
+
+void	child_process(t_exec *ex)
+{
+	// setup_input.
+	if (ex->pipe.in != STDIN_FILENO)
+		setup_input_pipe(ex->pipe.in);
+	//setup_output if needed.
+	if (ex->cmd->next)
+		setup_output_pipe(ex->pipe.fd);
+	// apply_redirections(ex->cmd->redirs);// TODO : create redir funtion.
+	execute_child(ex->cmd->args, ex->shell->env);
+}
+
+void	parent_process(t_exec *ex)
+{
+	if (ex->pipe.in != STDIN_FILENO)
+		close(ex->pipe.in);
+	if (!ex->cmd->next)
+		return ;
+	close(ex->pipe.fd[1]);
+	ex->pipe.in = ex->pipe.fd[0];
+}
+
+int	execute_pipeline(t_cmd *cmds, t_shell *shell)
+{
+	t_exec	ex;
+
+	ex.shell = shell;
+	ex.cmd = cmds;
+	ex.pipe.in = STDIN_FILENO;
+	ex.pipe.cmd_count = cmd_count(cmds);
+
+	while (ex.cmd)
+	{
+		if (open_pipe(&ex))
+			return (1);
+		ex.pipe.pid = fork();
+		if (ex.pipe.pid == -1)
+			return (perror("fork"), 1);
+		if (ex.pipe.pid == 0)
+			child_process(&ex);
+		parent_process(&ex);
+		ex.cmd = ex.cmd->next;
+	}
+	wait_children(&ex.pipe, shell);
+	return (0);
+}
+
+/*------------------------------------------------------------*/
+/* Everything bellow is just for reference from old version!! */
+
+// // FIX : copied from old V1.0!!!.
 // static void	exec_child(t_exec *exec)
 // {
 // 	if (exec->prev_fd != -1)

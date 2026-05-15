@@ -33,7 +33,8 @@ SRCS =	srcs/main.c \
 		srcs/executor/setup_pipes.c \
 		srcs/builtin_commands/builtin_cmds.c \
 		srcs/builtin_commands/cd.c \
-		srcs/builtin_commands/echo.c
+		srcs/builtin_commands/echo.c \
+		srcs/executor/redirection.c
 
 OBJS = $(patsubst %.c, $(OBJ_DIR)/%.o, $(SRCS))
 

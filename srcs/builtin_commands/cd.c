@@ -13,7 +13,7 @@
 
 // TODO : Do I need to handle all chdir() errors???
 // TODO : Need to updated OLDPWD in env after every cd
-// and need to handle if get_env_var("OLDPWD", retuns NULL. 
+// and need to handle if get_env_var("OLDPWD", retuns NULL.
 // BUG : Need to fix! Info in Things to discuss file.
 int	exec_cd(t_cmd *cmd, t_shell *shell)
 {
