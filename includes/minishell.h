@@ -6,7 +6,7 @@
 /*   By: aleriaza <aleriaza@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 15:43:33 by ariazano          #+#    #+#             */
-/*   Updated: 2026/05/13 22:32:55 by denis            ###   ########.fr       */
+/*   Updated: 2026/05/15 15:13:06 by dprudnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,23 @@ typedef struct s_cmd
 	struct s_cmd	*next;
 }	t_cmd;
 
+/* Pipes */
+typedef struct s_pipe
+{
+	int		in;
+	int		fd[2];
+	int		cmd_count;
+	pid_t	pid;
+}	t_pipe;
+
+/* Execution struct */
+typedef struct s_exec
+{
+	t_shell			*shell;
+	t_cmd			*cmd;
+	t_pipe			pipe;
+}	t_exec;
+
 /* signals.c */
 void	setup_signals(void);
 void	handle_sigint(int sig);
@@ -104,19 +121,31 @@ int		exec_env(t_shell *shell);
 int		exec_exit(t_cmd *cmd, t_shell *shell);
 
 /* builtin_entry.c */
+int     save_std_fds(int *saved_stdin, int *saved_stdout);
+void    restore_std_fds(int saved_stdin, int saved_stdout);
 int		is_builtin(char *arg);
 
 /* execute.c */
-int		execute_command(char **args, t_shell *shell);
-int		fork_and_exec(char **args, t_shell *shell);
+int		execute_command(t_cmd *cmd, t_shell *shell);
+int		fork_and_exec(t_cmd *cmd, t_shell *shell);
 void	execute_child(char **args, char **env);
 int		is_absolute_path(char *str);
 int		is_relative_path(char *str);
 
+/* redirection.c */
+void	apply_redirections(t_redir *redir);
+
+/* setup_pipes.c */
+void	close_pipe_fds(int *fd);
+void	setup_input_pipe(int fd);
+void	setup_output_pipe(int *fd);
+void	close_unused_pipes(int *prev_fd, int *curr_fd);
+
 /* run_commands.c */
 void	run_commands(t_cmd *cmds, t_shell *shell);
 int		execute_builtin(t_cmd *cmd, t_shell *shell);
-int		execute_multi_cmds(t_cmd *cmds, t_shell *shell);
+int		select_builtin(t_cmd *cmd, t_shell *shell);
+int		execute_pipeline(t_cmd *cmds, t_shell *shell);
 
 /* string_utils.c */
 void	free_array(char **arr);

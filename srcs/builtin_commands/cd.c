@@ -13,7 +13,7 @@
 
 // TODO : Do I need to handle all chdir() errors???
 // TODO : Need to updated OLDPWD in env after every cd
-// and need to handle if get_env_var("OLDPWD", retuns NULL. 
+// and need to handle if get_env_var("OLDPWD", retuns NULL.
 // BUG : Need to fix! Info in Things to discuss file.
 int	exec_cd(t_cmd *cmd, t_shell *shell)
 {
@@ -23,7 +23,6 @@ int	exec_cd(t_cmd *cmd, t_shell *shell)
 	if (cmd->args[2])
 	{
 		print_error("cd: too many arguments");
-		shell->exit_status = 1;
 		return (1);
 	}
 	else if (!cmd->args[1])
@@ -36,7 +35,7 @@ int	exec_cd(t_cmd *cmd, t_shell *shell)
 	if (ret == -1)
 	{
 		print_error("cd: No such file or directory");
-		shell->exit_status = 1;
+		return (1);
 	}
 	return (0);
 }

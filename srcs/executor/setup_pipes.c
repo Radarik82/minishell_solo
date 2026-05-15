@@ -12,27 +12,23 @@
 
 #include "minishell.h"
 
-int	create_pipe_fds(int *fd)
-{
-	if (pipe(fd) == -1)
-	{
-		perror("pipe");
-		return (-1);
-	}
-	return (0);
-}
-
 void	close_pipe_fds(int *fd)
 {
 	close(fd[0]);
 	close(fd[1]);
 }
 
-void	setup_input_pipe(int *fd)
+// void	setup_input_pipe(int *fd)
+// {
+// 	dup2(fd[0], STDIN_FILENO);
+// 	close(fd[0]);
+// 	close(fd[1]);
+// }
+
+void	setup_input_pipe(int fd)
 {
-	dup2(fd[0], STDIN_FILENO);
-	close(fd[0]);
-	close(fd[1]);
+	dup2(fd, STDIN_FILENO);
+	close(fd);
 }
 
 void	setup_output_pipe(int *fd)
