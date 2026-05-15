@@ -12,14 +12,28 @@
 
 #include "minishell.h"
 
+// TODO : according to sections 3.2 Documentation.
+// need to add redirection fucntionality to bultin && execute_command funtion.
+int	execute_builtin(t_cmd *cmd, t_shell *shell)
+{
+	//save_stdin/stdout.
+	apply_redirections(cmd->redirs);
+	select_builtin(cmd, shell);
+	//restore stdin/stdout.
+	//update exit status
+
+	return (0);
+}
+
 // TODO : need to change. Refer to Documentation.
 void	run_commands(t_cmd *cmds, t_shell *shell)
 {
-	if (cmds->next == NULL && is_builtin(cmds->args[0]))
-		execute_builtin(cmds, shell);
-	else if (cmds->next == NULL)// Only for single extern arg to bypass pipecreation
-		execute_command(cmds->args, shell);
-	else
+	if (cmds->next == NULL)
+		if (is_builtin(cmds->args[0]))
+			execute_builtin(cmds, shell);
+		else
+			execute_command(cmds->args, shell);
+	else if (cmds->next != NULL)
 		execute_pipeline(cmds, shell);
 	return ;
 	// command_readout(pipeline, shell);//Debug Only
@@ -27,7 +41,7 @@ void	run_commands(t_cmd *cmds, t_shell *shell)
 
 // TODO : all builtin cmds need to update shell exit code
 // for exit code expander.
-int	execute_builtin(t_cmd *cmd, t_shell *shell)
+int	select_builtin(t_cmd *cmd, t_shell *shell)
 {
 	int	len;
 	char *arg;

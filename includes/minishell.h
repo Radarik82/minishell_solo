@@ -142,6 +142,7 @@ void	close_unused_pipes(int *prev_fd, int *curr_fd);
 /* run_commands.c */
 void	run_commands(t_cmd *cmds, t_shell *shell);
 int		execute_builtin(t_cmd *cmd, t_shell *shell);
+int		select_builtin(t_cmd *cmd, t_shell *shell);
 int		execute_pipeline(t_cmd *cmds, t_shell *shell);
 
 /* string_utils.c */
