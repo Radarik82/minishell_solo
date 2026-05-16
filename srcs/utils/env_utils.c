@@ -1,3 +1,4 @@
+
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
@@ -61,6 +62,33 @@ void	free_env(char **env)
 		i++;
 	}
 	free(env);
+}
+
+int	set_env_var(char *name, char *value, t_shell *shell)
+{
+	char	*entry;
+	int		len;
+	int		i;
+
+	entry = ft_strjoin(name, "=");
+	entry = ft_strjoin_free(entry, value);
+	if (!entry)
+		return (-1);
+	len = ft_strlen(name);
+	i = 0;
+	while (shell->env[i])
+	{
+		if (ft_strncmp(shell->env[i], name, len) == 0
+			&& shell->env[i][len] == '=')
+		{
+			free(shell->env[i]);
+			shell->env[i] = entry;
+			return (0);
+		}
+		i++;
+	}
+	free(entry);
+	return (-1);
 }
 
 char	*get_env_var(char *name, char **env)

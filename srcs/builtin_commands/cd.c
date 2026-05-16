@@ -11,35 +11,63 @@
 /* ************************************************************************** */
 
 
+#include "minishell.h"
+
 // TODO : Do I need to handle all chdir() errors???
 // TODO : Need to updated OLDPWD in env after every cd
 // and need to handle if get_env_var("OLDPWD", retuns NULL.
 // BUG : Need to fix! Info in Things to discuss file.
-int	exec_cd(t_cmd *cmd, t_shell *shell)
+static int	cd_error(char *path)
 {
-	int		ret;
-	char	*path;
+	char	*msg;
 
-	if (cmd->args[2])
-	{
-		print_error("cd: too many arguments");
-		return (1);
-	}
-	else if (!cmd->args[1])
-		path = get_env_var("HOME", shell->env);
-	else if (cmd->args[1][0] == '-' && cmd->args[1][1] == '\0')
-		path = get_env_var("OLDPWD", shell->env);
-	else
-		path = cmd->args[1];
-	ret = chdir(path);
-	if (ret == -1)
-		return (cd_not_exist_error(path));
-	return (0);
-}
-int	cd_not_exist_error(char *path)
-{
-	write(2, "minishell: cd: ", 15);
-	write(2, path, ft_strlen(path));
-	write(2, ": No such file or directory\n", 28);
+	msg = ft_strjoin("minishell: cd: ", path);
+	perror(msg);
+	free(msg);
 	return (1);
 }
+
+/* Resolves target path: HOME, OLDPWD (with print), or literal arg */
+static char	*get_cd_path(t_cmd *cmd, t_shell *shell)
+{
+	char	*path;
+
+	if (!cmd->args[1])
+		return (get_env_var("HOME", shell->env));
+	if (cmd->args[1][0] == '-' && cmd->args[1][1] == '\0')
+	{
+		path = get_env_var("OLDPWD", shell->env);
+		if (!path)
+			return (print_error("cd: OLDPWD not set"), NULL);
+		ft_printf("%s\n", path);
+		return (path);
+	}
+	return (cmd->args[1]);
+}
+
+/* Changes directory and updates PWD and OLDPWD in env */
+int	exec_cd(t_cmd *cmd, t_shell *shell)
+{
+	char	*path;
+	char	*old_pwd;
+	char	buf[PATH_MAX];
+
+	if (cmd->args[1] && cmd->args[2])
+		return (print_error("cd: too many arguments"), 1);
+	old_pwd = get_env_var("PWD", shell->env);
+	path = get_cd_path(cmd, shell);
+	if (!path || path[0] == '\0')
+		return (1);
+	if (chdir(path) == -1)
+		return (cd_error(path));
+	set_env_var("OLDPWD", old_pwd ? old_pwd : "", shell);
+	set_env_var("PWD", getcwd(buf, PATH_MAX), shell);
+	return (0);
+}
+
+// NOTE : getcwd() always resolves symlinks to the physical path.
+// To track the logical path (like bash does) we would need to build it manually:
+//   - If path is absolute -> use it directly as new PWD
+//   - If path is relative -> join current PWD + "/" + path,
+//     then normalize . and .. without resolving symlinks
+// This requires a path normalizer function. Would fix cd /bin -> /usr/bin issue.

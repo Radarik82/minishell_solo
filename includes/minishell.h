@@ -98,6 +98,7 @@ int		env_size(char **env);
 char	**copy_env(char **env);
 void	free_env(char **env);
 char	*get_env_var(char *name, char **env);
+int		set_env_var(char *name, char *value, t_shell *shell);
 
 /* errors.c */
 void	print_error(char *msg);
