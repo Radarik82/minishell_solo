@@ -3,13 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: denis <dprudnik@student.42wolfsburg.de>    +#+  +:+       +#+        */
+/*   By: aleriaza <aleriaza@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/13 22:29:00 by denis             #+#    #+#             */
-/*   Updated: 2026/05/13 22:29:12 by denis            ###   ########.fr       */
+/*   Updated: 2026/05/16 12:11:55 by aleriaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "minishell.h"
+
 
 // TODO : Do I need to handle all chdir() errors???
 // TODO : Need to updated OLDPWD in env after every cd
@@ -33,9 +33,13 @@ int	exec_cd(t_cmd *cmd, t_shell *shell)
 		path = cmd->args[1];
 	ret = chdir(path);
 	if (ret == -1)
-	{
-		print_error("cd: No such file or directory");
-		return (1);
-	}
+		return (cd_not_exist_error(path));
 	return (0);
+}
+int	cd_not_exist_error(char *path)
+{
+	write(2, "minishell: cd: ", 15);
+	write(2, path, ft_strlen(path));
+	write(2, ": No such file or directory\n", 28);
+	return (1);
 }
