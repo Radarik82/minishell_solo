@@ -56,7 +56,7 @@ static void	process_line(char *line, t_shell *shell)
 	cmds = split_and_parse(line, shell);
 	if (!cmds)
 		return ;
-	run_commands(cmds, shell);// FIX :Added by Denis for exec entry point!!
+	run_commands(cmds, shell);// NOTE :Added by Denis for exec entry point!!
 	free_cmd_list(cmds);
 }
 

@@ -5,7 +5,7 @@ Things to discuss:
 [ ] -Does loop in main.c reset shell->exit_status ?
 [ ] -Does shell pass/return exit_status to parent shell (ex. when command "exit i j sakdjf" is called)? I manually coded the exit code if exit cmd is miss-used.
 [ ] -Need functions to add to env. Such as when no OLDPWD need to create OLDPWD and expand env list.
-[ ] -Use of Global defines allowed? (REDIR_IN etc.)
+[ ] -Use of Global defines allowed? (REDIR_IN etc..)
 
 
 
@@ -15,6 +15,15 @@ Things to change:
 [ ] -Bug! When running cd (on my laptop) with no commands for the first time. For some reason the exec_cd first condition fails which means there are 3 args in total passed on the first time. If cd is run with an empty space then it works and works every time after that.
 [ ] -Need to updated OLDPWD in env after every cd in exec_cd.
 
+[ ] -Change of env list to this data structure.
+typedef struct s_var
+{
+    char *name;
+    char *value;
+    int exported;
+    struct s_var *next;
+} t_var;
+[ ] -function char **build_envp(t_var *vars) that gets passed to execve.
 
 
 
