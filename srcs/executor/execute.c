@@ -33,22 +33,29 @@ int	is_relative_path(char *str)
 	return (0);
 }
 
-void	execute_child(char **args, char **env)
+/* Build envp from vars, exec the command; child exits on any failure */
+void	execute_child(char **args, t_var *vars)
 {
+	char	**envp;
 	char	*cmd_path;
 
+	envp = vars_to_envp(vars);
 	if (is_absolute_path(args[0]) || is_relative_path(args[0]))
 		cmd_path = args[0];
 	else
-		cmd_path = find_command(args[0], env);
+		cmd_path = find_command(args[0], vars);
 	if (!cmd_path)
 	{
 		print_error("command not found");
 		exit(127);
 	}
+<<<<<<< HEAD
 	signal(SIGINT, SIG_DFL);// NOTE : Reset the signal to mormal for parent prosses.
 	signal(SIGQUIT, SIG_DFL);// NOTE : Reset the signal to mormal for parent prosses.
-	execve(cmd_path, args, env);
+	execve(cmd_path, args, envp);
+=======
+	execve(cmd_path, args, envp);
+>>>>>>> origin/main
 	perror("execve");
 	exit(126);
 }
@@ -66,7 +73,7 @@ int	fork_and_exec(t_cmd *cmd, t_shell *shell)
 	{
 		if (cmd->redirs != NULL)
 			apply_redirections(cmd->redirs);
-		execute_child(cmd->args, shell->env);
+		execute_child(cmd->args, shell->vars);
 	}
 	waitpid(pid, &status, 0);
 	if (WIFSIGNALED(status))//added with tmp signals.

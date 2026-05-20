@@ -24,8 +24,6 @@ void	run_commands(t_cmd *cmds, t_shell *shell)
 	return ;
 }
 
-// TODO : according to sections 3.2 Documentation.
-// need to add redirection fucntionality to execute_command funtion.
 int	execute_builtin(t_cmd *cmd, t_shell *shell)
 {
 	int	exit_code;
@@ -50,8 +48,6 @@ int	execute_builtin(t_cmd *cmd, t_shell *shell)
 	return (0);
 }
 
-// TODO : all builtin cmds need to return a code
-// for shell update exit code for exit code expander.
 int	select_builtin(t_cmd *cmd, t_shell *shell)
 {
 	int	len;
@@ -88,7 +84,7 @@ int	open_pipe(t_exec *ex)
 	return (0);
 }
 
-// TODO : dont know if allowed to use WEXITSTATUS();
+// NOTE : dont know if allowed to use WEXITSTATUS();
 static void	wait_children(t_pipe *pipe, t_shell *shell)
 {
 	int		status;
@@ -121,7 +117,7 @@ void	child_process(t_exec *ex)
 	{
 		if (ex->cmd->redirs != NULL)
 			apply_redirections(ex->cmd->redirs);
-		execute_child(ex->cmd->args, ex->shell->env);
+		execute_child(ex->cmd->args, ex->shell->vars);
 	}
 }
 

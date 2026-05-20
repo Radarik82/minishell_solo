@@ -6,7 +6,7 @@
 /*   By: aleriaza <aleriaza@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/25 16:06:23 by aleriaza          #+#    #+#             */
-/*   Updated: 2026/05/16 13:27:29 by aleriaza         ###   ########.fr       */
+/*   Updated: 2026/05/18 16:23:54 by aleriaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@ static void	cleanup_shell(t_shell *shell)
 {
 	if (shell)
 	{
-		if (shell->env)
-			free_env(shell->env);
+		if (shell->vars)
+			free_vars(shell->vars);
 		free(shell);
 	}
 }
@@ -30,8 +30,8 @@ static t_shell	*init_shell(char **envp)
 	shell = malloc(sizeof(t_shell));
 	if (!shell)
 		exit_error("malloc failed", 1);
-	shell->env = copy_env(envp);
-	if (!shell->env)
+	shell->vars = envp_to_vars(envp);
+	if (!shell->vars)
 	{
 		free(shell);
 		exit_error("env copy failed", 1);
@@ -56,7 +56,7 @@ static void	process_line(char *line, t_shell *shell)
 	cmds = split_and_parse(line, shell);
 	if (!cmds)
 		return ;
-	run_commands(cmds, shell);// FIX :Added by Denis for exec entry point!!
+	run_commands(cmds, shell);// NOTE :Added by Denis for exec entry point!!
 	free_cmd_list(cmds);
 }
 
@@ -69,7 +69,8 @@ static void	shell_loop(t_shell *shell)
 		line = read_full_line();
 		if (!line)
 		{
-			printf("exit\n");
+			if (isatty(STDIN_FILENO))
+				printf("exit\n");
 			break ;
 		}
 		process_line(line, shell);
