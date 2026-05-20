@@ -35,7 +35,8 @@ SRCS =	srcs/main.c \
 		srcs/builtin_commands/builtin_cmds.c \
 		srcs/builtin_commands/cd.c \
 		srcs/builtin_commands/echo.c \
-		srcs/executor/redirection.c
+		srcs/executor/redirection.c \
+		srcs/executor/heredoc.c
 
 OBJS = $(patsubst %.c, $(OBJ_DIR)/%.o, $(SRCS))
 

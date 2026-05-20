@@ -73,10 +73,10 @@ static t_cmd	*parse_segment(char *seg, t_shell *shell)
 	tokens = tokenize_input(seg);
 	if (!tokens)
 		return (NULL);
-	if (expand_token_list(tokens, shell) == -1)
-		return (segment_fail(tokens, NULL, NULL));
 	redirs = NULL;
-	if (parse_redirs(&tokens, &redirs) == -1)
+	if (parse_redirs(&tokens, &redirs, shell) == -1)
+		return (segment_fail(tokens, redirs, NULL));
+	if (expand_token_list(tokens, shell) == -1)
 		return (segment_fail(tokens, redirs, NULL));
 	args = tokens_to_argv(tokens);
 	free_tokens(tokens);

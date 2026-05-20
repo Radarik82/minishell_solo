@@ -83,6 +83,11 @@ void	apply_redirections(t_redir *redir)
 			handle_output_redirection(redir->file);
 		else if (redir->type == REDIR_APPEND)
 			handle_append_redirection(redir->file);
+		else if (redir->type == REDIR_HEREDOC)
+		{
+			handle_input_redirection(redir->file);
+			unlink(redir->file);
+		}
 		redir = redir->next;
 	}
 }

@@ -145,6 +145,10 @@ int		is_relative_path(char *str);
 /* redirection.c */
 void	apply_redirections(t_redir *redir);
 
+/* heredoc.c */
+void	resolve_last_redir(t_redir *last, t_shell *shell);
+char	*handle_heredoc(char *delim, t_shell *shell);
+
 /* setup_pipes.c */
 void	close_pipe_fds(int *fd);
 void	setup_input_pipe(int fd);
@@ -205,7 +209,7 @@ int		get_redir_type(char *val);
 
 /* redir_parse.c */
 int		check_redir_syntax(char *input);
-int		parse_redirs(t_token **head, t_redir **redirs);
+int		parse_redirs(t_token **head, t_redir **redirs, t_shell *shell);
 
 /* syntax.c */
 int		validate_input(char *input);

@@ -84,10 +84,11 @@ int	check_redir_syntax(char *input)
 	return (0);
 }
 
-int	parse_redirs(t_token **head, t_redir **redirs)
+int	parse_redirs(t_token **head, t_redir **redirs, t_shell *shell)
 {
 	t_token	*cur;
 	t_token	*prev;
+	t_redir	*last;
 
 	cur = *head;
 	prev = NULL;
@@ -97,6 +98,10 @@ int	parse_redirs(t_token **head, t_redir **redirs)
 		{
 			if (extract_one_redir(head, &prev, cur, redirs) == -1)
 				return (-1);
+			last = *redirs;
+			while (last->next)
+				last = last->next;
+			resolve_last_redir(last, shell);
 			cur = (prev ? prev->next : *head);
 		}
 		else
