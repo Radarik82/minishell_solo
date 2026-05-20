@@ -61,7 +61,6 @@ int	fork_and_exec(t_cmd *cmd, t_shell *shell)
 	pid_t	pid;
 	int		status;
 
-	setup_tmp_signals();// NOTE : tmp signals for child prosses.
 	pid = fork();
 	if (pid == -1)
 		return (-1);
@@ -71,6 +70,7 @@ int	fork_and_exec(t_cmd *cmd, t_shell *shell)
 			apply_redirections(cmd->redirs);
 		execute_child(cmd->args, shell->vars);
 	}
+	setup_tmp_signals();// NOTE : tmp signals for child prosses.
 	waitpid(pid, &status, 0);
 	if (WIFSIGNALED(status))//added with tmp signals.
 	{
