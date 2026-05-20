@@ -43,3 +43,14 @@ void	setup_signals(void)
 	sa_quit.sa_flags = 0;
 	sigaction(SIGQUIT, &sa_quit, NULL);
 }
+
+void	setup_tmp_signals(void)
+{
+	struct sigaction	sa_ignore;
+	struct sigaction	sa_old;
+
+	sa_ignore.sa_handler = SIG_IGN;
+	sigemptyset(&sa_ignore.sa_mask);
+	sa_ignore.sa_flags = 0;
+	sigaction(SIGINT, &sa_ignore, &sa_old);
+}

@@ -92,8 +92,9 @@ typedef struct s_exec
 }	t_exec;
 
 /* signals.c */
-void	setup_signals(void);
 void	handle_sigint(int sig);
+void	setup_signals(void);
+void	setup_tmp_signals(void);
 
 /* var_list.c */
 t_var	*new_var(char *name, char *value, int exported);
