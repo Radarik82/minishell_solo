@@ -46,6 +46,8 @@ void	execute_child(char **args, char **env)
 		print_error("command not found");
 		exit(127);
 	}
+	signal(SIGINT, SIG_DFL);// NOTE : Reset the signal to mormal for parent prosses.
+	signal(SIGQUIT, SIG_DFL);// NOTE : Reset the signal to mormal for parent prosses.
 	execve(cmd_path, args, env);
 	perror("execve");
 	exit(126);
@@ -56,6 +58,7 @@ int	fork_and_exec(t_cmd *cmd, t_shell *shell)
 	pid_t	pid;
 	int		status;
 
+	setup_tmp_signals();// NOTE : tmp signals for child prosses.
 	pid = fork();
 	if (pid == -1)
 		return (-1);
@@ -66,6 +69,14 @@ int	fork_and_exec(t_cmd *cmd, t_shell *shell)
 		execute_child(cmd->args, shell->env);
 	}
 	waitpid(pid, &status, 0);
+	if (WIFSIGNALED(status))//added with tmp signals.
+	{
+		if (WTERMSIG(status) == SIGQUIT)
+			printf("Quit (core dumped)\n");
+		else if (WTERMSIG(status) == SIGINT)
+			printf("\n");
+	}
+	setup_signals();
 	if (WIFEXITED(status))
 		return (WEXITSTATUS(status));
 	return (1);
