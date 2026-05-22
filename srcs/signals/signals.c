@@ -13,47 +13,47 @@
 #define _XOPEN_SOURCE 500
 #include "minishell.h"
 
-volatile sig_atomic_t g_last_signal = 0;
+volatile sig_atomic_t	g_last_signal = 0;
 
 /* Move to a new line and reset the current input */
-static void sigint_prompt_handler(int sig)
+static void	sigint_prompt_handler(int sig)
 {
-    (void)sig;
-    g_last_signal = SIGINT;
-    write(STDOUT_FILENO, "\n", 1);
-    rl_on_new_line();
-    rl_replace_line("", 0);
-    rl_redisplay();
+	(void)sig;
+	g_last_signal = SIGINT;
+	write(STDOUT_FILENO, "\n", 1);
+	rl_on_new_line();
+	rl_replace_line("", 0);
+	rl_redisplay();
 }
 
 /* Helper to install handler */
-static void set_action(int signo, void (*handler)(int), int flags)
+static void	set_action(int signo, void (*handler)(int), int flags)
 {
-    struct sigaction	sa;
+	struct sigaction	sa;
 
-    sa.sa_handler = handler;
-    sigemptyset(&sa.sa_mask);
-    sa.sa_flags = flags;
-    sigaction(signo, &sa, NULL);
+	sa.sa_handler = handler;
+	sigemptyset(&sa.sa_mask);
+	sa.sa_flags = flags;
+	sigaction(signo, &sa, NULL);
 }
 
 /* Parent at prompt */
-void signals_set_interactive(void)
+void	signals_set_interactive(void)
 {
-    set_action(SIGINT, sigint_prompt_handler, SA_RESTART);
-    set_action(SIGQUIT, SIG_IGN, 0);
+	set_action(SIGINT, sigint_prompt_handler, SA_RESTART);
+	set_action(SIGQUIT, SIG_IGN, 0);
 }
 
 /* Parent while children are running */
-void signals_set_parent_waiting(void)
+void	signals_set_parent_waiting(void)
 {
-    set_action(SIGINT, SIG_IGN, 0);
-    set_action(SIGQUIT, SIG_IGN, 0);
+	set_action(SIGINT, SIG_IGN, 0);
+	set_action(SIGQUIT, SIG_IGN, 0);
 }
 
 /* Child before exec */
-void signals_set_child_exec(void)
+void	signals_set_child_exec(void)
 {
-    set_action(SIGINT, SIG_DFL, 0);
-    set_action(SIGQUIT, SIG_DFL, 0);
+	set_action(SIGINT, SIG_DFL, 0);
+	set_action(SIGQUIT, SIG_DFL, 0);
 }

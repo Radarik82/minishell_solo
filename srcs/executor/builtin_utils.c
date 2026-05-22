@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-int     save_std_fds(int *saved_stdin, int *saved_stdout)
+int	save_std_fds(int *saved_stdin, int *saved_stdout)
 {
 	*saved_stdin = dup(STDIN_FILENO);
 	*saved_stdout = dup(STDOUT_FILENO);
@@ -24,7 +24,7 @@ int     save_std_fds(int *saved_stdin, int *saved_stdout)
 	return (0);
 }
 
-void    restore_std_fds(int saved_stdin, int saved_stdout)
+void	restore_std_fds(int saved_stdin, int saved_stdout)
 {
 	if (saved_stdin != -1)
 	{
@@ -43,13 +43,13 @@ int	is_builtin(char *arg)
 	int	len;
 
 	len = ft_strlen(arg);
-	if (ft_strncmp(arg, "echo", len) == 0 ||
-		ft_strncmp(arg, "cd", len) == 0 ||
-		ft_strncmp(arg, "pwd", len) == 0 ||
-		ft_strncmp(arg, "export", len) == 0 ||
-		ft_strncmp(arg, "unset", len) == 0 ||
-		ft_strncmp(arg, "env", len) == 0 ||
-		ft_strncmp(arg, "exit", len) == 0)
+	if (ft_strncmp(arg, "echo", len) == 0
+		|| ft_strncmp(arg, "cd", len) == 0
+		|| ft_strncmp(arg, "pwd", len) == 0
+		|| ft_strncmp(arg, "export", len) == 0
+		|| ft_strncmp(arg, "unset", len) == 0
+		|| ft_strncmp(arg, "env", len) == 0
+		|| ft_strncmp(arg, "exit", len) == 0)
 		return (1);
-	return	(0);
+	return (0);
 }

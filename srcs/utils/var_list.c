@@ -21,7 +21,10 @@ t_var	*new_var(char *name, char *value, int exported)
 	if (!node)
 		return (NULL);
 	node->name = ft_strdup(name);
-	node->value = ft_strdup(value ? value : "");
+	if (value)
+		node->value = ft_strdup(value);
+	else
+		node->value = ft_strdup("");
 	node->exported = exported;
 	node->next = NULL;
 	if (!node->name || !node->value)

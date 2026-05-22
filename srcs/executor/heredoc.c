@@ -55,9 +55,10 @@ static char	*collect_heredoc_body(char *delim, int interactive)
 /* Write body to a unique temp file; return heap-allocated path */
 static char	*heredoc_tmpfile(char *body)
 {
-	char	path[] = "/tmp/ms_hd_XXXXXX";
+	char	path[19];
 	int		fd;
 
+	ft_strlcpy(path, "/tmp/ms_hd_XXXXXX", sizeof(path));
 	fd = mkstemp(path);
 	if (fd == -1)
 		return (NULL);

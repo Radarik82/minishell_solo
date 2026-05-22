@@ -102,7 +102,10 @@ t_cmd	*split_and_parse(char *input, t_shell *shell)
 	while (1)
 	{
 		pipe = find_pipe_pos(input, start);
-		if (pipe < 0 || !(seg = extract_segment(input, start, pipe)))
+		if (pipe < 0)
+			return (free_cmd_list(head), NULL);
+		seg = extract_segment(input, start, pipe);
+		if (!seg)
 			return (free_cmd_list(head), NULL);
 		node = parse_segment(seg, shell);
 		free(seg);

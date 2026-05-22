@@ -20,16 +20,16 @@ static int	handle_input_redirection(char *infile)
 	if (infile_fd == -1)
 	{
 		perror("open infile");
-		return -1;
+		return (-1);
 	}
 	if (dup2(infile_fd, STDIN_FILENO) == -1)
 	{
 		perror("dup2 input");
 		close(infile_fd);
-		return -1;
+		return (-1);
 	}
 	close(infile_fd);
-	return 0;
+	return (0);
 }
 
 static int	handle_output_redirection(const char *outfile)
@@ -40,16 +40,16 @@ static int	handle_output_redirection(const char *outfile)
 	if (outfile_fd == -1)
 	{
 		perror("open outfile");
-		return -1;
+		return (-1);
 	}
 	if (dup2(outfile_fd, STDOUT_FILENO) == -1)
 	{
 		perror("dup2 output");
 		close(outfile_fd);
-		return -1;
+		return (-1);
 	}
 	close(outfile_fd);
-	return 0;
+	return (0);
 }
 
 static int	handle_append_redirection(const char *outfile)
@@ -60,16 +60,16 @@ static int	handle_append_redirection(const char *outfile)
 	if (outfile_fd == -1)
 	{
 		perror("open outfile");
-		return -1;
+		return (-1);
 	}
 	if (dup2(outfile_fd, STDOUT_FILENO) == -1)
 	{
 		perror("dup2 output");
 		close(outfile_fd);
-		return -1;
+		return (-1);
 	}
 	close(outfile_fd);
-	return 0;
+	return (0);
 }
 
 // TODO : Error handling.

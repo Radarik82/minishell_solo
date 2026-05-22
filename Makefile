@@ -37,7 +37,8 @@ SRCS =	srcs/main.c \
 		srcs/executor/find_path.c \
 		srcs/executor/setup_pipes.c \
 		srcs/executor/redirection.c \
-		srcs/executor/heredoc.c
+		srcs/executor/heredoc.c \
+		srcs/executor/pipeline.c
 
 OBJS = $(patsubst %.c, $(OBJ_DIR)/%.o, $(SRCS))
 

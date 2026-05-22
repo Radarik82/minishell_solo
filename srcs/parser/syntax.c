@@ -38,7 +38,8 @@ int	check_unclosed_quotes(char *input)
 	return (0);
 }
 
-static int	check_pipe_char(char *input, int *i, int *has_content, int *had_pipe)
+static int	check_pipe_char(char *input, int *i,
+				int *has_content, int *had_pipe)
 {
 	if (is_quote(input[*i]))
 	{

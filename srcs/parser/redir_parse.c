@@ -27,7 +27,7 @@ static t_token	*remove_token(t_token **head, t_token *prev, t_token *cur)
 	return (next);
 }
 
-static int	extract_one_redir(t_token **head, t_token **prev_p,
+static t_redir	*extract_one_redir(t_token **head, t_token **prev_p,
 				t_token *cur, t_redir **redirs)
 {
 	int		type;
@@ -38,13 +38,13 @@ static int	extract_one_redir(t_token **head, t_token **prev_p,
 	cur = remove_token(head, *prev_p, cur);
 	file_tok = cur;
 	if (!file_tok)
-		return (-1);
+		return (NULL);
 	redir = new_redir(type, ft_strdup(file_tok->val));
 	if (!redir)
-		return (-1);
+		return (NULL);
 	redir_add_back(redirs, redir);
 	remove_token(head, *prev_p, file_tok);
-	return (0);
+	return (redir);
 }
 
 /* Advances i past redir op, checks a valid target follows */
@@ -88,27 +88,24 @@ int	parse_redirs(t_token **head, t_redir **redirs, t_shell *shell)
 {
 	t_token	*cur;
 	t_token	*prev;
-	t_redir	*last;
+	t_redir	*rdir;
 
-	cur = *head;
 	prev = NULL;
+	cur = *head;
 	while (cur)
 	{
 		if (is_redir_op(cur->val))
 		{
-			if (extract_one_redir(head, &prev, cur, redirs) == -1)
+			rdir = extract_one_redir(head, &prev, cur, redirs);
+			if (!rdir)
 				return (-1);
-			last = *redirs;
-			while (last->next)
-				last = last->next;
-			resolve_last_redir(last, shell);
-			cur = (prev ? prev->next : *head);
+			resolve_last_redir(rdir, shell);
 		}
 		else
-		{
 			prev = cur;
-			cur = cur->next;
-		}
+		cur = *head;
+		if (prev)
+			cur = prev->next;
 	}
 	return (0);
 }

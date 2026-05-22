@@ -23,33 +23,39 @@ static void	exec_export_no_args(t_var *vars)
 	}
 }
 
-/* Set or create vars as exported; no args prints current exported vars */
-int	exec_export(t_cmd *cmd, t_shell *shell)
+static void	process_export_arg(char *arg, t_shell *shell)
 {
 	t_var	*node;
 	char	*eq;
-	int		i;
+
+	eq = ft_strchr(arg, '=');
+	if (eq)
+	{
+		*eq = '\0';
+		set_var(arg, eq + 1, 1, shell);
+		*eq = '=';
+	}
+	else
+	{
+		node = find_var(arg, shell->vars);
+		if (node)
+			node->exported = 1;
+		else
+			set_var(arg, NULL, 1, shell);
+	}
+}
+
+/* Set or create vars as exported; no args prints current exported vars */
+int	exec_export(t_cmd *cmd, t_shell *shell)
+{
+	int	i;
 
 	if (!cmd->args[1])
 		return (exec_export_no_args(shell->vars), 0);
 	i = 1;
 	while (cmd->args[i])
 	{
-		eq = ft_strchr(cmd->args[i], '=');
-		if (eq)
-		{
-			*eq = '\0';
-			set_var(cmd->args[i], eq + 1, 1, shell);
-			*eq = '=';
-		}
-		else
-		{
-			node = find_var(cmd->args[i], shell->vars);
-			if (node)
-				node->exported = 1;
-			else
-				set_var(cmd->args[i], NULL, 1, shell);
-		}
+		process_export_arg(cmd->args[i], shell);
 		i++;
 	}
 	return (0);
@@ -68,8 +74,6 @@ int	exec_unset(t_cmd *cmd, t_shell *shell)
 	}
 	return (0);
 }
-
-
 
 /* Exit the shell with optional exit code */
 int	exec_exit(t_cmd *cmd, t_shell *shell)
