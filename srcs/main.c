@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aleriaza <aleriaza@student.42wolfsburg.    +#+  +:+       +#+        */
+/*   By: dprudnik <dprudnik@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/25 16:06:23 by aleriaza          #+#    #+#             */
-/*   Updated: 2026/05/18 16:23:54 by aleriaza         ###   ########.fr       */
+/*   Updated: 2026/05/22 15:35:20 by dprudnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ static void	process_line(char *line, t_shell *shell)
 	cmds = split_and_parse(line, shell);
 	if (!cmds)
 		return ;
-	run_commands(cmds, shell);// NOTE :Added by Denis for exec entry point!!
+	run_commands(cmds, shell);
 	free_cmd_list(cmds);
 }
 
@@ -66,12 +66,18 @@ static void	shell_loop(t_shell *shell)
 
 	while (1)
 	{
+		signals_set_interactive();
 		line = read_full_line();
 		if (!line)
 		{
 			if (isatty(STDIN_FILENO))
 				printf("exit\n");
 			break ;
+		}
+		if (g_last_signal == SIGINT)
+		{
+			shell->exit_status = 130;
+			g_last_signal = 0;
 		}
 		process_line(line, shell);
 		free(line);
@@ -85,7 +91,6 @@ int	main(int argc, char **argv, char **envp)
 	(void)argc;
 	(void)argv;
 	shell = init_shell(envp);
-	setup_signals();
 	shell_loop(shell);
 	cleanup_shell(shell);
 	return (0);
