@@ -53,5 +53,6 @@ void	setup_tmp_signals(void)
 	sa_ignore.sa_handler = SIG_IGN;
 	sigemptyset(&sa_ignore.sa_mask);
 	sa_ignore.sa_flags = 0;
+	sigaction(SIGQUIT, &sa_ignore, &sa_old); // Ignore SIGQUIT as well
 	sigaction(SIGINT, &sa_ignore, &sa_old);
 }
