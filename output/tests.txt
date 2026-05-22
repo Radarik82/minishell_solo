@@ -1,0 +1,1367 @@
+
+
+████  ECHO (tests 1-15)  ████
+
+══ Test   1 ══════════════════════════════════════════════
+DESCRIPTION : echo: simple string
+
+1. INPUT:
+echo hello
+
+2. BASH OUTPUT:
+hello
+
+3. MINISHELL OUTPUT:
+hello
+
+══ Test   2 ══════════════════════════════════════════════
+DESCRIPTION : echo: multiple arguments
+
+1. INPUT:
+echo hello world
+
+2. BASH OUTPUT:
+hello world
+
+3. MINISHELL OUTPUT:
+hello world
+
+══ Test   3 ══════════════════════════════════════════════
+DESCRIPTION : echo: suppress newline (-n)
+
+1. INPUT:
+echo -n hi
+
+2. BASH OUTPUT:
+hi
+
+3. MINISHELL OUTPUT:
+hi
+
+══ Test   4 ══════════════════════════════════════════════
+DESCRIPTION : echo: no arguments
+
+1. INPUT:
+echo
+
+2. BASH OUTPUT:
+(empty)
+
+3. MINISHELL OUTPUT:
+(empty)
+
+══ Test   5 ══════════════════════════════════════════════
+DESCRIPTION : echo: only -n flag
+
+1. INPUT:
+echo -n
+
+2. BASH OUTPUT:
+(empty)
+
+3. MINISHELL OUTPUT:
+(empty)
+
+══ Test   6 ══════════════════════════════════════════════
+DESCRIPTION : echo: single-quoted string
+
+1. INPUT:
+echo 'hello world'
+
+2. BASH OUTPUT:
+hello world
+
+3. MINISHELL OUTPUT:
+hello world
+
+══ Test   7 ══════════════════════════════════════════════
+DESCRIPTION : echo: double-quoted string
+
+1. INPUT:
+echo "hello world"
+
+2. BASH OUTPUT:
+hello world
+
+3. MINISHELL OUTPUT:
+hello world
+
+══ Test   8 ══════════════════════════════════════════════
+DESCRIPTION : echo: empty single quotes
+
+1. INPUT:
+echo ''
+
+2. BASH OUTPUT:
+(empty)
+
+3. MINISHELL OUTPUT:
+(empty)
+
+══ Test   9 ══════════════════════════════════════════════
+DESCRIPTION : echo: single quotes prevent expansion
+
+1. INPUT:
+echo '$HOME'
+
+2. BASH OUTPUT:
+$HOME
+
+3. MINISHELL OUTPUT:
+$HOME
+
+══ Test  10 ══════════════════════════════════════════════
+DESCRIPTION : echo: double quotes allow expansion
+
+1. INPUT:
+echo "$HOME"
+
+2. BASH OUTPUT:
+/home/aleriaza
+
+3. MINISHELL OUTPUT:
+/home/aleriaza
+
+══ Test  11 ══════════════════════════════════════════════
+DESCRIPTION : echo: multi-flag -nnn
+
+1. INPUT:
+echo -nnn foo
+
+2. BASH OUTPUT:
+foo
+
+3. MINISHELL OUTPUT:
+foo
+
+══ Test  12 ══════════════════════════════════════════════
+DESCRIPTION : echo: two commands (no trailing newline)
+
+1. INPUT:
+echo -n hello
+echo world
+
+2. BASH OUTPUT:
+helloworld
+
+3. MINISHELL OUTPUT:
+helloworld
+
+══ Test  13 ══════════════════════════════════════════════
+DESCRIPTION : echo: spaces inside double quotes
+
+1. INPUT:
+echo "  spaces  "
+
+2. BASH OUTPUT:
+  spaces  
+
+3. MINISHELL OUTPUT:
+  spaces  
+
+══ Test  14 ══════════════════════════════════════════════
+DESCRIPTION : echo: mixed single and double quotes
+
+1. INPUT:
+echo 'a'"b"'c'
+
+2. BASH OUTPUT:
+abc
+
+3. MINISHELL OUTPUT:
+abc
+
+══ Test  15 ══════════════════════════════════════════════
+DESCRIPTION : echo: USER variable expansion
+
+1. INPUT:
+echo "$USER"
+
+2. BASH OUTPUT:
+aleriaza
+
+3. MINISHELL OUTPUT:
+aleriaza
+
+
+
+████  PWD (tests 16-17)  ████
+
+══ Test  16 ══════════════════════════════════════════════
+DESCRIPTION : pwd: print working directory
+
+1. INPUT:
+pwd
+
+2. BASH OUTPUT:
+/sgoinfre/aleriaza/aleriaza42/Aleriaza-current/minishell/minishell_solo
+
+3. MINISHELL OUTPUT:
+/sgoinfre/aleriaza/aleriaza42/Aleriaza-current/minishell/minishell_solo
+
+══ Test  17 ══════════════════════════════════════════════
+DESCRIPTION : pwd: after cd to /tmp
+
+1. INPUT:
+cd /tmp
+pwd
+
+2. BASH OUTPUT:
+/tmp
+
+3. MINISHELL OUTPUT:
+/tmp
+
+
+
+████  CD (tests 18-27)  ████
+
+══ Test  18 ══════════════════════════════════════════════
+DESCRIPTION : cd: tilde expands to HOME
+
+1. INPUT:
+cd ~
+pwd
+
+2. BASH OUTPUT:
+/home/aleriaza
+
+3. MINISHELL OUTPUT:
+/home/aleriaza
+
+══ Test  19 ══════════════════════════════════════════════
+DESCRIPTION : cd: no argument goes home
+
+1. INPUT:
+cd
+pwd
+
+2. BASH OUTPUT:
+/home/aleriaza
+
+3. MINISHELL OUTPUT:
+/home/aleriaza
+
+══ Test  20 ══════════════════════════════════════════════
+DESCRIPTION : cd: absolute path /var
+
+1. INPUT:
+cd /var
+pwd
+
+2. BASH OUTPUT:
+/var
+
+3. MINISHELL OUTPUT:
+/var
+
+══ Test  21 ══════════════════════════════════════════════
+DESCRIPTION : cd: then back with cd -
+
+1. INPUT:
+cd /tmp
+cd /var
+cd -
+pwd
+
+2. BASH OUTPUT:
+/tmp
+/tmp
+
+3. MINISHELL OUTPUT:
+/tmp
+
+══ Test  22 ══════════════════════════════════════════════
+DESCRIPTION : cd: exit status on success
+
+1. INPUT:
+cd /tmp
+echo $?
+
+2. BASH OUTPUT:
+0
+
+3. MINISHELL OUTPUT:
+0
+
+══ Test  23 ══════════════════════════════════════════════
+DESCRIPTION : cd: exit status on failure
+
+1. INPUT:
+cd /nonexistentdir123
+echo $?
+
+2. BASH OUTPUT:
+bash: line 1: cd: /nonexistentdir123: No such file or directory
+1
+
+3. MINISHELL OUTPUT:
+minishell: cd: /nonexistentdir123: No such file or directory
+1
+
+══ Test  24 ══════════════════════════════════════════════
+DESCRIPTION : cd: parent directory ..
+
+1. INPUT:
+cd /tmp
+cd ..
+pwd
+
+2. BASH OUTPUT:
+/
+
+3. MINISHELL OUTPUT:
+/
+
+══ Test  25 ══════════════════════════════════════════════
+DESCRIPTION : cd: nested path /usr/bin
+
+1. INPUT:
+cd /usr/bin
+pwd
+
+2. BASH OUTPUT:
+/usr/bin
+
+3. MINISHELL OUTPUT:
+/usr/bin
+
+══ Test  26 ══════════════════════════════════════════════
+DESCRIPTION : cd: HOME then back
+
+1. INPUT:
+cd ~
+cd /tmp
+cd ~
+pwd
+
+2. BASH OUTPUT:
+/home/aleriaza
+
+3. MINISHELL OUTPUT:
+/home/aleriaza
+
+══ Test  27 ══════════════════════════════════════════════
+DESCRIPTION : cd: update OLDPWD chain
+
+1. INPUT:
+cd /tmp
+cd /var
+cd -
+cd -
+pwd
+
+2. BASH OUTPUT:
+/tmp
+/var
+/var
+
+3. MINISHELL OUTPUT:
+/var
+
+
+
+████  EXIT STATUS $? (tests 28-35)  ████
+
+══ Test  28 ══════════════════════════════════════════════
+DESCRIPTION : exit status: true = 0
+
+1. INPUT:
+true
+echo $?
+
+2. BASH OUTPUT:
+0
+
+3. MINISHELL OUTPUT:
+0
+
+══ Test  29 ══════════════════════════════════════════════
+DESCRIPTION : exit status: false = 1
+
+1. INPUT:
+false
+echo $?
+
+2. BASH OUTPUT:
+1
+
+3. MINISHELL OUTPUT:
+1
+
+══ Test  30 ══════════════════════════════════════════════
+DESCRIPTION : exit status: nonexistent command = 127
+
+1. INPUT:
+nonexistentcmd123
+echo $?
+
+2. BASH OUTPUT:
+bash: line 1: nonexistentcmd123: command not found
+127
+
+3. MINISHELL OUTPUT:
+minishell: command not found
+127
+
+══ Test  31 ══════════════════════════════════════════════
+DESCRIPTION : exit status: echo = 0
+
+1. INPUT:
+echo hi
+echo $?
+
+2. BASH OUTPUT:
+hi
+0
+
+3. MINISHELL OUTPUT:
+hi
+0
+
+══ Test  32 ══════════════════════════════════════════════
+DESCRIPTION : exit status: /bin/ls success = 0
+
+1. INPUT:
+/bin/ls / > /dev/null
+echo $?
+
+2. BASH OUTPUT:
+0
+
+3. MINISHELL OUTPUT:
+0
+
+══ Test  33 ══════════════════════════════════════════════
+DESCRIPTION : exit status: /bin/ls bad path
+
+1. INPUT:
+/bin/ls /badpath123 2>/dev/null
+echo $?
+
+2. BASH OUTPUT:
+2
+
+3. MINISHELL OUTPUT:
+/bin/ls: cannot access '/badpath123': No such file or directory
+/bin/ls: cannot access '2': No such file or directory
+2
+
+══ Test  34 ══════════════════════════════════════════════
+DESCRIPTION : exit status: false then true = 0
+
+1. INPUT:
+false
+true
+echo $?
+
+2. BASH OUTPUT:
+0
+
+3. MINISHELL OUTPUT:
+0
+
+══ Test  35 ══════════════════════════════════════════════
+DESCRIPTION : exit status: true then false = 1
+
+1. INPUT:
+true
+false
+echo $?
+
+2. BASH OUTPUT:
+1
+
+3. MINISHELL OUTPUT:
+1
+
+
+
+████  EXPORT / UNSET / ENV (tests 36-50)  ████
+
+══ Test  36 ══════════════════════════════════════════════
+DESCRIPTION : export: set and echo variable
+
+1. INPUT:
+export TESTVAR=hello
+echo $TESTVAR
+
+2. BASH OUTPUT:
+hello
+
+3. MINISHELL OUTPUT:
+hello
+
+══ Test  37 ══════════════════════════════════════════════
+DESCRIPTION : export: unset removes variable
+
+1. INPUT:
+export TESTVAR=hello
+unset TESTVAR
+echo $TESTVAR
+
+2. BASH OUTPUT:
+(empty)
+
+3. MINISHELL OUTPUT:
+(empty)
+
+══ Test  38 ══════════════════════════════════════════════
+DESCRIPTION : export: env shows HOME
+
+1. INPUT:
+env | grep '^HOME='
+
+2. BASH OUTPUT:
+HOME=/home/aleriaza
+
+3. MINISHELL OUTPUT:
+HOME=/home/aleriaza
+
+══ Test  39 ══════════════════════════════════════════════
+DESCRIPTION : export: new var visible in env
+
+1. INPUT:
+export MYVAR=42
+env | grep '^MYVAR='
+
+2. BASH OUTPUT:
+MYVAR=42
+
+3. MINISHELL OUTPUT:
+MYVAR=42
+
+══ Test  40 ══════════════════════════════════════════════
+DESCRIPTION : export: overwrite existing variable
+
+1. INPUT:
+export X=first
+export X=second
+echo $X
+
+2. BASH OUTPUT:
+second
+
+3. MINISHELL OUTPUT:
+second
+
+══ Test  41 ══════════════════════════════════════════════
+DESCRIPTION : export: empty value
+
+1. INPUT:
+export EMPTYVAR=
+echo "$EMPTYVAR"
+
+2. BASH OUTPUT:
+(empty)
+
+3. MINISHELL OUTPUT:
+(empty)
+
+══ Test  42 ══════════════════════════════════════════════
+DESCRIPTION : export: multiple vars on one export line
+
+1. INPUT:
+export A=1 B=2 C=3
+echo $A $B $C
+
+2. BASH OUTPUT:
+1 2 3
+
+3. MINISHELL OUTPUT:
+1 2 3
+
+══ Test  43 ══════════════════════════════════════════════
+DESCRIPTION : export: unset non-existent var (exit 0)
+
+1. INPUT:
+unset NOVAR_XYZ
+echo $?
+
+2. BASH OUTPUT:
+0
+
+3. MINISHELL OUTPUT:
+0
+
+══ Test  44 ══════════════════════════════════════════════
+DESCRIPTION : export: number string value
+
+1. INPUT:
+export NUM=42
+echo $NUM
+
+2. BASH OUTPUT:
+42
+
+3. MINISHELL OUTPUT:
+42
+
+══ Test  45 ══════════════════════════════════════════════
+DESCRIPTION : export: value with spaces (quoted)
+
+1. INPUT:
+export SPACED="hello world"
+echo $SPACED
+
+2. BASH OUTPUT:
+hello world
+
+3. MINISHELL OUTPUT:
+hello world
+
+══ Test  46 ══════════════════════════════════════════════
+DESCRIPTION : export: chain overwrites
+
+1. INPUT:
+export V=1
+export V=2
+export V=3
+echo $V
+
+2. BASH OUTPUT:
+3
+
+3. MINISHELL OUTPUT:
+3
+
+══ Test  47 ══════════════════════════════════════════════
+DESCRIPTION : export: no-args shows declare -x format
+
+1. INPUT:
+export SHOWME=test
+export | grep '^declare -x SHOWME'
+
+2. BASH OUTPUT:
+declare -x SHOWME="test"
+
+3. MINISHELL OUTPUT:
+declare -x SHOWME="test"
+
+══ Test  48 ══════════════════════════════════════════════
+DESCRIPTION : export: alphabetical order (Z A M sequence)
+
+1. INPUT:
+export ZTEST=z
+export ATEST=a
+export MTEST=m
+export | grep TEST
+
+2. BASH OUTPUT:
+declare -x ATEST="a"
+declare -x MTEST="m"
+declare -x ZTEST="z"
+
+3. MINISHELL OUTPUT:
+declare -x ZTEST="z"
+declare -x ATEST="a"
+declare -x MTEST="m"
+
+══ Test  49 ══════════════════════════════════════════════
+DESCRIPTION : env: PATH variable is set
+
+1. INPUT:
+env | grep '^PATH=' | head -1 | cut -c1-5
+
+2. BASH OUTPUT:
+PATH=
+
+3. MINISHELL OUTPUT:
+PATH=
+
+══ Test  50 ══════════════════════════════════════════════
+DESCRIPTION : env: USER variable is set
+
+1. INPUT:
+env | grep '^USER='
+
+2. BASH OUTPUT:
+USER=aleriaza
+
+3. MINISHELL OUTPUT:
+USER=aleriaza
+
+
+
+████  QUOTES (tests 51-60)  ████
+
+══ Test  51 ══════════════════════════════════════════════
+DESCRIPTION : quotes: single quotes block all expansion
+
+1. INPUT:
+echo '$USER $HOME'
+
+2. BASH OUTPUT:
+$USER $HOME
+
+3. MINISHELL OUTPUT:
+$USER $HOME
+
+══ Test  52 ══════════════════════════════════════════════
+DESCRIPTION : quotes: double quotes expand USER
+
+1. INPUT:
+echo "$USER"
+
+2. BASH OUTPUT:
+aleriaza
+
+3. MINISHELL OUTPUT:
+aleriaza
+
+══ Test  53 ══════════════════════════════════════════════
+DESCRIPTION : quotes: mixed single/double concatenated
+
+1. INPUT:
+echo 'a'"b"'c'
+
+2. BASH OUTPUT:
+abc
+
+3. MINISHELL OUTPUT:
+abc
+
+══ Test  54 ══════════════════════════════════════════════
+DESCRIPTION : quotes: empty single quotes
+
+1. INPUT:
+echo ''
+
+2. BASH OUTPUT:
+(empty)
+
+3. MINISHELL OUTPUT:
+(empty)
+
+══ Test  55 ══════════════════════════════════════════════
+DESCRIPTION : quotes: empty double quotes
+
+1. INPUT:
+echo ""
+
+2. BASH OUTPUT:
+(empty)
+
+3. MINISHELL OUTPUT:
+(empty)
+
+══ Test  56 ══════════════════════════════════════════════
+DESCRIPTION : quotes: spaces preserved in single
+
+1. INPUT:
+echo 'a   b'
+
+2. BASH OUTPUT:
+a   b
+
+3. MINISHELL OUTPUT:
+a   b
+
+══ Test  57 ══════════════════════════════════════════════
+DESCRIPTION : quotes: spaces preserved in double
+
+1. INPUT:
+echo "a   b"
+
+2. BASH OUTPUT:
+a   b
+
+3. MINISHELL OUTPUT:
+a   b
+
+══ Test  58 ══════════════════════════════════════════════
+DESCRIPTION : quotes: variable inside double quotes
+
+1. INPUT:
+export VAR=hello
+echo "value: $VAR"
+
+2. BASH OUTPUT:
+value: hello
+
+3. MINISHELL OUTPUT:
+value: hello
+
+══ Test  59 ══════════════════════════════════════════════
+DESCRIPTION : quotes: dollar-question in double quotes
+
+1. INPUT:
+true
+echo "status: $?"
+
+2. BASH OUTPUT:
+status: 0
+
+3. MINISHELL OUTPUT:
+status: 0
+
+══ Test  60 ══════════════════════════════════════════════
+DESCRIPTION : quotes: no expansion in single quotes
+
+1. INPUT:
+echo 'no $expansion here'
+
+2. BASH OUTPUT:
+no $expansion here
+
+3. MINISHELL OUTPUT:
+no $expansion here
+
+
+
+████  PIPES (tests 61-70)  ████
+
+══ Test  61 ══════════════════════════════════════════════
+DESCRIPTION : pipe: echo to cat
+
+1. INPUT:
+echo hello | cat
+
+2. BASH OUTPUT:
+hello
+
+3. MINISHELL OUTPUT:
+hello
+
+══ Test  62 ══════════════════════════════════════════════
+DESCRIPTION : pipe: printf to grep
+
+1. INPUT:
+printf 'a\nb\nc\n' | grep b
+
+2. BASH OUTPUT:
+b
+
+3. MINISHELL OUTPUT:
+b
+
+══ Test  63 ══════════════════════════════════════════════
+DESCRIPTION : pipe: three-stage cat chain
+
+1. INPUT:
+echo hello | cat | cat
+
+2. BASH OUTPUT:
+hello
+
+3. MINISHELL OUTPUT:
+hello
+
+══ Test  64 ══════════════════════════════════════════════
+DESCRIPTION : pipe: echo to wc -w
+
+1. INPUT:
+echo hello | wc -w
+
+2. BASH OUTPUT:
+1
+
+3. MINISHELL OUTPUT:
+1
+
+══ Test  65 ══════════════════════════════════════════════
+DESCRIPTION : pipe: sort strings
+
+1. INPUT:
+printf 'banana\napple\ncherry\n' | sort
+
+2. BASH OUTPUT:
+apple
+banana
+cherry
+
+3. MINISHELL OUTPUT:
+apple
+banana
+cherry
+
+══ Test  66 ══════════════════════════════════════════════
+DESCRIPTION : pipe: tr uppercase to lowercase
+
+1. INPUT:
+echo HELLO | tr 'A-Z' 'a-z'
+
+2. BASH OUTPUT:
+hello
+
+3. MINISHELL OUTPUT:
+hello
+
+══ Test  67 ══════════════════════════════════════════════
+DESCRIPTION : pipe: tail last line
+
+1. INPUT:
+printf 'line1\nline2\nline3\n' | tail -1
+
+2. BASH OUTPUT:
+line3
+
+3. MINISHELL OUTPUT:
+line3
+
+══ Test  68 ══════════════════════════════════════════════
+DESCRIPTION : pipe: four-stage chain
+
+1. INPUT:
+echo foo | cat | cat | cat
+
+2. BASH OUTPUT:
+foo
+
+3. MINISHELL OUTPUT:
+foo
+
+══ Test  69 ══════════════════════════════════════════════
+DESCRIPTION : pipe: grep matching pattern
+
+1. INPUT:
+printf 'apple\nbanana\napricot\n' | grep '^a'
+
+2. BASH OUTPUT:
+apple
+apricot
+
+3. MINISHELL OUTPUT:
+apple
+apricot
+
+══ Test  70 ══════════════════════════════════════════════
+DESCRIPTION : pipe: count words in echo
+
+1. INPUT:
+echo hello world foo | wc -w
+
+2. BASH OUTPUT:
+3
+
+3. MINISHELL OUTPUT:
+3
+
+
+
+████  REDIRECTIONS (tests 71-82)  ████
+
+══ Test  71 ══════════════════════════════════════════════
+DESCRIPTION : redirect: > creates and writes file
+
+1. INPUT:
+echo hello > /tmp/ms_redir_39386841
+cat /tmp/ms_redir_39386841
+
+2. BASH OUTPUT:
+hello
+
+3. MINISHELL OUTPUT:
+hello
+
+══ Test  72 ══════════════════════════════════════════════
+DESCRIPTION : redirect: >> appends second line
+
+1. INPUT:
+echo line1 > /tmp/ms_redir_39386842
+echo line2 >> /tmp/ms_redir_39386842
+cat /tmp/ms_redir_39386842
+
+2. BASH OUTPUT:
+line1
+line2
+
+3. MINISHELL OUTPUT:
+line1
+line2
+
+══ Test  73 ══════════════════════════════════════════════
+DESCRIPTION : redirect: < reads stdin from file
+
+1. INPUT:
+echo world > /tmp/ms_redir_39386843
+cat < /tmp/ms_redir_39386843
+
+2. BASH OUTPUT:
+world
+
+3. MINISHELL OUTPUT:
+world
+
+══ Test  74 ══════════════════════════════════════════════
+DESCRIPTION : redirect: > truncates existing file
+
+1. INPUT:
+echo first > /tmp/ms_redir_39386844
+echo second > /tmp/ms_redir_39386844
+cat /tmp/ms_redir_39386844
+
+2. BASH OUTPUT:
+second
+
+3. MINISHELL OUTPUT:
+second
+
+══ Test  75 ══════════════════════════════════════════════
+DESCRIPTION : redirect: < with wc -w
+
+1. INPUT:
+echo hello world > /tmp/ms_redir_39386845
+wc -w < /tmp/ms_redir_39386845
+
+2. BASH OUTPUT:
+2
+
+3. MINISHELL OUTPUT:
+2
+
+══ Test  76 ══════════════════════════════════════════════
+DESCRIPTION : redirect: multi-line append (3 lines)
+
+1. INPUT:
+echo alpha > /tmp/ms_redir_39386846
+echo beta >> /tmp/ms_redir_39386846
+echo gamma >> /tmp/ms_redir_39386846
+cat /tmp/ms_redir_39386846
+
+2. BASH OUTPUT:
+alpha
+beta
+gamma
+
+3. MINISHELL OUTPUT:
+alpha
+beta
+gamma
+
+══ Test  77 ══════════════════════════════════════════════
+DESCRIPTION : redirect: pipe result into file
+
+1. INPUT:
+echo piped | cat > /tmp/ms_redir_39386847
+cat /tmp/ms_redir_39386847
+
+2. BASH OUTPUT:
+piped
+
+3. MINISHELL OUTPUT:
+piped
+
+══ Test  78 ══════════════════════════════════════════════
+DESCRIPTION : redirect: count lines with wc -l
+
+1. INPUT:
+echo a > /tmp/ms_redir_39386848
+echo b >> /tmp/ms_redir_39386848
+echo c >> /tmp/ms_redir_39386848
+wc -l < /tmp/ms_redir_39386848
+
+2. BASH OUTPUT:
+3
+
+3. MINISHELL OUTPUT:
+3
+
+══ Test  79 ══════════════════════════════════════════════
+DESCRIPTION : redirect: grep from redirected file
+
+1. INPUT:
+echo hello world > /tmp/ms_redir_39386849
+grep hello < /tmp/ms_redir_39386849
+
+2. BASH OUTPUT:
+hello world
+
+3. MINISHELL OUTPUT:
+hello world
+
+══ Test  80 ══════════════════════════════════════════════
+DESCRIPTION : redirect: cat file into another file
+
+1. INPUT:
+echo source > /tmp/ms_redir_393868410
+cat < /tmp/ms_redir_393868410 > /tmp/ms_redir_393868411
+cat /tmp/ms_redir_393868411
+
+2. BASH OUTPUT:
+source
+
+3. MINISHELL OUTPUT:
+source
+
+══ Test  81 ══════════════════════════════════════════════
+DESCRIPTION : redirect: chain > then cat
+
+1. INPUT:
+echo chain > /tmp/ms_redir_393868412
+cat /tmp/ms_redir_393868412 | wc -c
+
+2. BASH OUTPUT:
+6
+
+3. MINISHELL OUTPUT:
+6
+
+══ Test  82 ══════════════════════════════════════════════
+DESCRIPTION : redirect: > with number content
+
+1. INPUT:
+echo 42 > /tmp/ms_redir_393868413
+cat /tmp/ms_redir_393868413
+
+2. BASH OUTPUT:
+42
+
+3. MINISHELL OUTPUT:
+42
+
+
+
+████  HEREDOC << (tests 83-88)  ████
+
+══ Test  83 ══════════════════════════════════════════════
+DESCRIPTION : heredoc: basic two-line body
+
+1. INPUT:
+cat << EOF
+hello
+world
+EOF
+
+2. BASH OUTPUT:
+hello
+world
+
+3. MINISHELL OUTPUT:
+hello
+world
+
+══ Test  84 ══════════════════════════════════════════════
+DESCRIPTION : heredoc: single-line body
+
+1. INPUT:
+cat << EOF
+only
+EOF
+
+2. BASH OUTPUT:
+only
+
+3. MINISHELL OUTPUT:
+only
+
+══ Test  85 ══════════════════════════════════════════════
+DESCRIPTION : heredoc: quoted delimiter blocks expansion
+
+1. INPUT:
+cat << 'EOF'
+$HOME
+EOF
+
+2. BASH OUTPUT:
+$HOME
+
+3. MINISHELL OUTPUT:
+$HOME
+
+══ Test  86 ══════════════════════════════════════════════
+DESCRIPTION : heredoc: unquoted delimiter expands vars
+
+1. INPUT:
+cat << EOF
+$HOME
+EOF
+
+2. BASH OUTPUT:
+/home/aleriaza
+
+3. MINISHELL OUTPUT:
+/home/aleriaza
+
+══ Test  87 ══════════════════════════════════════════════
+DESCRIPTION : heredoc: piped to grep
+
+1. INPUT:
+cat << EOF | grep hello
+hello
+world
+EOF
+
+2. BASH OUTPUT:
+hello
+
+3. MINISHELL OUTPUT:
+hello
+
+══ Test  88 ══════════════════════════════════════════════
+DESCRIPTION : heredoc: after regular command
+
+1. INPUT:
+echo start
+cat << END
+line1
+line2
+END
+
+2. BASH OUTPUT:
+start
+line1
+line2
+
+3. MINISHELL OUTPUT:
+start
+line1
+line2
+
+
+
+████  EXTERNAL COMMANDS (tests 89-95)  ████
+
+══ Test  89 ══════════════════════════════════════════════
+DESCRIPTION : external: /bin/echo
+
+1. INPUT:
+/bin/echo test
+
+2. BASH OUTPUT:
+test
+
+3. MINISHELL OUTPUT:
+test
+
+══ Test  90 ══════════════════════════════════════════════
+DESCRIPTION : external: /bin/true exit status
+
+1. INPUT:
+/bin/true
+echo $?
+
+2. BASH OUTPUT:
+0
+
+3. MINISHELL OUTPUT:
+0
+
+══ Test  91 ══════════════════════════════════════════════
+DESCRIPTION : external: /bin/false exit status
+
+1. INPUT:
+/bin/false
+echo $?
+
+2. BASH OUTPUT:
+1
+
+3. MINISHELL OUTPUT:
+1
+
+══ Test  92 ══════════════════════════════════════════════
+DESCRIPTION : external: tr via full path
+
+1. INPUT:
+/usr/bin/tr a-z A-Z <<< hello
+
+2. BASH OUTPUT:
+HELLO
+
+3. MINISHELL OUTPUT:
+minishell: syntax error: syntax error near unexpected token `newline'
+
+══ Test  93 ══════════════════════════════════════════════
+DESCRIPTION : external: whoami
+
+1. INPUT:
+whoami
+
+2. BASH OUTPUT:
+aleriaza
+
+3. MINISHELL OUTPUT:
+aleriaza
+
+══ Test  94 ══════════════════════════════════════════════
+DESCRIPTION : external: hostname
+
+1. INPUT:
+hostname
+
+2. BASH OUTPUT:
+c2r7s7.42wolfsburg.de
+
+3. MINISHELL OUTPUT:
+c2r7s7.42wolfsburg.de
+
+══ Test  95 ══════════════════════════════════════════════
+DESCRIPTION : external: echo piped to external wc
+
+1. INPUT:
+echo one two three | /usr/bin/wc -w
+
+2. BASH OUTPUT:
+3
+
+3. MINISHELL OUTPUT:
+3
+
+
+
+████  EXIT CODE — shell process (tests 96-100)  ████
+
+══ Test  96 ══════════════════════════════════════════════
+DESCRIPTION : exit: exit 0 → shell exits 0
+
+1. INPUT:
+exit 0
+
+2. BASH OUTPUT:
+exit code: 0
+
+3. MINISHELL OUTPUT:
+exit code: 0
+
+══ Test  97 ══════════════════════════════════════════════
+DESCRIPTION : exit: exit 1 → shell exits 1
+
+1. INPUT:
+exit 1
+
+2. BASH OUTPUT:
+exit code: 1
+
+3. MINISHELL OUTPUT:
+exit code: 1
+
+══ Test  98 ══════════════════════════════════════════════
+DESCRIPTION : exit: exit 42 → shell exits 42
+
+1. INPUT:
+exit 42
+
+2. BASH OUTPUT:
+exit code: 42
+
+3. MINISHELL OUTPUT:
+exit code: 42
+
+══ Test  99 ══════════════════════════════════════════════
+DESCRIPTION : exit: exit 127 → shell exits 127
+
+1. INPUT:
+exit 127
+
+2. BASH OUTPUT:
+exit code: 127
+
+3. MINISHELL OUTPUT:
+exit code: 127
+
+══ Test 100 ══════════════════════════════════════════════
+DESCRIPTION : exit: exit 255 → shell exits 255
+
+1. INPUT:
+exit 255
+
+2. BASH OUTPUT:
+exit code: 255
+
+3. MINISHELL OUTPUT:
+exit code: 255
+
+
+
+Total tests generated: 100

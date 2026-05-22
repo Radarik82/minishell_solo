@@ -26,19 +26,20 @@ static int	cd_error(char *path)
 	return (1);
 }
 
-/* Resolves target path: HOME, OLDPWD (with print), or literal arg */
+/* Resolves target path: HOME (no arg or ~), OLDPWD (cd -), or literal arg */
 static char	*get_cd_path(t_cmd *cmd, t_shell *shell)
 {
 	char	*path;
 
 	if (!cmd->args[1])
 		return (get_var("HOME", shell->vars));
+	if (ft_strncmp(cmd->args[1], "~", 2) == 0)
+		return (get_var("HOME", shell->vars));
 	if (cmd->args[1][0] == '-' && cmd->args[1][1] == '\0')
 	{
 		path = get_var("OLDPWD", shell->vars);
 		if (!path)
 			return (print_error("cd: OLDPWD not set"), NULL);
-		ft_printf("%s\n", path);
 		return (path);
 	}
 	return (cmd->args[1]);
