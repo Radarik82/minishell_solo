@@ -27,14 +27,15 @@ SRCS =	srcs/main.c \
 		srcs/parser/redir_utils.c \
 		srcs/parser/redir_parse.c \
 		srcs/parser/syntax.c \
+		srcs/builtin_commands/builtin_cmds.c \
+		srcs/builtin_commands/cd.c \
+		srcs/builtin_commands/echo.c \
+		srcs/builtin_commands/env.c \
 		srcs/executor/builtin_utils.c \
 		srcs/executor/execute.c \
 		srcs/executor/run_commands.c \
 		srcs/executor/find_path.c \
 		srcs/executor/setup_pipes.c \
-		srcs/builtin_commands/builtin_cmds.c \
-		srcs/builtin_commands/cd.c \
-		srcs/builtin_commands/echo.c \
 		srcs/executor/redirection.c \
 		srcs/executor/heredoc.c
 

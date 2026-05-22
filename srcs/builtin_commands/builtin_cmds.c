@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_cmds.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aleriaza <aleriaza@student.42wolfsburg.    +#+  +:+       +#+        */
+/*   By: dprudnik <dprudnik@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/12 15:32:39 by aleriaza          #+#    #+#             */
-/*   Updated: 2026/05/18 00:00:00 by aleriaza         ###   ########.fr       */
+/*   Updated: 2026/05/22 16:00:02 by dprudnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,20 +69,7 @@ int	exec_unset(t_cmd *cmd, t_shell *shell)
 	return (0);
 }
 
-/* Print all exported environment variables as NAME=VALUE */
-int	exec_env(t_shell *shell)
-{
-	t_var	*cur;
 
-	cur = shell->vars;
-	while (cur)
-	{
-		if (cur->exported)
-			ft_printf("%s=%s\n", cur->name, cur->value);
-		cur = cur->next;
-	}
-	return (0);
-}
 
 /* Exit the shell with optional exit code */
 int	exec_exit(t_cmd *cmd, t_shell *shell)

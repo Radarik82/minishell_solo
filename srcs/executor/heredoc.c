@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aleriaza <aleriaza@student.42wolfsburg.    +#+  +:+       +#+        */
+/*   By: dprudnik <dprudnik@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/19 00:00:00 by aleriaza          #+#    #+#             */
-/*   Updated: 2026/05/19 00:00:00 by aleriaza         ###   ########.fr       */
+/*   Updated: 2026/05/22 16:06:49 by dprudnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 /* Read one heredoc body line: readline in interactive, fgets otherwise */
+// FIX : not allowed to use fgets!
 static char	*read_hd_line(int interactive)
 {
 	char	buf[4096];

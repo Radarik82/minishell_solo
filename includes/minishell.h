@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aleriaza <aleriaza@student.42wolfsburg.    +#+  +:+       +#+        */
+/*   By: dprudnik <dprudnik@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 15:43:33 by ariazano          #+#    #+#             */
-/*   Updated: 2026/05/16 13:27:20 by aleriaza         ###   ########.fr       */
+/*   Updated: 2026/05/22 16:01:23 by dprudnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,32 +25,32 @@
 # include "../libft/libft.h"
 
 //signal variable
-extern int	g_signal_received;
+extern volatile sig_atomic_t g_last_signal;
 
 
 /* Token node — internal, used only during parsing */
-typedef struct s_token
+typedef struct		s_token
 {
 	char			*val;
 	struct s_token	*next;
-}	t_token;
+}					t_token;
 
 /* Environment variable node */
-typedef struct s_var
+typedef struct		s_var
 {
 	char			*name;
 	char			*value;
 	int				exported;
 	struct s_var	*next;
-}	t_var;
+}					t_var;
 
 /* Shell context — env linked list + last return code */
-typedef struct s_shell
+typedef struct		s_shell
 {
-	int		in_child;
-	t_var	*vars;
-	int		exit_status;
-}	t_shell;
+	int				in_child;
+	t_var			*vars;
+	int				exit_status;
+}					t_shell;
 
 /* Redirection type constants */
 # define REDIR_IN		0
@@ -59,42 +59,42 @@ typedef struct s_shell
 # define REDIR_HEREDOC	3
 
 /* Redirection node */
-typedef struct s_redir
+typedef struct		s_redir
 {
 	int				type;
 	char			*file;
 	struct s_redir	*next;
-}	t_redir;
+}					t_redir;
 
 /* Command node — parser output, one node per pipe segment */
-typedef struct s_cmd
+typedef struct		s_cmd
 {
 	char			**args;
 	t_redir			*redirs;
 	struct s_cmd	*next;
-}	t_cmd;
+}					t_cmd;
 
 /* Pipes */
-typedef struct s_pipe
+typedef struct		s_pipe
 {
-	int		in;
-	int		fd[2];
-	int		cmd_count;
-	pid_t	pid;
-}	t_pipe;
+	int				in;
+	int				fd[2];
+	int				cmd_count;
+	pid_t			pid;
+}					t_pipe;
 
 /* Execution struct */
-typedef struct s_exec
+typedef struct		s_exec
 {
 	t_shell			*shell;
 	t_cmd			*cmd;
 	t_pipe			pipe;
-}	t_exec;
+}					t_exec;
 
 /* signals.c */
-void	handle_sigint(int sig);
-void	setup_signals(void);
-void	setup_tmp_signals(void);
+void	signals_set_interactive(void);
+void	signals_set_parent_waiting(void);
+void	signals_set_child_exec(void);
 
 /* var_list.c */
 t_var	*new_var(char *name, char *value, int exported);
@@ -124,11 +124,11 @@ char	*join_path_cmd(char *dir, char *cmd);
 /* builtin_commands */
 int		exec_cd(t_cmd *cmd, t_shell *shell);
 int		exec_echo(char **args);
+int		exec_env(t_shell *shell);
 
 int		exec_pwd(t_cmd *cmd, t_shell *shell);
 int		exec_export(t_cmd *cmd, t_shell *shell);
 int		exec_unset(t_cmd *cmd, t_shell *shell);
-int		exec_env(t_shell *shell);
 int		exec_exit(t_cmd *cmd, t_shell *shell);
 
 /* builtin_entry.c */

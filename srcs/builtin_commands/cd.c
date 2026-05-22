@@ -3,13 +3,12 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aleriaza <aleriaza@student.42wolfsburg.    +#+  +:+       +#+        */
+/*   By: dprudnik <dprudnik@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/13 22:29:00 by denis             #+#    #+#             */
-/*   Updated: 2026/05/16 12:11:55 by aleriaza         ###   ########.fr       */
+/*   Updated: 2026/05/22 16:19:28 by dprudnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "minishell.h"
 
@@ -60,7 +59,10 @@ int	exec_cd(t_cmd *cmd, t_shell *shell)
 		return (1);
 	if (chdir(path) == -1)
 		return (cd_error(path));
-	set_var("OLDPWD", old_pwd ? old_pwd : "", 1, shell);
+	if (old_pwd)
+		set_var("OLDPWD", old_pwd, 1, shell);
+	else
+		set_var("OLDPWD", "", 1, shell);
 	set_var("PWD", getcwd(buf, PATH_MAX), 1, shell);
 	return (0);
 }
@@ -85,8 +87,10 @@ int	exec_pwd(t_cmd *cmd, t_shell *shell)
 }
 
 // NOTE : getcwd() always resolves symlinks to the physical path.
-// To track the logical path (like bash does) we would need to build it manually:
+// To track the logical path (like bash does)
+// we would need to build it manually:
 //   - If path is absolute -> use it directly as new PWD
 //   - If path is relative -> join current PWD + "/" + path,
 //     then normalize . and .. without resolving symlinks
-// This requires a path normalizer function. Would fix cd /bin -> /usr/bin issue.
+// This requires a path normalizer function.
+// Would fix cd /bin -> /usr/bin issue.

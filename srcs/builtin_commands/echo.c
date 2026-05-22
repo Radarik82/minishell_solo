@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: denis <dprudnik@student.42wolfsburg.de>    +#+  +:+       +#+        */
+/*   By: dprudnik <dprudnik@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/13 22:27:26 by denis             #+#    #+#             */
-/*   Updated: 2026/05/13 22:28:07 by denis            ###   ########.fr       */
+/*   Updated: 2026/05/22 15:36:09 by dprudnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int is_valid_n_flag(char *arg)
+static int	is_valid_n_flag(char *arg)
 {
 	int	j;
 

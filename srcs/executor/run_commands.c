@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   run_commands.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aleriaza <aleriaza@student.42wolfsburg.    +#+  +:+       +#+        */
+/*   By: dprudnik <dprudnik@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/12 16:43:43 by aleriaza          #+#    #+#             */
-/*   Updated: 2026/05/16 13:58:24 by dprudnik         ###   ########.fr       */
+/*   Updated: 2026/05/22 15:34:37 by dprudnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,12 +108,12 @@ static void	wait_children(t_pipe *pipe, t_shell *shell)
 		}
 		pid = waitpid(-1, &status, 0);
 	}
-	setup_signals();
 }
 
 void	child_process(t_exec *ex)
 {
 	ex->shell->in_child = 1;
+	signals_set_child_exec();
 	if (ex->pipe.in != STDIN_FILENO)
 		setup_input_pipe(ex->pipe.in);
 	if (ex->cmd->next)
@@ -146,19 +146,20 @@ int	execute_pipeline(t_cmd *cmds, t_shell *shell)
 	ex.cmd = cmds;
 	ex.pipe.in = STDIN_FILENO;
 	ex.pipe.cmd_count = cmd_count(cmds);
-	setup_tmp_signals();// NOTE : added here to test first.
+	signals_set_parent_waiting();
 	while (ex.cmd)
 	{
 		if (open_pipe(&ex))
-			return (1);
+			return (signals_set_interactive(), 1);
 		ex.pipe.pid = fork();
 		if (ex.pipe.pid == -1)
-			return (perror("fork"), 1);
+			return (perror("fork"), signals_set_interactive(), 1);
 		if (ex.pipe.pid == 0)
 			child_process(&ex);
 		parent_process(&ex);
 		ex.cmd = ex.cmd->next;
 	}
 	wait_children(&ex.pipe, shell);
+	signals_set_interactive();
 	return (0);
 }
