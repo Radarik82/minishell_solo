@@ -6,21 +6,30 @@
 /*   By: dprudnik <dprudnik@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/12 15:32:39 by aleriaza          #+#    #+#             */
-/*   Updated: 2026/05/22 16:00:02 by dprudnik         ###   ########.fr       */
+/*   Updated: 2026/05/23 20:49:15 by denis            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 /* Print all exported vars in declare -x format (export with no args) */
-static void	exec_export_no_args(t_var *vars)
+void	exec_export_no_args(t_var *vars)
 {
-	while (vars)
+	t_var	**arr;
+	int		size;
+	int		i;
+
+	arr = vars_to_array(vars, &size);
+	if (!arr)
+		return ;
+	i = 0;
+	while (i < size)
 	{
-		if (vars->exported)
-			ft_printf("declare -x %s=\"%s\"\n", vars->name, vars->value);
-		vars = vars->next;
+		if (arr[i]->exported)
+			print_export_var(arr[i]);
+		i++;
 	}
+	free(arr);
 }
 
 static void	process_export_arg(char *arg, t_shell *shell)

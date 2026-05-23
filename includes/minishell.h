@@ -6,7 +6,7 @@
 /*   By: dprudnik <dprudnik@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 15:43:33 by ariazano          #+#    #+#             */
-/*   Updated: 2026/05/22 16:01:23 by dprudnik         ###   ########.fr       */
+/*   Updated: 2026/05/23 20:51:00 by denis            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,6 +129,12 @@ int		exec_pwd(t_cmd *cmd, t_shell *shell);
 int		exec_export(t_cmd *cmd, t_shell *shell);
 int		exec_unset(t_cmd *cmd, t_shell *shell);
 int		exec_exit(t_cmd *cmd, t_shell *shell);
+
+void	swap_vars(t_var **a, t_var **b);
+int		cmp_names(char *s1, char *s2);
+void	print_export_var(t_var *var);
+void	sort_vars(t_var **arr, int size);
+t_var	**vars_to_array(t_var *vars, int *size);
 
 /* builtin_entry.c */
 int		save_std_fds(int *saved_stdin, int *saved_stdout);

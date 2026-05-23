@@ -34,6 +34,7 @@ int	is_relative_path(char *str)
 }
 
 /* Build envp from vars, exec the command; child exits on any failure */
+// NOTE : Does envp get freed?
 void	execute_child(char **args, t_var *vars)
 {
 	char	**envp;

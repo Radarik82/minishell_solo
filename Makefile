@@ -31,6 +31,7 @@ SRCS =	srcs/main.c \
 		srcs/builtin_commands/cd.c \
 		srcs/builtin_commands/echo.c \
 		srcs/builtin_commands/env.c \
+		srcs/builtin_commands/export_utils.c \
 		srcs/executor/builtin_utils.c \
 		srcs/executor/execute.c \
 		srcs/executor/run_commands.c \
