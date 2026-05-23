@@ -38,6 +38,7 @@ void	execute_child(char **args, t_var *vars)
 {
 	char	**envp;
 	char	*cmd_path;
+	char	*err;
 
 	signals_set_child_exec();
 	envp = vars_to_envp(vars);
@@ -47,7 +48,9 @@ void	execute_child(char **args, t_var *vars)
 		cmd_path = find_command(args[0], vars);
 	if (!cmd_path)
 	{
-		print_error("command not found");
+		err = ft_strjoin(args[0], ": command not found");
+		print_error(err);
+		free(err);
 		exit(127);
 	}
 	execve(cmd_path, args, envp);

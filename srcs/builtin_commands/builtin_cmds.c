@@ -12,9 +12,35 @@
 
 #include "minishell.h"
 
+static void	sort_export(t_var *vars)
+{
+	t_var	*i;
+	t_var	*j;
+	char	*tmp;
+	int		etmp;
+
+	i = vars;
+	while (i)
+	{
+		j = i->next;
+		while (j)
+		{
+			if (ft_strncmp(i->name, j->name, 256) > 0)
+			{
+				tmp = i->name; i->name = j->name; j->name = tmp;
+				tmp = i->value; i->value = j->value; j->value = tmp;
+				etmp = i->exported; i->exported = j->exported; j->exported = etmp;
+			}
+			j = j->next;
+		}
+		i = i->next;
+	}
+}
+
 /* Print all exported vars in declare -x format (export with no args) */
 static void	exec_export_no_args(t_var *vars)
 {
+	sort_export(vars);
 	while (vars)
 	{
 		if (vars->exported)
@@ -56,20 +82,6 @@ int	exec_export(t_cmd *cmd, t_shell *shell)
 	while (cmd->args[i])
 	{
 		process_export_arg(cmd->args[i], shell);
-		i++;
-	}
-	return (0);
-}
-
-/* Remove variables from the shell var list */
-int	exec_unset(t_cmd *cmd, t_shell *shell)
-{
-	int	i;
-
-	i = 1;
-	while (cmd->args[i])
-	{
-		unset_var(cmd->args[i], shell);
 		i++;
 	}
 	return (0);

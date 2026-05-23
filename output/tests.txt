@@ -270,6 +270,7 @@ pwd
 
 3. MINISHELL OUTPUT:
 /tmp
+/tmp
 
 ══ Test  22 ══════════════════════════════════════════════
 DESCRIPTION : cd: exit status on success
@@ -357,6 +358,8 @@ pwd
 /var
 
 3. MINISHELL OUTPUT:
+/tmp
+/var
 /var
 
 
@@ -401,7 +404,7 @@ bash: line 1: nonexistentcmd123: command not found
 127
 
 3. MINISHELL OUTPUT:
-minishell: command not found
+minishell: nonexistentcmd123: command not found
 127
 
 ══ Test  31 ══════════════════════════════════════════════
@@ -653,9 +656,9 @@ declare -x MTEST="m"
 declare -x ZTEST="z"
 
 3. MINISHELL OUTPUT:
-declare -x ZTEST="z"
 declare -x ATEST="a"
 declare -x MTEST="m"
+declare -x ZTEST="z"
 
 ══ Test  49 ══════════════════════════════════════════════
 DESCRIPTION : env: PATH variable is set
@@ -945,8 +948,8 @@ echo hello world foo | wc -w
 DESCRIPTION : redirect: > creates and writes file
 
 1. INPUT:
-echo hello > /tmp/ms_redir_39386841
-cat /tmp/ms_redir_39386841
+echo hello > /tmp/ms_redir_23149731
+cat /tmp/ms_redir_23149731
 
 2. BASH OUTPUT:
 hello
@@ -958,9 +961,9 @@ hello
 DESCRIPTION : redirect: >> appends second line
 
 1. INPUT:
-echo line1 > /tmp/ms_redir_39386842
-echo line2 >> /tmp/ms_redir_39386842
-cat /tmp/ms_redir_39386842
+echo line1 > /tmp/ms_redir_23149732
+echo line2 >> /tmp/ms_redir_23149732
+cat /tmp/ms_redir_23149732
 
 2. BASH OUTPUT:
 line1
@@ -974,8 +977,8 @@ line2
 DESCRIPTION : redirect: < reads stdin from file
 
 1. INPUT:
-echo world > /tmp/ms_redir_39386843
-cat < /tmp/ms_redir_39386843
+echo world > /tmp/ms_redir_23149733
+cat < /tmp/ms_redir_23149733
 
 2. BASH OUTPUT:
 world
@@ -987,9 +990,9 @@ world
 DESCRIPTION : redirect: > truncates existing file
 
 1. INPUT:
-echo first > /tmp/ms_redir_39386844
-echo second > /tmp/ms_redir_39386844
-cat /tmp/ms_redir_39386844
+echo first > /tmp/ms_redir_23149734
+echo second > /tmp/ms_redir_23149734
+cat /tmp/ms_redir_23149734
 
 2. BASH OUTPUT:
 second
@@ -1001,8 +1004,8 @@ second
 DESCRIPTION : redirect: < with wc -w
 
 1. INPUT:
-echo hello world > /tmp/ms_redir_39386845
-wc -w < /tmp/ms_redir_39386845
+echo hello world > /tmp/ms_redir_23149735
+wc -w < /tmp/ms_redir_23149735
 
 2. BASH OUTPUT:
 2
@@ -1014,10 +1017,10 @@ wc -w < /tmp/ms_redir_39386845
 DESCRIPTION : redirect: multi-line append (3 lines)
 
 1. INPUT:
-echo alpha > /tmp/ms_redir_39386846
-echo beta >> /tmp/ms_redir_39386846
-echo gamma >> /tmp/ms_redir_39386846
-cat /tmp/ms_redir_39386846
+echo alpha > /tmp/ms_redir_23149736
+echo beta >> /tmp/ms_redir_23149736
+echo gamma >> /tmp/ms_redir_23149736
+cat /tmp/ms_redir_23149736
 
 2. BASH OUTPUT:
 alpha
@@ -1033,8 +1036,8 @@ gamma
 DESCRIPTION : redirect: pipe result into file
 
 1. INPUT:
-echo piped | cat > /tmp/ms_redir_39386847
-cat /tmp/ms_redir_39386847
+echo piped | cat > /tmp/ms_redir_23149737
+cat /tmp/ms_redir_23149737
 
 2. BASH OUTPUT:
 piped
@@ -1046,10 +1049,10 @@ piped
 DESCRIPTION : redirect: count lines with wc -l
 
 1. INPUT:
-echo a > /tmp/ms_redir_39386848
-echo b >> /tmp/ms_redir_39386848
-echo c >> /tmp/ms_redir_39386848
-wc -l < /tmp/ms_redir_39386848
+echo a > /tmp/ms_redir_23149738
+echo b >> /tmp/ms_redir_23149738
+echo c >> /tmp/ms_redir_23149738
+wc -l < /tmp/ms_redir_23149738
 
 2. BASH OUTPUT:
 3
@@ -1061,8 +1064,8 @@ wc -l < /tmp/ms_redir_39386848
 DESCRIPTION : redirect: grep from redirected file
 
 1. INPUT:
-echo hello world > /tmp/ms_redir_39386849
-grep hello < /tmp/ms_redir_39386849
+echo hello world > /tmp/ms_redir_23149739
+grep hello < /tmp/ms_redir_23149739
 
 2. BASH OUTPUT:
 hello world
@@ -1074,9 +1077,9 @@ hello world
 DESCRIPTION : redirect: cat file into another file
 
 1. INPUT:
-echo source > /tmp/ms_redir_393868410
-cat < /tmp/ms_redir_393868410 > /tmp/ms_redir_393868411
-cat /tmp/ms_redir_393868411
+echo source > /tmp/ms_redir_231497310
+cat < /tmp/ms_redir_231497310 > /tmp/ms_redir_231497311
+cat /tmp/ms_redir_231497311
 
 2. BASH OUTPUT:
 source
@@ -1088,8 +1091,8 @@ source
 DESCRIPTION : redirect: chain > then cat
 
 1. INPUT:
-echo chain > /tmp/ms_redir_393868412
-cat /tmp/ms_redir_393868412 | wc -c
+echo chain > /tmp/ms_redir_231497312
+cat /tmp/ms_redir_231497312 | wc -c
 
 2. BASH OUTPUT:
 6
@@ -1101,8 +1104,8 @@ cat /tmp/ms_redir_393868412 | wc -c
 DESCRIPTION : redirect: > with number content
 
 1. INPUT:
-echo 42 > /tmp/ms_redir_393868413
-cat /tmp/ms_redir_393868413
+echo 42 > /tmp/ms_redir_231497313
+cat /tmp/ms_redir_231497313
 
 2. BASH OUTPUT:
 42
@@ -1281,10 +1284,10 @@ DESCRIPTION : external: hostname
 hostname
 
 2. BASH OUTPUT:
-c2r7s7.42wolfsburg.de
+c2r6s7.42wolfsburg.de
 
 3. MINISHELL OUTPUT:
-c2r7s7.42wolfsburg.de
+c2r6s7.42wolfsburg.de
 
 ══ Test  95 ══════════════════════════════════════════════
 DESCRIPTION : external: echo piped to external wc

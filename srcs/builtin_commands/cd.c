@@ -40,6 +40,7 @@ static char	*get_cd_path(t_cmd *cmd, t_shell *shell)
 		path = get_var("OLDPWD", shell->vars);
 		if (!path)
 			return (print_error("cd: OLDPWD not set"), NULL);
+		ft_printf("%s\n", path);
 		return (path);
 	}
 	return (cmd->args[1]);

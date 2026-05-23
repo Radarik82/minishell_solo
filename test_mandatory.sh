@@ -80,7 +80,8 @@ pwd"                               "$HOME"
 run "cd - goes back"          "cd /tmp
 cd $PWD
 cd -
-pwd"                               "/tmp"
+pwd"                               "/tmp
+/tmp"
 
 # ── EXPORT / UNSET / ENV ────────────────────────────────────────────────────
 sep "export / unset / env"
