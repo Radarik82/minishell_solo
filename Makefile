@@ -27,11 +27,13 @@ SRCS =	srcs/main.c \
 		srcs/parser/redir_utils.c \
 		srcs/parser/redir_parse.c \
 		srcs/parser/syntax.c \
-		srcs/builtin_commands/builtin_cmds.c \
-		srcs/builtin_commands/unset.c \
 		srcs/builtin_commands/cd.c \
 		srcs/builtin_commands/echo.c \
 		srcs/builtin_commands/env.c \
+		srcs/builtin_commands/exit.c \
+		srcs/builtin_commands/export.c \
+		srcs/builtin_commands/export_utils.c \
+		srcs/builtin_commands/unset.c \
 		srcs/executor/builtin_utils.c \
 		srcs/executor/execute.c \
 		srcs/executor/run_commands.c \
