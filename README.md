@@ -2,7 +2,7 @@
 >
 # Description:
 
-Minishell is a small shell similar to Bash. It can execute single commands and also piped commands. It handles redirects and heredocs.
+Minishell is a 42 School project where the goal is to build a small, functional UNIX-like shell in C. It recreates the core behavior of a command interpreter: displaying a prompt, reading and parsing user input, and executing programs by resolving them through the environment `PATH`. The project focuses on handling pipelines and I/O redirections, running both built-in commands and external executables, and properly managing processes, signals, and exit statuses.
 
 ## Instructions:
 
@@ -19,23 +19,25 @@ Minishell is a small shell similar to Bash. It can execute single commands and a
 
 - Shell Execution Instructions
 
-	Run `./minishell ` in the CLI to start/execute Minishell.
+	Run `./minishell ` in the directory where it was compiled to start/execute Minishell.
 
-	> [!NOTE]
-	> If **Not** Compiled see above instructions to compile first.
+> [!NOTE]
+> If **Not** Compiled see above instructions to compile first.
 
 - Minishell Use Instructions
 
 	`minishell> <command> <options> <argument> ` 
 
-	`minishell> exit` Exit and close shell.
+	`minishell> exit` (or Ctrl-d) to Exit and close shell.
 
 
 
  ## Resources:
 
  AI Usage:
-- Ai was used to...
+- Chatgpt was used in the research phase of the project to help understand certain requirements and aspects like forking or piping.
+- Claude code was used to generate code for a many parts of the project and to generate tests.
+- Ai was also used in debugging certain bugs.
 
  Learning Resources:
 
@@ -43,7 +45,7 @@ Minishell is a small shell similar to Bash. It can execute single commands and a
 
 - [Youtube "Shell Program Explained"](https://www.youtube.com/watch?v=ubt-UjcQUYg)
 
-- [Youtube "The fork() function in C"](https://www.youtube.com/watch?v=cex9XrZCU14)
+- [Youtube Playlist "Unix Processes in C"](https://www.youtube.com/watch?v=cex9XrZCU14&list=PLfqABt5AS4FkW5mOn2Tn9ZZLLDwA3kZUY)
 
 
  Additional (e.g., usage examples, feature list, technical choices, etc.).
