@@ -2,19 +2,13 @@ A file to keep track of TODOs.
 ----------------------------------------------------
 
 Things to discuss:
-[X] -Need functions to add to env. Such as when no OLDPWD need to create OLDPWD and expand env list.
-[ ] -Use of Global defines allowed? (REDIR_IN etc..)
-
-
-
+[ ] -In heredoc mode while being promted with '>' and Ctrl-c is hit, behavoir is different to bash.
+[ ] -In eval sheet testing "Environment path" how to test last bulletpoint "Set $PATH to a multiple directory value and ensure that directories are checked from left to right"???
 
 
 Things to change:
-[ ] -Herdoc functions contain illegal functions and have unused function "mkstemp()".
+[ ] -File heredoc.c contains illegal functions "mkstemp()" x1 and "fgets()" x2.
 
 
 
 Things to add:
-[ ] -Need to deal with command miss-use for builtin_cmds.
-[ ] -Need to code functions for exec_export && exec_unset.
-[ ] -As mentioned above need functionality to expand env list.
