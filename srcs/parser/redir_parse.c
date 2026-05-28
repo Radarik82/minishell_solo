@@ -100,6 +100,8 @@ int	parse_redirs(t_token **head, t_redir **redirs, t_shell *shell)
 			if (!rdir)
 				return (-1);
 			resolve_last_redir(rdir, shell);
+			if (!rdir->file)
+				return (-1);
 		}
 		else
 			prev = cur;

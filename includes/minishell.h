@@ -95,6 +95,9 @@ void	signals_set_interactive(void);
 void	signals_set_parent_waiting(void);
 void	signals_set_child_exec(void);
 
+/* signals_heredoc.c */
+void	signals_set_heredoc(void);
+
 /* var_list.c */
 t_var	*new_var(char *name, char *value, int exported);
 void	var_add_back(t_var **head, t_var *node);

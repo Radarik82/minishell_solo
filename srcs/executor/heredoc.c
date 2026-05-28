@@ -12,20 +12,27 @@
 
 #include "minishell.h"
 
-/* Read one heredoc body line: readline in interactive, fgets otherwise */
-// FIX : not allowed to use fgets!
+/* Read one heredoc body line using read(); write prompt if interactive */
 static char	*read_hd_line(int interactive)
 {
 	char	buf[4096];
-	size_t	len;
+	char	c;
+	int		i;
+	int		ret;
 
 	if (interactive)
-		return (readline("> "));
-	if (!fgets(buf, sizeof(buf), stdin))
-		return (NULL);
-	len = ft_strlen(buf);
-	if (len > 0 && buf[len - 1] == '\n')
-		buf[len - 1] = '\0';
+		write(STDOUT_FILENO, "> ", 2);
+	i = 0;
+	while (i < 4095)
+	{
+		ret = read(STDIN_FILENO, &c, 1);
+		if (g_last_signal == SIGINT || ret <= 0)
+			return (NULL);
+		if (c == '\n')
+			break ;
+		buf[i++] = c;
+	}
+	buf[i] = '\0';
 	return (ft_strdup(buf));
 }
 
@@ -37,34 +44,45 @@ static char	*collect_heredoc_body(char *delim, int interactive)
 	char	*tmp;
 	int		len;
 
+	signals_set_heredoc();
 	body = ft_strdup("");
 	len = ft_strlen(delim);
 	while (body)
 	{
 		line = read_hd_line(interactive);
+		if (g_last_signal == SIGINT)
+			return (signals_set_interactive(), free(line), free(body), NULL);
 		if (!line || (ft_strncmp(line, delim, len) == 0 && line[len] == '\0'))
-			return (free(line), body);
+			return (signals_set_interactive(), free(line), body);
 		tmp = ft_strjoin(line, "\n");
 		free(line);
 		body = ft_strjoin_free(body, tmp);
 		free(tmp);
 	}
-	return (NULL);
+	return (signals_set_interactive(), NULL);
 }
 
 /* Write body to a unique temp file; return heap-allocated path */
 static char	*heredoc_tmpfile(char *body)
 {
-	char	path[19];
-	int		fd;
+	static int	n = 0;
+	char		*num;
+	char		*path;
+	int			fd;
 
-	ft_strlcpy(path, "/tmp/ms_hd_XXXXXX", sizeof(path));
-	fd = mkstemp(path);
-	if (fd == -1)
+	num = ft_itoa(n++);
+	if (!num)
 		return (NULL);
+	path = ft_strjoin("/tmp/ms_hd_", num);
+	free(num);
+	if (!path)
+		return (NULL);
+	fd = open(path, O_CREAT | O_WRONLY | O_TRUNC, 0600);
+	if (fd == -1)
+		return (free(path), NULL);
 	write(fd, body, ft_strlen(body));
 	close(fd);
-	return (ft_strdup(path));
+	return (path);
 }
 
 /* Expand redir filename or, for heredoc, collect body into tmp file */

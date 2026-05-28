@@ -55,7 +55,14 @@ static void	process_line(char *line, t_shell *shell)
 	}
 	cmds = split_and_parse(line, shell);
 	if (!cmds)
+	{
+		if (g_last_signal == SIGINT)
+		{
+			shell->exit_status = 130;
+			g_last_signal = 0;
+		}
 		return ;
+	}
 	run_commands(cmds, shell);
 	free_cmd_list(cmds);
 }

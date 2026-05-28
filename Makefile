@@ -13,6 +13,7 @@ OBJ_DIR = obj
 
 SRCS =	srcs/main.c \
 		srcs/signals/signals.c \
+		srcs/signals/signals_heredoc.c \
 		srcs/utils/env_utils.c \
 		srcs/utils/var_list.c \
 		srcs/utils/errors.c \
