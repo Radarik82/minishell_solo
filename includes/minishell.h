@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dprudnik <dprudnik@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aleriaza <aleriaza@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 15:43:33 by ariazano          #+#    #+#             */
-/*   Updated: 2026/05/23 21:49:01 by denis            ###   ########.fr       */
+/*   Updated: 2026/05/28 13:12:28 by aleriaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,7 +162,6 @@ char	*handle_heredoc(char *delim, t_shell *shell);
 void	close_pipe_fds(int *fd);
 void	setup_input_pipe(int fd);
 void	setup_output_pipe(int *fd);
-void	close_unused_pipes(int *prev_fd, int *curr_fd);
 
 /* run_commands.c */
 void	run_commands(t_cmd *cmds, t_shell *shell);

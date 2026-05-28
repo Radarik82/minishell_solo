@@ -3,19 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dprudnik <dprudnik@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aleriaza <aleriaza@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/13 22:29:00 by denis             #+#    #+#             */
-/*   Updated: 2026/05/22 16:19:28 by dprudnik         ###   ########.fr       */
+/*   Updated: 2026/05/28 13:07:55 by aleriaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// TODO : Do I need to handle all chdir() errors???
-// TODO : Need to updated OLDPWD in env after every cd
-// and need to handle if get_env_var("OLDPWD", retuns NULL.
-// BUG : Need to fix! Info in Things to discuss file.
 static int	cd_error(char *path)
 {
 	char	*msg;
@@ -87,12 +83,3 @@ int	exec_pwd(t_cmd *cmd, t_shell *shell)
 	free(path);
 	return (0);
 }
-
-// NOTE : getcwd() always resolves symlinks to the physical path.
-// To track the logical path (like bash does)
-// we would need to build it manually:
-//   - If path is absolute -> use it directly as new PWD
-//   - If path is relative -> join current PWD + "/" + path,
-//     then normalize . and .. without resolving symlinks
-// This requires a path normalizer function.
-// Would fix cd /bin -> /usr/bin issue.

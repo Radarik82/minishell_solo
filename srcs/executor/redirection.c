@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dprudnik <dprudnik@student.42wolfsburg.de  +#+  +:+       +#+        */
+/*   By: aleriaza <aleriaza@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/15 14:33:48 by dprudnik          #+#    #+#             */
-/*   Updated: 2026/05/15 15:13:47 by dprudnik         ###   ########.fr       */
+/*   Updated: 2026/05/28 13:09:59 by aleriaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,6 @@ static int	handle_append_redirection(const char *outfile)
 	return (0);
 }
 
-// TODO : Error handling.
 void	apply_redirections(t_redir *redir)
 {
 	while (redir)

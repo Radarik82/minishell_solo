@@ -1,6 +1,0 @@
-*.o
-*.a
-obj/
-minishell
-compile_commands.json
-Prompt.txt
